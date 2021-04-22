@@ -27,7 +27,7 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'The jelly fish will follow your cursor', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + 2(borderUISize + borderPadding), 'Press <- for quick session or -> for long session', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + (2 *(borderUISize + borderPadding)), 'Press <- for quick session or -> for long session', menuConfig).setOrigin(0.5);
 
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
