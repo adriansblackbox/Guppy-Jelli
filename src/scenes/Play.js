@@ -1,4 +1,9 @@
 class Play extends Phaser.Scene{
+
+    constructor() {
+        super("playScene");
+    }
+
     preload(){
         this.load.image('platform','./assets/Ground.png');
         this.load.image('player','./assets/Player.png');
@@ -14,9 +19,24 @@ class Play extends Phaser.Scene{
         //this.player = new this.player(this,game.config.width/2, game.config.height-borderUISize-boarderPadding);
 
         //this.jellyFish = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'JellyFish'); // Bailey: we should make sure to bound the jellyfish to playarea
-        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + boarderPadding*4, 'shark', 0).setOrigin(0,0);
+        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0).setOrigin(0,0);
 
         // Bailey: importing old code from rocket patrol to set up bounds, game over state, and finally reset
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00,).setOrigin(0,0);
+
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontsize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
@@ -26,6 +46,7 @@ class Play extends Phaser.Scene{
 
         this.gameOver = false;
 
+        scoreConfig.fixedWidth = 0;
         this.timeVariable = game.settings.gameTimer;
 
         this.clock = this.time.delayedCall(this.timeVariable, () => {
