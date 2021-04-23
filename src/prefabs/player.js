@@ -31,7 +31,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         if(keyUP.isDown && this.y >= borderUISize + borderPadding){
             this.body.setAccelerationY(-this.accel);
             this.body.setAccelerationX(0);
-            //console.log(this.y);
         }
         if(keyDOWN.isDown){
             this.body.setAccelerationY(this.accel);
@@ -40,10 +39,12 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         if(keyLEFT.isDown){
             this.body.setAccelerationX(-this.accel);
             this.body.setAccelerationY(0);
+            this.flipX = true;
         }
         if(keyRIGHT.isDown){
             this.body.setAccelerationX(this.accel);
             this.body.setAccelerationY(0);
+            this.flipX = false;
         }
         
         //Diagonal movent
