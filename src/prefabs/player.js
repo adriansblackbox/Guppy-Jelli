@@ -20,11 +20,13 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         *  
         *   log:(4/23/2021)
         */
-
+       //                           83                                              880
+        //&& this.y >= borderUISize + borderPadding && this.y <= game.config.height - borderUISize - this.height
         // Horizontal/Vertical movement
-        if(keyUP.isDown){
+        if(keyUP.isDown && this.y >= borderUISize + borderPadding){
             this.body.setAccelerationY(-this.accel);
             this.body.setAccelerationX(0);
+            //console.log(this.y);
         }
         if(keyDOWN.isDown){
             this.body.setAccelerationY(this.accel);
@@ -39,6 +41,24 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             this.body.setAccelerationY(0);
         }
 
+        //clamping (still need to make it work for diagonal)
+        if(this.y >= game.config.height - borderUISize - this.height){
+            this.body.setAccelerationY(-this.accel);
+            this.body.setAccelerationX(0);
+        }
+        if(this.y <= borderUISize + borderPadding){
+            this.body.setAccelerationY(this.accel);
+            this.body.setAccelerationX(0);
+        }
+        if(this.x >= game.config.height - borderUISize - this.width){
+            this.body.setAccelerationY(0);
+            this.body.setAccelerationX(-this.accel);
+        }
+        if(this.x <= borderUISize + borderPadding){
+            this.body.setAccelerationY(0);
+            this.body.setAccelerationX(this.accel);
+        }
+        
         //Diagonal movent
         if(keyUP.isDown && keyLEFT.isDown){
             this.body.setAccelerationY(-this.accel/2);
