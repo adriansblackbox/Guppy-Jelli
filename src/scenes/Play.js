@@ -18,7 +18,7 @@ class Play extends Phaser.Scene{
         //work in progress
         //this.player = new this.player(this,game.config.width/2, game.config.height-borderUISize-boarderPadding);
 
-        //this.jellyFish = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'JellyFish'); // Bailey: we should make sure to bound the jellyfish to playarea
+        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'player'); // Bailey: we should make sure to bound the jellyfish to playarea
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0).setOrigin(0,0);
 
         // Bailey: importing old code from rocket patrol to set up bounds, game over state, and finally reset
@@ -58,12 +58,17 @@ class Play extends Phaser.Scene{
     update(){
         //will need a bool var to check for gameover
         //also might work by not putting x/y, but will test once we get a testable game out
-        /*this.jellyFish.x = this.input.activePointer.x;
-        this.jellyFish.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
-        */
+
+        //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
+        if(this.input.activePointer.x >= borderUISize + borderPadding && this.input.activePointer.x <= game.config.width - borderUISize - this.jellyFishCont.width){
+            this.jellyFishCont.x = this.input.activePointer.x;
+        }
+        if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height){
+            this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
+        }
 
         if(!this.gameOver){
-        this.shark.update();
+            this.shark.update();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();

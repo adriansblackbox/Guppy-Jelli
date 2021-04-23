@@ -1,13 +1,17 @@
-class JellyFish extends Phaser.GameObjects.Sprite{
-    constructor(scene,x,y,texture,frame){
-        super(scene,x,y,texture,frame);
+class JellyFish extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y, texture, frame) {
+        super(scene, x, y, texture, frame);
         scene.add.existing(this);
-        this.speed = 2;
+        this.speed = 3;
     }
-    create(){
 
+    update() {
+       
     }
-    update(){
-        
+
+    reset() {
+        this.x = game.config.width + 30;
+        this.y = Phaser.Math.Between(borderUISize*5, game.config.height-(borderUIsize*5));
+        this.alpha = 1;
     }
 }
