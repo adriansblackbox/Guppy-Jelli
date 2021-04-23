@@ -20,18 +20,44 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         *  
         *   log:(4/23/2021)
         */
+
+        // Horizontal/Vertical movement
         if(keyUP.isDown){
             this.body.setAccelerationY(-this.accel);
+            this.body.setAccelerationX(0);
         }
         if(keyDOWN.isDown){
             this.body.setAccelerationY(this.accel);
+            this.body.setAccelerationX(0);
         }
         if(keyLEFT.isDown){
             this.body.setAccelerationX(-this.accel);
+            this.body.setAccelerationY(0);
         }
         if(keyRIGHT.isDown){
             this.body.setAccelerationX(this.accel);
+            this.body.setAccelerationY(0);
         }
+
+        //Diagonal movent
+        if(keyUP.isDown && keyLEFT.isDown){
+            this.body.setAccelerationY(-this.accel/2);
+            this.body.setAccelerationX(-this.accel/2);
+        }
+        if(keyUP.isDown && keyRIGHT.isDown){
+            this.body.setAccelerationY(-this.accel/2);
+            this.body.setAccelerationX(this.accel/2);
+        }
+        if(keyDOWN.isDown && keyLEFT.isDown){
+            this.body.setAccelerationY(this.accel/2);
+            this.body.setAccelerationX(-this.accel/2);
+        }
+        if(keyDOWN.isDown && keyRIGHT.isDown){
+            this.body.setAccelerationY(this.accel/2);
+            this.body.setAccelerationX(this.accel/2);
+        }
+
+        // Idle
         if(!keyUP.isDown && !keyDOWN.isDown && !keyLEFT.isDown && !keyRIGHT.isDown){
             this.stopMoving();
         }
