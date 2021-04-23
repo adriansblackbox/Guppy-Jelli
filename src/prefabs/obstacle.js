@@ -13,7 +13,8 @@ class Obstacle extends Phaser.GameObjects.Sprite {
         this.x -= this.speed;
 
         if(this.x < -this.width){
-            this.x = game.config.width; 
+            this.x = game.config.width;
+            this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height); 
         }
     }
 
