@@ -12,8 +12,8 @@ class Menu extends Phaser.Scene {
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: ' 28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#006994',
+            color: '#FFFFFF',
             align: 'right',
             padding:{
                 top: 5,
@@ -25,8 +25,8 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Endless Runner prototype #1', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Use the keys: (W,A,S,D) to move the fish', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'The jelly fish will follow your cursor', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.color = '#000';
+        menuConfig.backgroundColor = '#000080';
+        menuConfig.color = '#FFFFFF';
         this.add.text(game.config.width/2, game.config.height/2 + (2 *(borderUISize + borderPadding)), 'Press <- for quick session or -> for long session', menuConfig).setOrigin(0.5);
 
 
