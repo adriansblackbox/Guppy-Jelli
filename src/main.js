@@ -5,7 +5,18 @@ let config = {
     width: 1280,
     height: 960,
     scene: [Menu, Play,], // Bailey: reusing the work from Rocket Patrol menu to start the game
-}
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: {
+                x: 0,
+                y: 0
+            }
+        }
+    },
+    scene: [Menu, Play]
+};
 
 let game = new Phaser.Game(config);
 
