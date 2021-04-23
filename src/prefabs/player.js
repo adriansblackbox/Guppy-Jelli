@@ -42,22 +42,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         }
 
         //clamping (still need to make it work for diagonal)
-        if(this.y >= game.config.height - borderUISize - this.height){
-            this.body.setAccelerationY(-this.accel);
-            this.body.setAccelerationX(0);
-        }
-        if(this.y <= borderUISize + borderPadding){
-            this.body.setAccelerationY(this.accel);
-            this.body.setAccelerationX(0);
-        }
-        if(this.x >= game.config.height - borderUISize - this.width){
-            this.body.setAccelerationY(0);
-            this.body.setAccelerationX(-this.accel);
-        }
-        if(this.x <= borderUISize + borderPadding){
-            this.body.setAccelerationY(0);
-            this.body.setAccelerationX(this.accel);
-        }
+        
         
         //Diagonal movent
         if(keyUP.isDown && keyLEFT.isDown){
@@ -75,6 +60,24 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         if(keyDOWN.isDown && keyRIGHT.isDown){
             this.body.setAccelerationY(this.accel/2);
             this.body.setAccelerationX(this.accel/2);
+        }
+
+        //clamping (still need to make it work for diagonal)
+        if(this.y >= game.config.height - borderUISize - this.height){
+            this.body.setAccelerationY(-this.accel);
+            this.body.setAccelerationX(0);
+        }
+        if(this.y <= borderUISize + borderPadding){
+            this.body.setAccelerationY(this.accel);
+            this.body.setAccelerationX(0);
+        }
+        if(this.x >= game.config.height - borderUISize - this.width){
+            this.body.setAccelerationY(0);
+            this.body.setAccelerationX(-this.accel);
+        }
+        if(this.x <= borderUISize + borderPadding){
+            this.body.setAccelerationY(0);
+            this.body.setAccelerationX(this.accel);
         }
 
         // Idle
