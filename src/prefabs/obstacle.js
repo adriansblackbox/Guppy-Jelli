@@ -7,16 +7,16 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this)
-        this.speed = 3;
+        this.speed = 6;
         this.body.collideWorldBounds = true;
     }
 
     update() {
         this.x -= this.speed;
 
-        if(this.x < -this.width){
+        if(this.x <= borderUISize + borderPadding){
             this.x = game.config.width;
-            this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height); 
+            this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
         }
     }
 
