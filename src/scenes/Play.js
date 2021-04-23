@@ -76,6 +76,8 @@ class Play extends Phaser.Scene{
         if(!this.gameOver){
             this.shark.update();
             this.player.update();
+        }else{
+            this.player.stopMoving();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
