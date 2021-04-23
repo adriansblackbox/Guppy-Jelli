@@ -8,11 +8,15 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.speed = 100;
         this.body.maxVelocity.set(this.speed, this.speed);
     }
-    create(){
-    }
+    //create(){
+    //}
     update(){
         
-        /* Adrian:
+        this.movement();
+        this.clampFun()
+    }
+
+    /* Adrian:
         *   Set up sweet motion controls. With this logic, the player can
         *   easily switch between butttons for a smooth experience. Speed
         *   controls the velocity of the player (set by max velocity in the constructor)
@@ -23,6 +27,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
        //                           83                                              880
         //&& this.y >= borderUISize + borderPadding && this.y <= game.config.height - borderUISize - this.height
         // Horizontal/Vertical movement
+    movement(){
         if(keyUP.isDown && this.y >= borderUISize + borderPadding){
             this.body.setAccelerationY(-this.accel);
             this.body.setAccelerationX(0);
@@ -58,10 +63,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             this.body.setAccelerationY(this.accel/2);
             this.body.setAccelerationX(this.accel/2);
         }
-
-        //clamps the fish (make sure to call below both movements)
-        this.clampFun()
-
         // Idle
         if(!keyUP.isDown && !keyDOWN.isDown && !keyLEFT.isDown && !keyRIGHT.isDown){
             this.stopMoving();
