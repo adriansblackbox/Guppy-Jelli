@@ -2,6 +2,7 @@ class Play extends Phaser.Scene{
 
     constructor() {
         super("playScene");
+        this.light = null;
     }
 
     preload(){
@@ -9,6 +10,7 @@ class Play extends Phaser.Scene{
         this.load.image('player','./assets/Player.png');
         this.load.image('fish','./assets/fish.png');
         this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
+        this.load.image('cover', './assets/BlackCover.png');
         //need a sprite for the jelly
     }
     create(){
@@ -23,8 +25,32 @@ class Play extends Phaser.Scene{
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0).setOrigin(0,0);
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2, 'fish');
 
-        // Bailey: importing old code from rocket patrol to set up bounds, game over state, and finally reset
-        
+        /*
+        //really close to working, just need to figure out how to make the shark an image not an object
+        const cX = game.config.width + borderUISize * 6;
+        const cY = borderUISize*4;
+        this.cover = this.add.image(game.config.width + borderUISize * 6, borderUISize*4, 'cover');
+        const covWidth = this.cover.width;
+        const covHeight = this.cover.height;
+        const rt = this.make.renderTexture({
+            covWidth,
+            covHeight,
+            add: false
+        })
+        const maskImage = this.make.image({
+            cX,
+            cY,
+            key: rt.texture.key,
+            add: false
+        })
+        this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
+        this.cover.mask.invertAlpha = true;
+        shark.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+        this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light.visible = false;
+        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+        this.renderTexture = rt;
+        */
 
         let scoreConfig = {
             fontFamily: 'Courier',
@@ -61,6 +87,14 @@ class Play extends Phaser.Scene{
             this.gameOver = true; 
         }, null, this);
     }
+
+    handlePointerMove(pointer){
+        const x = pointer.x - this.cover.x + this.cover.width * .5;
+        const y = pointer.y - this.cover.y + this.cover.height * .5;
+        this.renderTexture.clear();
+        this.renderTexture.draw(this.light, x, y);
+    }
+
     update(){
         //will need a bool var to check for gameover
         //also might work by not putting x/y, but will test once we get a testable game out
