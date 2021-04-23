@@ -14,6 +14,10 @@ class Play extends Phaser.Scene{
         //need a sprite for the jelly
     }
     create(){
+
+        //Adrian: Boolean var for checking if the player has died
+        this.fishDead = false;
+
         //origionally I started making this work for platforms
         //this.platforms = this.add.group({removeCallback: function(platform){platform.scene.platformPool.add(platform)}});
         //this.platformPool = this.add.group({removeCallback: function(platform){platform.scene.platforms.add(platform)}});
@@ -103,7 +107,8 @@ class Play extends Phaser.Scene{
 
         // Adrian: Collision detection between shark and fish calls onSharkCollision
         // log(4,23,21)
-        this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
+        if(!this.fishDead)
+            this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
         if(this.input.activePointer.x >= borderUISize + borderPadding && this.input.activePointer.x <= game.config.width - borderUISize - this.jellyFishCont.width){
             this.jellyFishCont.x = this.input.activePointer.x;
@@ -132,16 +137,16 @@ class Play extends Phaser.Scene{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
             this.player.stopMoving();
-            this.shark.stopMoving();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
         }
     }
 
-    
+
     //functions
     onSharkCollision(){
         this.gameOver = true;
+        this.fishDead = true;
     }
 }

@@ -7,6 +7,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this)
+        this.body.setImmovable()
         this.speed = 2;
         this.body.collideWorldBounds = true;
     }
@@ -24,10 +25,5 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         this.x = game.config.width + 30;
         this.y = Phaser.Math.Between(borderUISize*5, game.config.height-(borderUIsize*5));
         this.alpha = 1;
-    }
-
-    stopMoving(){
-        this.body.setVelocityX(0);
-        this.body.setVelocityY(0);
     }
 }
