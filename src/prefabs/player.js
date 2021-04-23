@@ -7,6 +7,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.drag = 200;
         this.speed = 100;
         this.body.maxVelocity.set(this.speed, this.speed);
+        this.body.collideWorldBounds = true;
     }
     //create(){
     //}
@@ -14,6 +15,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         
         this.movement();
         this.clampFun()
+        this.collision();
     }
 
     /* Adrian:
@@ -99,6 +101,10 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             this.body.setAccelerationY(0);
             this.body.setAccelerationX(this.accel);
         }
+    }
+
+    collision(){
+        
     }
 
 }
