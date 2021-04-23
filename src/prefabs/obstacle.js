@@ -25,4 +25,9 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         this.y = Phaser.Math.Between(borderUISize*5, game.config.height-(borderUIsize*5));
         this.alpha = 1;
     }
+
+    stopMoving(){
+        this.body.setVelocityX(0);
+        this.body.setVelocityY(0);
+    }
 }

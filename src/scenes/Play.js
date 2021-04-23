@@ -112,18 +112,36 @@ class Play extends Phaser.Scene{
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
 
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontsize: '28px',
+            backgroundColor: '#006994',
+            color: '#FFFFFF',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+
         if(!this.gameOver){
             this.shark.update();
             this.player.update();
         }else{
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
             this.player.stopMoving();
+            this.shark.stopMoving();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
         }
     }
+
+    
     //functions
     onSharkCollision(){
-        console.log("OWWIE");
+        this.gameOver = true;
     }
 }
