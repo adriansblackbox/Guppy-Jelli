@@ -100,6 +100,11 @@ class Play extends Phaser.Scene{
         //also might work by not putting x/y, but will test once we get a testable game out
 
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
+
+        // Adrian: Collision detection between shark and fish calls onSharkCollision
+        // log(4,23,21)
+        this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
+
         if(this.input.activePointer.x >= borderUISize + borderPadding && this.input.activePointer.x <= game.config.width - borderUISize - this.jellyFishCont.width){
             this.jellyFishCont.x = this.input.activePointer.x;
         }
@@ -118,5 +123,7 @@ class Play extends Phaser.Scene{
         }
     }
     //functions
-
+    onSharkCollision(){
+        console.log("OWWIE");
+    }
 }

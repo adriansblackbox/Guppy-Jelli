@@ -1,5 +1,5 @@
 /*  Bailey: idea this is a general class that which coral and shark will be derived from.
- *  starting off using my code from the ship.js from the Rocket patrol work 
+ *  starting off using my code from the ship.js from the Rocket patrol work rdr
  *
  */
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
@@ -7,7 +7,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
         scene.physics.add.existing(this)
-        this.speed = 6;
+        this.speed = 2;
         this.body.collideWorldBounds = true;
     }
 
