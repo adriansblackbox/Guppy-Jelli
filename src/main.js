@@ -12,4 +12,4 @@ let game = new Phaser.Game(config);
 let borderUISize = game.config.height/15;
 let borderPadding = borderUISize/3;
 
-let keyLEFT, keyRIGHT, keyF, keyR; //Bailey: we might need to add keyUP and keyDOWN for the player.
+let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN; //Bailey: we might need to add keyUP and keyDOWN for the player.

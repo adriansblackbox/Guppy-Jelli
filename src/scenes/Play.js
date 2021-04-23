@@ -7,6 +7,7 @@ class Play extends Phaser.Scene{
     preload(){
         this.load.image('platform','./assets/Ground.png');
         this.load.image('player','./assets/Player.png');
+        this.load.image('fish','./assets/fish.png');
         this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
         //need a sprite for the jelly
     }
@@ -20,9 +21,10 @@ class Play extends Phaser.Scene{
 
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'player'); // Bailey: we should make sure to bound the jellyfish to playarea
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0).setOrigin(0,0);
+        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2, 'fish');
 
         // Bailey: importing old code from rocket patrol to set up bounds, game over state, and finally reset
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00,).setOrigin(0,0);
+        
 
         let scoreConfig = {
             fontFamily: 'Courier',
@@ -43,6 +45,10 @@ class Play extends Phaser.Scene{
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
     
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
         this.gameOver = false;
 
@@ -69,6 +75,7 @@ class Play extends Phaser.Scene{
 
         if(!this.gameOver){
             this.shark.update();
+            this.player.update();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
