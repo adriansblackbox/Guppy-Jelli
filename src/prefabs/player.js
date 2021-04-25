@@ -9,8 +9,8 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.maxVelocity.set(this.speed, this.speed);
         this.body.collideWorldBounds = true;
     }
-    //create(){
-    //}
+    create(){
+    }
     update(){
         
         this.movement();
@@ -69,6 +69,7 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         // Idle
         if(!keyUP.isDown && !keyDOWN.isDown && !keyLEFT.isDown && !keyRIGHT.isDown){
             this.stopMoving();
+            
         }
     }
 
