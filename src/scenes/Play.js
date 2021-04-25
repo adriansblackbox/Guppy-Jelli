@@ -12,7 +12,7 @@ class Play extends Phaser.Scene{
         this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
         this.load.image('cover', './assets/BlackCover.png');
 
-        this.load.spritesheet('idle', 'assets/feesh_spreadsheet.png', {frameWidth: 38, frameHeight: 23, startFrame: 0, endFrame: 15});
+        this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 38, frameHeight: 23, startFrame: 0, endFrame: 15});
         //need a sprite for the jelly
     }
     create(){
@@ -27,9 +27,10 @@ class Play extends Phaser.Scene{
         //work in progress
         //this.player = new this.player(this,game.config.width/2, game.config.height-borderUISize-boarderPadding);
 
+
         this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('idle', { start: 0, end: 15, first: 0}),
+            key: 'swim',
+            frames: this.anims.generateFrameNumbers('fishswim', { start: 0, end: 15, first: 0}),
             frameRate: 15
         });
 
@@ -141,7 +142,8 @@ class Play extends Phaser.Scene{
         if(!this.gameOver){
             this.shark.update();
             this.player.update();
-            this.player.anims.play('idle', true);
+            this.player.anims.play('swim', true);
+
         }else{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
