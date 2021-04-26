@@ -3,6 +3,7 @@ class Play extends Phaser.Scene{
     constructor() {
         super("playScene");
         this.light = null;
+        this.renderTexture = null;
     }
 
     preload(){
@@ -17,10 +18,6 @@ class Play extends Phaser.Scene{
         //need a sprite for the jelly
     }
     create(){
-
-
-        
-
         //Adrian: Boolean var for checking if the player has died
         this.fishDead = false;
 
@@ -30,7 +27,6 @@ class Play extends Phaser.Scene{
 
         //work in progress
         //this.player = new this.player(this,game.config.width/2, game.config.height-borderUISize-boarderPadding);
-
 
         this.anims.create({
             key: 'swim',
@@ -51,7 +47,8 @@ class Play extends Phaser.Scene{
         //really close to working, just need to figure out how to make the shark an image not an object
         const cX = game.config.width + borderUISize * 6;
         const cY = borderUISize*4;
-        this.cover = this.add.image(game.config.width-570, borderUISize+350, 'cover'); // these values should be variables
+        this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
+        //this.cover.setTint(0x004c99);
         const covWidth = this.cover.width;
         const covHeight = this.cover.height;
         const rt = this.make.renderTexture({
@@ -68,7 +65,7 @@ class Play extends Phaser.Scene{
         this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
         this.cover.mask.invertAlpha = true;
         this.shark.texture.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
-        this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,100,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
         this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
         this.renderTexture = rt;
