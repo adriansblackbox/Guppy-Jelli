@@ -47,7 +47,6 @@ class Play extends Phaser.Scene{
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0).setOrigin(0,0);
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2, 'fish');
 
-
         /*
         //really close to working, just need to figure out how to make the shark an image not an object
         const cX = game.config.width + borderUISize * 6;

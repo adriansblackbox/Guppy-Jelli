@@ -9,7 +9,14 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.maxVelocity.set(this.speed, this.speed);
         this.body.collideWorldBounds = true;
 
+        this.body.setSize(40,23,true);
+
         this.isMoving = false;
+
+        this.body.setSize(40, 23);  //Adrian: collision box adjustments for fish
+        this.body.offset.x = 0;
+        this.body.offset.y = 0;     // WARNING: Keep the offsets even if they're 0.
+                                    // Just the way phaser works I guess
     }
     create(){
     }
