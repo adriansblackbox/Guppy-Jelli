@@ -41,9 +41,9 @@ class Play extends Phaser.Scene{
             frameRate: 10
         });
 
-        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'player'); // Bailey: we should make sure to bound the jellyfish to playarea
-        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0, 140, 35).setOrigin(0,0);
-        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2, 'fish');
+        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); // Bailey: we should make sure to bound the jellyfish to playarea
+        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 140, 35).setOrigin(0,0);
+        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
 
         
         //really close to working, just need to figure out how to make the shark an image not an object
