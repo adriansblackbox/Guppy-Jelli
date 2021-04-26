@@ -51,7 +51,7 @@ class Play extends Phaser.Scene{
         //really close to working, just need to figure out how to make the shark an image not an object
         const cX = game.config.width + borderUISize * 6;
         const cY = borderUISize*4;
-        this.cover = this.add.image(game.config.width + borderUISize * 6, borderUISize*4, 'cover');
+        this.cover = this.add.image(game.config.width-570, borderUISize+350, 'cover'); // these values should be variables
         const covWidth = this.cover.width;
         const covHeight = this.cover.height;
         const rt = this.make.renderTexture({
