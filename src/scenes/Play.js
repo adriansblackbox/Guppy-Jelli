@@ -47,7 +47,7 @@ class Play extends Phaser.Scene{
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0, 140, 35).setOrigin(0,0);
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2, 'fish');
 
-        /*
+        
         //really close to working, just need to figure out how to make the shark an image not an object
         const cX = game.config.width + borderUISize * 6;
         const cY = borderUISize*4;
@@ -67,12 +67,12 @@ class Play extends Phaser.Scene{
         })
         this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
         this.cover.mask.invertAlpha = true;
-        this.shark.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+        this.shark.texture.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
         this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
         this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
         this.renderTexture = rt;
-        */
+        //end of mask stuff
 
         let scoreConfig = {
             fontFamily: 'Courier',
