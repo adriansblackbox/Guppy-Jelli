@@ -4,6 +4,7 @@ let config = {
     type: Phaser.CANVAS,
     width: 1280,
     height: 960,
+    pixelArt: true,
     scene: [Menu, Play,], // Bailey: reusing the work from Rocket Patrol menu to start the game
 
     physics: {               // Adrian: set built in physics to arcade physics. gravity is 0 currently
@@ -16,8 +17,9 @@ let config = {
             }
         }
     },
-    scene: [Menu, Play]
+    
 };
+
 
 let game = new Phaser.Game(config);
 

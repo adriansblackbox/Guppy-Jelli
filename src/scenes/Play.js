@@ -13,9 +13,13 @@ class Play extends Phaser.Scene{
         this.load.image('cover', './assets/BlackCover.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
+        this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 140, frameHeight: 56, startFrame: 0, endFrame: 30});
         //need a sprite for the jelly
     }
     create(){
+
+
+        
 
         //Adrian: Boolean var for checking if the player has died
         this.fishDead = false;
@@ -33,10 +37,16 @@ class Play extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('fishswim', { start: 0, end: 15, first: 0}),
             frameRate: 15
         });
+        this.anims.create({
+            key: 'shark',
+            frames: this.anims.generateFrameNumbers('sharkswim', { start: 0, end: 30, first: 0}),
+            frameRate: 10
+        });
 
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'player'); // Bailey: we should make sure to bound the jellyfish to playarea
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4, 'shark', 0).setOrigin(0,0);
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2, 'fish');
+
 
         /*
         //really close to working, just need to figure out how to make the shark an image not an object
@@ -143,6 +153,7 @@ class Play extends Phaser.Scene{
             this.shark.update();
             this.player.update();
             this.player.anims.play('swim', true);
+            this.shark.anims.play('shark', true);
 
             if(this.player.isMoving){
                 this.player.anims.msPerFrame = 30;
@@ -154,7 +165,8 @@ class Play extends Phaser.Scene{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
             this.player.stopMoving();
-            this.player.anims.play('idle', false );
+            this.player.anims.play('swim', false );
+            this.shark.anims.play('shark', false);
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
