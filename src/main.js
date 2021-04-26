@@ -22,8 +22,14 @@ let config = {
 
 
 let game = new Phaser.Game(config);
-
 let borderUISize = game.config.height/15;
 let borderPadding = borderUISize/3;
 
 let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN; //Bailey: we might need to add keyUP and keyDOWN for the player.
+
+/*
+this code goes in the html file below setting color to hide cursor everywhere
+    * {
+        cursor: none;
+    }
+*/

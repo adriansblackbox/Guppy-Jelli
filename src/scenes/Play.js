@@ -16,6 +16,8 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 140, frameHeight: 56, startFrame: 0, endFrame: 30});
         //need a sprite for the jelly
+        this.canvas = this.sys.canvas;
+        this.canvas.style.cursor = 'none';
     }
     create(){
         //Adrian: Boolean var for checking if the player has died
