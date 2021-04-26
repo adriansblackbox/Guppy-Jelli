@@ -3,15 +3,15 @@
  *
  */
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame);
+    constructor(scene, x, y, texture, frame, bodyW, bodyH) {
+        super(scene, x, y, texture, frame, bodyW, bodyH);
         scene.add.existing(this);
         scene.physics.add.existing(this)
         this.body.setImmovable()
         this.speed = 2;
         this.body.collideWorldBounds = true;
 
-        this.body.setSize(140,35);  //Adrian: collision box adjustments for shark
+        this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
         this.body.offset.x = 0;
         this.body.offset.y = 10;     // WARNING: Keep the offsets even if they're 0.
                                      // Just the way phaser works I guess
