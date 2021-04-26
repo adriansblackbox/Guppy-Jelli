@@ -144,6 +144,12 @@ class Play extends Phaser.Scene{
             this.player.update();
             this.player.anims.play('swim', true);
 
+            if(this.player.isMoving){
+                this.player.anims.msPerFrame = 30;
+            }else{
+                this.player.anims.msPerFrame = 60;
+            }
+
         }else{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
