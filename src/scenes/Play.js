@@ -155,7 +155,7 @@ class Play extends Phaser.Scene{
             this.shark.anims.play('shark', true);
 
             if(this.player.isMoving){
-                this.player.anims.msPerFrame = 30;
+                this.player.anims.msPerFrame = 35;
             }else{
                 this.player.anims.msPerFrame = 75;
             }
