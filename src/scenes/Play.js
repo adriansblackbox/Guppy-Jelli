@@ -157,7 +157,7 @@ class Play extends Phaser.Scene{
             if(this.player.isMoving){
                 this.player.anims.msPerFrame = 30;
             }else{
-                this.player.anims.msPerFrame = 60;
+                this.player.anims.msPerFrame = 75;
             }
 
         }else{
