@@ -54,7 +54,7 @@ class Play extends Phaser.Scene{
         //really close to working, just need to figure out how to make the shark an image not an object
         //const cX = game.config.width + borderUISize * 6;
         //const cY = borderUISize*4;
-        const cX = game.config.width-370;
+        const cX = game.config.width-570;
         const cY = borderUISize+350;
 
     
