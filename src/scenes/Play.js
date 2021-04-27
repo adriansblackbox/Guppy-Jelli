@@ -16,7 +16,7 @@ class Play extends Phaser.Scene{
         this.load.image('BG', './assets/middlelayer.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
-        this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 140, frameHeight: 56, startFrame: 0, endFrame: 30});
+        this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 280, frameHeight: 112, startFrame: 0, endFrame: 30});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
@@ -51,7 +51,7 @@ class Play extends Phaser.Scene{
         const cY = borderUISize+350;
 
         this.background = this.add.image(cX, cY, 'BG');
-        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 140, 35).setOrigin(0,0);
+        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 280, 80).setOrigin(0,0);
 
 
         //====================== Place hidden things ^ =============================
