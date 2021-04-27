@@ -84,11 +84,11 @@ class Play extends Phaser.Scene{
         this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
 
-        this.renderTexture = rt;
+        //this.renderTexture = rt;
 
         this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
 
-        //this.renderTexture = rt;
+        this.renderTexture = rt;
         //end of mask stuff
 
         let scoreConfig = {
@@ -127,23 +127,19 @@ class Play extends Phaser.Scene{
         //}, null, this);
 
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
-        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); // Bailey: we should make sure to bound the jellyfish to playarea
+        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
     }
 
     handlePointerMove(pointer){
 
         const x = pointer.x - this.cover.x + this.cover.width * 0.5;
         const y = pointer.y - this.cover.y + this.cover.height * 0.5;
-
         
         this.renderTexture.clear();
         this.renderTexture.draw(this.light, x, y);
     }
 
     update(){
-        //will need a bool var to check for gameover <-- Already did it: fishDead
-        //also might work by not putting x/y, but will test once we get a testable game out
-
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
         // Adrian: Collision detection between shark and fish calls onSharkCollision
