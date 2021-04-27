@@ -54,10 +54,9 @@ class Play extends Phaser.Scene{
         //really close to working, just need to figure out how to make the shark an image not an object
         //const cX = game.config.width + borderUISize * 6;
         //const cY = borderUISize*4;
-        const cX = game.config.width-370;
+        const cX = game.config.width-570;
         const cY = borderUISize+350;
 
-    
         //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
         //const reveal = this.add.image(cX, cY, 'cover');
         //reveal.alpha = 0;
@@ -77,6 +76,7 @@ class Play extends Phaser.Scene{
 
         shape.fillPath();
 
+<<<<<<< HEAD
         const mask = shape.createGeometryMask();
 
         image.setMask(mask);
@@ -112,6 +112,8 @@ class Play extends Phaser.Scene{
 
         //this.renderTexture = rt;
 
+=======
+>>>>>>> d15470578113047564356af7030e232a33eda353
         //this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
 
         //this.renderTexture = rt;
@@ -156,6 +158,7 @@ class Play extends Phaser.Scene{
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
     }
 
+<<<<<<< HEAD
     //handlePointerMove(pointer){
     //
     //    const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
@@ -164,6 +167,16 @@ class Play extends Phaser.Scene{
     //    this.renderTexture.clear();
     //    this.renderTexture.draw(this.light, x, y);
     //}
+=======
+    handlePointerMove(pointer){
+
+        const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
+        const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
+        
+        //this.renderTexture.clear();
+        //this.renderTexture.draw(this.light, pointer.x, pointer.y);
+    }
+>>>>>>> d15470578113047564356af7030e232a33eda353
 
     update(){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
@@ -179,6 +192,10 @@ class Play extends Phaser.Scene{
         if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height){
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
+
+
+        this.renderTexture.clear();
+        this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
 
 
         let scoreConfig = {
