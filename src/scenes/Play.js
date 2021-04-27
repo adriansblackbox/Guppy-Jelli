@@ -82,15 +82,19 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,50,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,80,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,60,0x000000,0.5);    //circle with radius of 30 and alpha of 1
-        this.light.visible = false;
-        this.lightFar = this.add.circle(0,0,65,0x000000,0.25);    //circle with radius of 30 and alpha of 1
-        this.light.visible = false;
+        this.lightMid = this.add.circle(0,0,90,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid.visible = false;
+        this.lightFar = this.add.circle(0,0,95,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.lightFar.visible = false;
 
-        this.fishlight = this.add.circle(0,0,50,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.fishlight = this.add.circle(0,0,35,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.fishlight.visible = false;
+        this.fishlightMid = this.add.circle(0,0,40,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.fishlightMid.visible = false;
+        this.fishlightFar = this.add.circle(0,0,45,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.fishlightFar.visible = false;
 
         this.renderTexture = rt;
 
@@ -159,7 +163,10 @@ class Play extends Phaser.Scene{
         this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
         this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
         this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
+
         this.renderTexture.draw(this.fishlight, this.player.x, this.player.y);
+        this.renderTexture.draw(this.fishlightMid, this.player.x, this.player.y);
+        this.renderTexture.draw(this.fishlightFar, this.player.x, this.player.y);
 
 
         let scoreConfig = {
