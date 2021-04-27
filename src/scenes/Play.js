@@ -61,19 +61,16 @@ class Play extends Phaser.Scene{
         //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0;
-        
         this.cover = this.add.image(cX, cY, 'cover'); // these values should be variables (570,350)
-        
         this.cover.alpha = 0.8;
-
 
 
         const covWidth = this.cover.width;
         const covHeight = this.cover.height;
 
         const rt = this.make.renderTexture({
-            width: covWidth,
-            height: covHeight,
+            covWidth,
+            covHeight,
             add: false
         })
         const maskImage = this.make.image({
@@ -90,11 +87,11 @@ class Play extends Phaser.Scene{
         this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
 
-        //this.renderTexture = rt;
+        this.renderTexture = rt;
 
         this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
 
-        this.renderTexture = rt;
+        //this.renderTexture = rt;
         //end of mask stuff
 
         let scoreConfig = {
@@ -141,9 +138,8 @@ class Play extends Phaser.Scene{
         const x = pointer.x - this.cover.x + this.cover.width * 0.5;
         const y = pointer.y - this.cover.y + this.cover.height * 0.5;
         
-        //this.renderTexture.clear();
-        this.renderTexture.draw(this.light, game.config.width, game.config.height);
-        console.log()
+        this.renderTexture.clear();
+        this.renderTexture.draw(this.light, x, y);
     }
 
     update(){
