@@ -43,25 +43,18 @@ class Play extends Phaser.Scene{
             frameRate: 10
         });
 
-        
-        this.background = this.add.image(game.config.width-370, borderUISize+350, 'BG');
 
+        //const cX = game.config.width-370;
+        //const cY = borderUISize+350;
+
+        const cX = 400;
+        const cY = 300;
+
+        this.background = this.add.image(cX, cY, 'BG');
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 140, 35).setOrigin(0,0);
 
-        //this.middle = this.add.image(game.config.width-370, borderUISize+350, 'middle');
+    /*
 
-        
-        //really close to working, just need to figure out how to make the shark an image not an object
-        //const cX = game.config.width + borderUISize * 6;
-        //const cY = borderUISize*4;
-        const cX = game.config.width-370;
-        const cY = borderUISize+350;
-
-        //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
-        //const reveal = this.add.image(cX, cY, 'cover');
-        //reveal.alpha = 0;
-        //this.cover = this.add.image(cX, cY, 'cover'); // these values should be variables (570,350)
-        //this.cover.alpha = 0.8;
         const image = this.add.image(cX, cY, 'cover');
 
         const shape = this.make.graphics();
@@ -80,40 +73,52 @@ class Play extends Phaser.Scene{
 
         image.setMask(mask);
 
+        
+
         this.input.on('pointermove', function (pointer) {
 
             shape.x = pointer.x;
             shape.y = pointer.y;
 
         });
+    */
 
-        //const covWidth = this.cover.width;
-        //const covHeight = this.cover.height;
 
-        //const rt = this.make.renderTexture({
-        //    width: covWidth,
-        //    height: covHeight,
-        //    add: false
-        //})
-        //const maskImage = this.make.image({
-        //    cX,
-        //    cY,
-        //    key: rt.texture.key,
-        //    add: false
-        //})
-        //this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
-        //this.cover.mask.invertAlpha = true;
+        const reveal = this.add.image(cX, cY, 'cover');
+        reveal.alpha = 0
 
-        //reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+        this.cover = this.add.image(cX, cY, 'cover');
+        this.cover.alpha = 0.7
 
-        //this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
-        //this.light.visible = false;
+        const covWidth = this.cover.width;
+        const covHeight = this.cover.height;
 
-        //this.renderTexture = rt;
+        const rt = this.make.renderTexture({
+            width: covWidth,
+            height: covHeight,
+            add: false
+        }) 
+        const maskImage = this.make.image({
+            x: game.config.width/2,
+            y: game.config.height/2,
+            key: rt.texture.key,
+            add: false
+        })
+        this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
+        this.cover.mask.invertAlpha = true;
 
-        //this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+        reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        //this.renderTexture = rt;
+        this.light = this.add.circle(0,0,50,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light.visible = false;
+
+        this.renderTexture = rt;
+
+        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+
+        this.renderTexture = rt;
+        this.renderTexture.setOrigin(game.config.width/2, game.config.height/2);
+
         //end of mask stuff
 
         let scoreConfig = {
@@ -155,14 +160,14 @@ class Play extends Phaser.Scene{
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
     }
 
-    //handlePointerMove(pointer){
-    //
-    //    const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
-    //    const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
-    //    
-    //    this.renderTexture.clear();
-    //    this.renderTexture.draw(this.light, x, y);
-    //}
+    handlePointerMove(pointer){
+    
+        const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
+        const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
+        
+        //this.renderTexture.clear();
+        //this.renderTexture.draw(this.light, x, y);
+    }
 
     update(){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
@@ -179,6 +184,8 @@ class Play extends Phaser.Scene{
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
 
+        this.renderTexture.clear();
+        this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
 
         let scoreConfig = {
             fontFamily: 'Courier',
