@@ -77,8 +77,8 @@ class Play extends Phaser.Scene{
             add: false
         })
         const maskImage = this.make.image({
-            width: cX,
-            height: cY,
+            cX,
+            cY,
             key: rt.texture.key,
             add: false
         })
