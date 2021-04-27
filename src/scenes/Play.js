@@ -2,8 +2,8 @@ class Play extends Phaser.Scene{
 
     constructor() {
         super("playScene");
-        this.light = null;
-        this.renderTexture = null;
+        //this.light = null;
+        //this.renderTexture = null;
     }
 
     preload(){
@@ -59,37 +59,60 @@ class Play extends Phaser.Scene{
 
     
         //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
-        const reveal = this.add.image(cX, cY, 'cover');
-        reveal.alpha = 0;
-        this.cover = this.add.image(cX, cY, 'cover'); // these values should be variables (570,350)
-        this.cover.alpha = 0.8;
+        //const reveal = this.add.image(cX, cY, 'cover');
+        //reveal.alpha = 0;
+        //this.cover = this.add.image(cX, cY, 'cover'); // these values should be variables (570,350)
+        //this.cover.alpha = 0.8;
+        const image = this.add.image(cX, cY, 'cover');
 
+        const shape = this.make.graphics();
 
-        const covWidth = this.cover.width;
-        const covHeight = this.cover.height;
+        shape.fillStyle(0x000000);
 
-        const rt = this.make.renderTexture({
-            width: covWidth,
-            height: covHeight,
-            add: false
-        })
-        const maskImage = this.make.image({
-            cX,
-            cY,
-            key: rt.texture.key,
-            add: false
-        })
-        this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
-        this.cover.mask.invertAlpha = true;
+        shape.beginPath();
 
-        reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+        shape.moveTo(0,0);
 
-        this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
-        this.light.visible = false;
+        shape.arc(0,0, 250, 0, Math.PI *2);
 
-        this.renderTexture = rt;
+        shape.fillPath();
 
-        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+        const mask = shape.createGeometryMask();
+
+        image.setMask(mask);
+
+        this.input.on('pointermove', function (pointer) {
+
+            shape.x = pointer.x;
+            shape.y = pointer.y;
+
+        });
+
+        //const covWidth = this.cover.width;
+        //const covHeight = this.cover.height;
+
+        //const rt = this.make.renderTexture({
+        //    width: covWidth,
+        //    height: covHeight,
+        //    add: false
+        //})
+        //const maskImage = this.make.image({
+        //    cX,
+        //    cY,
+        //    key: rt.texture.key,
+        //    add: false
+        //})
+        //this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
+        //this.cover.mask.invertAlpha = true;
+
+        //reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+
+        //this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
+        //this.light.visible = false;
+
+        //this.renderTexture = rt;
+
+        //this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
 
         //this.renderTexture = rt;
         //end of mask stuff
@@ -133,14 +156,14 @@ class Play extends Phaser.Scene{
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
     }
 
-    handlePointerMove(pointer){
-
-        const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
-        const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
-        
-        this.renderTexture.clear();
-        this.renderTexture.draw(this.light, x, y);
-    }
+    //handlePointerMove(pointer){
+    //
+    //    const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
+    //    const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
+    //    
+    //    this.renderTexture.clear();
+    //    this.renderTexture.draw(this.light, x, y);
+    //}
 
     update(){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
