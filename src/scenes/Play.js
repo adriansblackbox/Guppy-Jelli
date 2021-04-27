@@ -89,7 +89,7 @@ class Play extends Phaser.Scene{
 
         this.renderTexture = rt;
 
-        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+        //this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
 
         //this.renderTexture = rt;
         //end of mask stuff
@@ -138,8 +138,8 @@ class Play extends Phaser.Scene{
         const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
         const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
         
-        this.renderTexture.clear();
-        this.renderTexture.draw(this.light, x, y);
+        //this.renderTexture.clear();
+        //this.renderTexture.draw(this.light, pointer.x, pointer.y);
     }
 
     update(){
@@ -156,6 +156,10 @@ class Play extends Phaser.Scene{
         if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height){
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
+
+
+        this.renderTexture.clear();
+        this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
 
 
         let scoreConfig = {
