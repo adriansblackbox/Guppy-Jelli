@@ -138,12 +138,12 @@ class Play extends Phaser.Scene{
 
     handlePointerMove(pointer){
 
-        const x = pointer.x - this.cover.x + this.cover.width * 0.5;
-        const y = pointer.y - this.cover.y + this.cover.height * 0.5;
+        const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
+        const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
         
-        //this.renderTexture.clear();
-        this.renderTexture.draw(this.light, game.config.width, game.config.height);
-        console.log()
+        this.renderTexture.clear();
+        this.renderTexture.draw(this.light, pointer.x,pointer.y);
+
     }
 
     update(){
