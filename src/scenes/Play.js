@@ -141,6 +141,7 @@ class Play extends Phaser.Scene{
 
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
+
     }
 
 
@@ -168,7 +169,8 @@ class Play extends Phaser.Scene{
         this.renderTexture.draw(this.fishlightMid, this.player.x, this.player.y);
         this.renderTexture.draw(this.fishlightFar, this.player.x, this.player.y);
 
-
+        //for the gameover text, if we want the top to not have as large as box we may need to change the fixedwidth in between the two texts
+        let gameOverConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#F3B141', color: '#843605', align: 'center', padding:{top: 5, bottom: 5,}, fixedWidth: 400}
         let scoreConfig = {
             fontFamily: 'Courier',
             fontsize: '28px',
@@ -195,8 +197,8 @@ class Play extends Phaser.Scene{
             }
 
         }else{
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', gameOverConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', gameOverConfig).setOrigin(0.5);
             this.player.stopMoving();
             this.player.anims.play('swim', false );
             this.shark.anims.play('shark', false);
