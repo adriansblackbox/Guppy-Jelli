@@ -13,6 +13,7 @@ class Play extends Phaser.Scene{
         this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
 
         this.load.image('cover', './assets/BlackCover.png');
+        this.load.image('BG', './assets/middlelayer.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 140, frameHeight: 56, startFrame: 0, endFrame: 30});
@@ -43,6 +44,8 @@ class Play extends Phaser.Scene{
         });
 
         
+        this.background = this.add.image(game.config.width-370, borderUISize+350, 'BG');
+
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 140, 35).setOrigin(0,0);
 
         //this.middle = this.add.image(game.config.width-370, borderUISize+350, 'middle');
@@ -58,21 +61,24 @@ class Play extends Phaser.Scene{
         //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0;
+        
         this.cover = this.add.image(cX, cY, 'cover'); // these values should be variables (570,350)
+        
         this.cover.alpha = 0.8;
+
 
 
         const covWidth = this.cover.width;
         const covHeight = this.cover.height;
 
         const rt = this.make.renderTexture({
-            covWidth,
-            covHeight,
+            width: covWidth,
+            height: covHeight,
             add: false
         })
         const maskImage = this.make.image({
-            cX,
-            cY,
+            width: cX,
+            height: cY,
             key: rt.texture.key,
             add: false
         })
@@ -136,8 +142,9 @@ class Play extends Phaser.Scene{
         const y = pointer.y - this.cover.y + this.cover.height * 0.5;
 
         
-        this.renderTexture.clear();
-        this.renderTexture.draw(this.light, x, y);
+        //this.renderTexture.clear();
+        this.renderTexture.draw(this.light, game.config.width, game.config.height);
+        console.log()
     }
 
     update(){
