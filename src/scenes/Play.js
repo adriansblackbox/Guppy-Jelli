@@ -57,7 +57,6 @@ class Play extends Phaser.Scene{
         const cX = game.config.width-570;
         const cY = borderUISize+350;
 
-    
         //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0;
