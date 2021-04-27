@@ -1,7 +1,7 @@
 //will probably want to change size
 // Bailey: doubling size of the canvas from Rocket Patrol Assignment
 let config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     width: 1280,
     height: 960,
     pixelArt: true,
