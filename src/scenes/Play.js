@@ -84,6 +84,10 @@ class Play extends Phaser.Scene{
 
         this.light = this.add.circle(0,0,50,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
+        this.lightMid = this.add.circle(0,0,60,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.light.visible = false;
+        this.lightFar = this.add.circle(0,0,65,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.light.visible = false;
 
         this.renderTexture = rt;
 
@@ -150,6 +154,9 @@ class Play extends Phaser.Scene{
 
         this.renderTexture.clear();
         this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
+        this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
+        this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
+
 
         let scoreConfig = {
             fontFamily: 'Courier',
