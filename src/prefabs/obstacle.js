@@ -3,7 +3,7 @@
  *
  */
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame, bodyW, bodyH) {
+    constructor(scene, x, y, texture, frame, bodyW, bodyH, offX, offY) {
         super(scene, x, y, texture, frame, bodyW, bodyH);
         scene.add.existing(this);
         scene.physics.add.existing(this)
@@ -12,8 +12,8 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
-        this.body.offset.x = 0;
-        this.body.offset.y = 20;     // WARNING: Keep the offsets even if they're 0.
+        this.body.offset.x = offX;
+        this.body.offset.y = offY;     // WARNING: Keep the offsets even if they're 0.
                                      // Just the way phaser works I guess
     }
 
