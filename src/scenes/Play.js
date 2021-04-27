@@ -51,7 +51,7 @@ class Play extends Phaser.Scene{
         const cY = borderUISize+350;
 
         this.background = this.add.image(cX, cY, 'BG');
-        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 280, 80, 0, 20).setOrigin(0,0);
+        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 280, 45, 15, 35).setOrigin(0,0);
 
 
         //====================== Place hidden things ^ =============================
