@@ -41,18 +41,29 @@ class Play extends Phaser.Scene{
             frameRate: 10
         });
 
-        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); // Bailey: we should make sure to bound the jellyfish to playarea
+        
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 140, 35).setOrigin(0,0);
-        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
+
+        //this.middle = this.add.image(game.config.width-370, borderUISize+350, 'middle');
 
         
         //really close to working, just need to figure out how to make the shark an image not an object
-        const cX = game.config.width + borderUISize * 6;
-        const cY = borderUISize*4;
-        this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
-        //this.cover.setTint(0x004c99);
+        //const cX = game.config.width + borderUISize * 6;
+        //const cY = borderUISize*4;
+        const cX = game.config.width-370;
+        const cY = borderUISize+350;
+
+    
+        //this.cover = this.add.image(game.config.width-370, borderUISize+350, 'cover'); // these values should be variables (570,350)
+        const reveal = this.add.image(cX, cY, 'cover');
+        reveal.alpha = 0;
+        this.cover = this.add.image(cX, cY, 'cover'); // these values should be variables (570,350)
+        this.cover.alpha = 0.8;
+
+
         const covWidth = this.cover.width;
         const covHeight = this.cover.height;
+
         const rt = this.make.renderTexture({
             covWidth,
             covHeight,
@@ -66,11 +77,17 @@ class Play extends Phaser.Scene{
         })
         this.cover.mask = new Phaser.Display.Masks.BitmapMask(this,maskImage);
         this.cover.mask.invertAlpha = true;
-        this.shark.texture.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
-        this.light = this.add.circle(0,0,100,0x000000,1);    //circle with radius of 30 and alpha of 1
+
+        reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
+
+        this.light = this.add.circle(0,0,30,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+
         this.renderTexture = rt;
+
+        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
+
+        //this.renderTexture = rt;
         //end of mask stuff
 
         let scoreConfig = {
@@ -107,17 +124,23 @@ class Play extends Phaser.Scene{
             //this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
             //this.gameOver = true; 
         //}, null, this);
+
+        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
+        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); // Bailey: we should make sure to bound the jellyfish to playarea
     }
 
     handlePointerMove(pointer){
-        const x = pointer.x - this.cover.x + this.cover.width * .5;
-        const y = pointer.y - this.cover.y + this.cover.height * .5;
+
+        const x = pointer.x - this.cover.x + this.cover.width * 0.5;
+        const y = pointer.y - this.cover.y + this.cover.height * 0.5;
+
+        
         this.renderTexture.clear();
         this.renderTexture.draw(this.light, x, y);
     }
 
     update(){
-        //will need a bool var to check for gameover
+        //will need a bool var to check for gameover <-- Already did it: fishDead
         //also might work by not putting x/y, but will test once we get a testable game out
 
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
@@ -133,6 +156,7 @@ class Play extends Phaser.Scene{
         if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height){
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
+
 
         let scoreConfig = {
             fontFamily: 'Courier',
