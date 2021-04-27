@@ -146,6 +146,7 @@ class Play extends Phaser.Scene{
         let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#30D5C8', color: '#000000', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 150}
         this.timeLeft = this.add.text(borderUISize + borderPadding + 410, borderUISize + borderPadding*2, 'Time: ', timeConfig);
         this.timeVar = 0;
+        this.timePassed = 0;
     }
 
 
@@ -188,6 +189,12 @@ class Play extends Phaser.Scene{
             fixedWidth: 100
         }
         this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
+        //this.shark.speed += (this.timeVar*.000001);   //one way of speeding up sharks
+        if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
+            this.shark.speed += 1;
+            this.timePassed+=10;
+            console.log(this.shark.speed);
+        }
         if(!this.gameOver){
             this.shark.update();
             this.player.update();
