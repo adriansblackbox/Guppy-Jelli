@@ -47,48 +47,21 @@ class Play extends Phaser.Scene{
         //const cX = game.config.width-370;
         //const cY = borderUISize+350;
 
-        const cX = 400;
-        const cY = 300;
+        const cX = game.config.width-370;;
+        const cY = borderUISize+350;
 
         this.background = this.add.image(cX, cY, 'BG');
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 140, 35).setOrigin(0,0);
 
-    /*
 
-        const image = this.add.image(cX, cY, 'cover');
-
-        const shape = this.make.graphics();
-
-        shape.fillStyle(0xffffff);
-
-        shape.beginPath();
-
-        shape.moveTo(0,0);
-
-        shape.arc(0,0, 250, 0, Math.PI *2);
-
-        shape.fillPath();
-
-        const mask = shape.createGeometryMask();
-
-        image.setMask(mask);
-
-        
-
-        this.input.on('pointermove', function (pointer) {
-
-            shape.x = pointer.x;
-            shape.y = pointer.y;
-
-        });
-    */
-
+        //====================== Place hidden things ^ =============================
+        //==========================================================================
 
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0
 
         this.cover = this.add.image(cX, cY, 'cover');
-        this.cover.alpha = 0.7
+        this.cover.alpha = 1
 
         const covWidth = this.cover.width;
         const covHeight = this.cover.height;
@@ -114,7 +87,6 @@ class Play extends Phaser.Scene{
 
         this.renderTexture = rt;
 
-        this.input.on(Phaser.Input.Events.POINTER_MOVE, this.handlePointerMove, this);
 
         this.renderTexture = rt;
         this.renderTexture.setOrigin(game.config.width/2, game.config.height/2);
@@ -123,7 +95,7 @@ class Play extends Phaser.Scene{
 
         let scoreConfig = {
             fontFamily: 'Courier',
-            fontsize: '28px',
+            fontsize: '28px',s
             backgroundColor: '#006994',
             color: '#FFFFFF',
             align: 'right',
@@ -160,14 +132,6 @@ class Play extends Phaser.Scene{
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
     }
 
-    handlePointerMove(pointer){
-    
-        const x = pointer.x - this.cover.x + (this.cover.width * 0.5);
-        const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
-        
-        //this.renderTexture.clear();
-        //this.renderTexture.draw(this.light, x, y);
-    }
 
     update(){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
