@@ -11,6 +11,7 @@ class Play extends Phaser.Scene{
         this.load.image('player','./assets/Player.png');
         this.load.image('fish','./assets/fish.png');
         this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
+
         this.load.image('cover', './assets/BlackCover.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
