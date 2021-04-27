@@ -34,7 +34,7 @@ class Play extends Phaser.Scene{
 
         this.anims.create({
             key: 'swim',
-            frames: this.anims.generateFrameNumbers('fishswim', { start: 0, end: 15, first: 0}),
+            frames: this.anims.generateFrameNumbers('fishswim', { start: 0, end: 14, first: 0}),
             frameRate: 15
         });
         this.anims.create({
