@@ -69,8 +69,8 @@ class Play extends Phaser.Scene{
         const covHeight = this.cover.height;
 
         const rt = this.make.renderTexture({
-            covWidth,
-            covHeight,
+            width: covWidth,
+            height: covHeight,
             add: false
         })
         const maskImage = this.make.image({
@@ -139,7 +139,7 @@ class Play extends Phaser.Scene{
         const y = pointer.y - this.cover.y + (this.cover.height * 0.5);
         
         this.renderTexture.clear();
-        this.renderTexture.draw(this.light, pointer.x,pointer.y);
+        this.renderTexture.draw(this.light, x, y);
     }
 
     update(){
