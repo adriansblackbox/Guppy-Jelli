@@ -47,7 +47,7 @@ class Play extends Phaser.Scene{
         //const cX = game.config.width-370;
         //const cY = borderUISize+350;
 
-        const cX = game.config.width-370;;
+        const cX = game.config.width-570;;
         const cY = borderUISize+350;
 
         this.background = this.add.image(cX, cY, 'BG');
