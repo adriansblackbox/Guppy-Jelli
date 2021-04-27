@@ -158,21 +158,14 @@ class Play extends Phaser.Scene{
         if(!this.fishDead)
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
-        if(this.input.activePointer.x >= borderUISize + borderPadding && this.input.activePointer.x <= game.config.width - borderUISize - this.jellyFishCont.width){
+        if(this.input.activePointer.x >= borderUISize + borderPadding && this.input.activePointer.x <= game.config.width - borderUISize - this.jellyFishCont.width && !this.fishDead){
             this.jellyFishCont.x = this.input.activePointer.x;
         }
-        if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height){
+        if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height && !this.fishDead){
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
 
-        this.renderTexture.clear();
-        this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
-        this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
-        this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
-
-        this.renderTexture.draw(this.fishlight, this.player.x, this.player.y);
-        this.renderTexture.draw(this.fishlightMid, this.player.x, this.player.y);
-        this.renderTexture.draw(this.fishlightFar, this.player.x, this.player.y);
+        
 
         //for the gameover text, if we want the top to not have as large as box we may need to change the fixedwidth in between the two texts
         let gameOverConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#F3B141', color: '#843605', align: 'center', padding:{top: 5, bottom: 5,}, fixedWidth: 400}
@@ -207,12 +200,28 @@ class Play extends Phaser.Scene{
                 this.player.anims.msPerFrame = 75;
             }
 
+            // light x/y values handled here
+            this.renderTexture.clear();
+            this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
+            this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
+            this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
+
+            this.renderTexture.draw(this.fishlight, this.player.x, this.player.y);
+            this.renderTexture.draw(this.fishlightMid, this.player.x, this.player.y);
+            this.renderTexture.draw(this.fishlightFar, this.player.x, this.player.y);
+
         }else{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', gameOverConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', gameOverConfig).setOrigin(0.5);
             this.player.stopMoving();
             this.player.anims.play('swim', false );
+            this.player.alpha = 0;
             this.shark.anims.play('shark', false);
+
+            this.renderTexture.clear();
+            this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
+            this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
+            this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
