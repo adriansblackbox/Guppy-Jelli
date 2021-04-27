@@ -89,11 +89,11 @@ class Play extends Phaser.Scene{
         this.lightFar = this.add.circle(0,0,95,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
-        this.fishlight = this.add.circle(0,0,35,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.fishlight = this.add.circle(0,0,45,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.fishlight.visible = false;
-        this.fishlightMid = this.add.circle(0,0,40,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.fishlightMid = this.add.circle(0,0,50,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.fishlightMid.visible = false;
-        this.fishlightFar = this.add.circle(0,0,45,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.fishlightFar = this.add.circle(0,0,55,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.fishlightFar.visible = false;
 
         this.renderTexture = rt;
@@ -142,10 +142,14 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
+        //setting up time text
+        let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#30D5C8', color: '#000000', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 150}
+        this.timeLeft = this.add.text(borderUISize + borderPadding + 410, borderUISize + borderPadding*2, 'Time: ', timeConfig);
+        this.timeVar = 0;
     }
 
 
-    update(){
+    update(time,delta){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
         // Adrian: Collision detection between shark and fish calls onSharkCollision
@@ -183,13 +187,13 @@ class Play extends Phaser.Scene{
             },
             fixedWidth: 100
         }
-
+        this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
         if(!this.gameOver){
             this.shark.update();
             this.player.update();
             this.player.anims.play('swim', true);
             this.shark.anims.play('shark', true);
-
+            this.timeVar = this.timeVar + delta;
             if(this.player.isMoving){
                 this.player.anims.msPerFrame = 35;
             }else{
