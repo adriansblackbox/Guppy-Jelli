@@ -12,7 +12,7 @@ let config = {
     physics: {               // Adrian: set built in physics to arcade physics. gravity is 0 currently
         default: 'arcade',   // log: (4/23/21)
         arcade: {
-            debug: false,    // Set to true for testing purposes only
+            debug: true,    // Set to true for testing purposes only
             gravity: {
                 x: 0,
                 y: 0
@@ -26,6 +26,7 @@ let config = {
 let game = new Phaser.Game(config);
 let borderUISize = game.config.height/15;
 let borderPadding = borderUISize/3;
+
 
 let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN; //Bailey: we might need to add keyUP and keyDOWN for the player.
 

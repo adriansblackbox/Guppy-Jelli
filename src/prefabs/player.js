@@ -97,19 +97,19 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.setDragY(this.drag);
     }
     clampFun(){
-        if(this.y >= game.config.height - borderUISize - this.height){
+        if(this.y >= game.config.height){
             this.body.setAccelerationY(-this.accel);
             this.body.setAccelerationX(0);
         }
-        if(this.y <= borderUISize + borderPadding){
+        if(this.y <= 0){
             this.body.setAccelerationY(this.accel);
             this.body.setAccelerationX(0);
         }
-        if(this.x >= game.config.height - borderUISize - this.width){
+        if(this.x >= game.config.width){
             this.body.setAccelerationY(0);
             this.body.setAccelerationX(-this.accel);
         }
-        if(this.x <= borderUISize + borderPadding){
+        if(this.x <= 0){
             this.body.setAccelerationY(0);
             this.body.setAccelerationX(this.accel);
         }

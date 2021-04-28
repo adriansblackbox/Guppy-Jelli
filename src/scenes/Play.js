@@ -13,7 +13,7 @@ class Play extends Phaser.Scene{
         this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
 
         this.load.image('cover', './assets/BlackCover.png');
-        this.load.image('BG', './assets/middlelayer.png');
+        this.load.image('BG', './assets/first_background.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 280, frameHeight: 112, startFrame: 0, endFrame: 30});
@@ -88,11 +88,11 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,80,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,85,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,90,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid = this.add.circle(0,0,95,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.lightMid.visible = false;
-        this.lightFar = this.add.circle(0,0,95,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.lightFar = this.add.circle(0,0,100,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
         this.fishlight = this.add.circle(0,0,45,0x000000,1);    //circle with radius of 30 and alpha of 1
@@ -123,10 +123,10 @@ class Play extends Phaser.Scene{
             fixedWidth: 100
         }
 
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
+        //this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
+        //this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
+        //this.add.rectangle(0, 0, 0, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
+        //this.add.rectangle(game.config.width - borderUISize, 0, 0, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
     
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -164,10 +164,16 @@ class Play extends Phaser.Scene{
         if(!this.fishDead)
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
-        if(this.input.activePointer.x >= borderUISize + borderPadding && this.input.activePointer.x <= game.config.width - borderUISize - this.jellyFishCont.width && !this.fishDead){
+        if(
+            this.input.activePointer.x >= 0 &&
+            this.input.activePointer.x <= game.config.width &&
+            !this.fishDead){
             this.jellyFishCont.x = this.input.activePointer.x;
         }
-        if(this.input.activePointer.y >= borderUISize + borderPadding && this.input.activePointer.y <= game.config.height - borderUISize - this.jellyFishCont.height && !this.fishDead){
+        if(
+            this.input.activePointer.y >= 0&& 
+            this.input.activePointer.y <= game.config.height&& 
+            !this.fishDead){
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
 
@@ -224,6 +230,7 @@ class Play extends Phaser.Scene{
             this.player.anims.play('swim', false );
             this.player.alpha = 0;
             this.shark.anims.play('shark', false);
+            this.jellyFishCont.play('jelly', false);
 
             this.renderTexture.clear();
             this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
@@ -233,8 +240,6 @@ class Play extends Phaser.Scene{
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
         }
-
-
     }
 
     
@@ -244,5 +249,3 @@ class Play extends Phaser.Scene{
         this.fishDead = true;
     }
 }
-
-//please delete me!!!

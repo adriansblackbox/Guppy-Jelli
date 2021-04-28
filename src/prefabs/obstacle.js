@@ -9,7 +9,7 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
         this.body.setImmovable()
         this.speed = 4;
-        this.body.collideWorldBounds = true;
+        //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
         this.body.offset.x = offX;
@@ -20,15 +20,17 @@ class Obstacle extends Phaser.Physics.Arcade.Sprite {
     update() {
         this.x -= this.speed;
 
-        if(this.x <= borderUISize + borderPadding - 100){
-            this.x = game.config.width;
-            this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
+        if(this.x <= -280){
+            //this.x = game.config.width;
+            //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
+            this.alpha = 0;
+            this.reset();
         }
     }
 
     reset() {
-        this.x = game.config.width + 30;
-        this.y = Phaser.Math.Between(borderUISize*5, game.config.height-(borderUIsize*5));
+        this.x = game.config.width + 280;
+        this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
         this.alpha = 1;
     }
 }
