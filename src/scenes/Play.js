@@ -17,6 +17,7 @@ class Play extends Phaser.Scene{
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 280, frameHeight: 112, startFrame: 0, endFrame: 30});
+        this.load.spritesheet('jelly', 'assets/jelly.png', {frameWidth: 32, frameHeight: 40, startFrame: 0, endFrame: 21});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
@@ -41,6 +42,11 @@ class Play extends Phaser.Scene{
             key: 'shark',
             frames: this.anims.generateFrameNumbers('sharkswim', { start: 0, end: 30, first: 0}),
             frameRate: 10
+        });
+        this.anims.create({
+            key: 'jelly',
+            frames: this.anims.generateFrameNumbers('jelly', { start: 0, end: 21, first: 0}),
+            frameRate: 13
         });
 
 
@@ -193,6 +199,7 @@ class Play extends Phaser.Scene{
             this.player.update();
             this.player.anims.play('swim', true);
             this.shark.anims.play('shark', true);
+            this.jellyFishCont.play('jelly', true);
             this.timeVar = this.timeVar + delta;
             if(this.player.isMoving){
                 this.player.anims.msPerFrame = 35;
