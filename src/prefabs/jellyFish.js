@@ -6,6 +6,7 @@ class JellyFish extends Phaser.Physics.Arcade.Sprite {
         this.speed = 3;
 
         this.body.setSize(40,23,true);
+        
 
 
         this.body.setSize(20, 30);  //Adrian: collision box adjustments

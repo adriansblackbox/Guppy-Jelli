@@ -165,14 +165,14 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
         if(
-            this.input.activePointer.x >= 0 &&
-            this.input.activePointer.x <= game.config.width &&
+            this.input.activePointer.x >= 0 + this.jellyFishCont.body.width &&
+            this.input.activePointer.x <= game.config.width - this.jellyFishCont.body.width&&
             !this.fishDead){
             this.jellyFishCont.x = this.input.activePointer.x;
         }
         if(
-            this.input.activePointer.y >= 0&& 
-            this.input.activePointer.y <= game.config.height&& 
+            this.input.activePointer.y >= 0 + this.jellyFishCont.body.height && 
+            this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height && 
             !this.fishDead){
             this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
