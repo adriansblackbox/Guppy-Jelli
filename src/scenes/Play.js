@@ -4,6 +4,7 @@ class Play extends Phaser.Scene{
         super("playScene");
         //this.light = null;
         //this.renderTexture = null;
+        
     }
 
     preload(){
@@ -15,8 +16,8 @@ class Play extends Phaser.Scene{
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('BG', './assets/first_background.png');
 
-        this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 40, frameHeight: 23, startFrame: 0, endFrame: 14});
-        this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 280, frameHeight: 112, startFrame: 0, endFrame: 30});
+        this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
+        this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
         this.load.spritesheet('jelly', 'assets/jelly.png', {frameWidth: 32, frameHeight: 40, startFrame: 0, endFrame: 21});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
@@ -25,14 +26,55 @@ class Play extends Phaser.Scene{
     create(){
         //Adrian: Boolean var for checking if the player has died
         this.fishDead = false;
+        this.gameOver = false;
 
-        //origionally I started making this work for platforms
-        //this.platforms = this.add.group({removeCallback: function(platform){platform.scene.platformPool.add(platform)}});
-        //this.platformPool = this.add.group({removeCallback: function(platform){platform.scene.platforms.add(platform)}});
+        this.initializeKeys();
+        this.creatAnims();
 
-        //work in progress
-        //this.player = new this.player(this,game.config.width/2, game.config.height-borderUISize-boarderPadding);
+        const cX = game.config.width/2;
+        const cY = game.config.height/2;
 
+        this.background = this.add.tileSprite(cX, cY, 1920, 720, 'BG');
+        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 400, 70, 15, 50).setOrigin(0,0);
+
+        //====================== Place hidden things ^ =============================
+        //==========================================================================
+
+        this.lightEffect(cX, cY);
+        
+        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
+        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
+
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontsize: '28px',
+            backgroundColor: '#006994',
+            color: '#FFFFFF',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+
+
+        scoreConfig.fixedWidth = 0;
+        this.timeVariable = game.settings.gameTimer;
+
+        //this.clock = this.time.delayedCall(this.timeVariable, () => {
+            //this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            //this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
+            //this.gameOver = true; 
+        //}, null, this);
+
+        //setting up time text
+        let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 150}
+        this.timeLeft = this.add.text(0, 0, 'Time: ', timeConfig);
+        this.timeVar = 0;
+        this.timePassed = 0;
+    }
+    creatAnims(){
         this.anims.create({
             key: 'swim',
             frames: this.anims.generateFrameNumbers('fishswim', { start: 0, end: 14, first: 0}),
@@ -48,21 +90,9 @@ class Play extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('jelly', { start: 0, end: 21, first: 0}),
             frameRate: 13
         });
-
-
-        //const cX = game.config.width-370;
-        //const cY = borderUISize+350;
-
-        const cX = game.config.width/2;
-        const cY = game.config.height/2;
-
-        this.background = this.add.image(cX, cY, 'BG');
-        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 280, 45, 15, 35).setOrigin(0,0);
-
-
-        //====================== Place hidden things ^ =============================
-        //==========================================================================
-
+        
+    }
+    lightEffect(cX, cY){
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0
 
@@ -88,11 +118,11 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,85,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,155,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,95,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid = this.add.circle(0,0,165,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.lightMid.visible = false;
-        this.lightFar = this.add.circle(0,0,100,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.lightFar = this.add.circle(0,0,170,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
         this.fishlight = this.add.circle(0,0,45,0x000000,1);    //circle with radius of 30 and alpha of 1
@@ -107,76 +137,27 @@ class Play extends Phaser.Scene{
 
         this.renderTexture = rt;
         this.renderTexture.setOrigin(game.config.width/2, game.config.height/2);
+    }
 
-        //end of mask stuff
-
-        let scoreConfig = {
-            fontFamily: 'Courier',
-            fontsize: '28px',
-            backgroundColor: '#006994',
-            color: '#FFFFFF',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
-
-        //this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        //this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0 ,0);
-        //this.add.rectangle(0, 0, 0, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-        //this.add.rectangle(game.config.width - borderUISize, 0, 0, game.config.height, 0xFFFFFF).setOrigin(0 ,0);
-    
+    initializeKeys(){
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-
-        this.gameOver = false;
-
-        scoreConfig.fixedWidth = 0;
-        this.timeVariable = game.settings.gameTimer;
-
-        //this.clock = this.time.delayedCall(this.timeVariable, () => {
-            //this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            //this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
-            //this.gameOver = true; 
-        //}, null, this);
-
-        this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
-        this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
-
-        //setting up time text
-        let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#30D5C8', color: '#000000', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 150}
-        this.timeLeft = this.add.text(borderUISize + borderPadding + 410, borderUISize + borderPadding*2, 'Time: ', timeConfig);
-        this.timeVar = 0;
-        this.timePassed = 0;
     }
 
 
     update(time,delta){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
+
+        this.background.tilePositionX += 0.8;
+
         // Adrian: Collision detection between shark and fish calls onSharkCollision
         // log(4,23,21)
-        if(!this.fishDead)
-            this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
-
-        if(
-            this.input.activePointer.x >= 0 + this.jellyFishCont.body.width &&
-            this.input.activePointer.x <= game.config.width - this.jellyFishCont.body.width&&
-            !this.fishDead){
-            this.jellyFishCont.x = this.input.activePointer.x;
-        }
-        if(
-            this.input.activePointer.y >= 0 + this.jellyFishCont.body.height && 
-            this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height && 
-            !this.fishDead){
-            this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
-        }
-
+        this.collisions();
+        this.jellyMovement();
         
 
         //for the gameover text, if we want the top to not have as large as box we may need to change the fixedwidth in between the two texts
@@ -198,7 +179,6 @@ class Play extends Phaser.Scene{
         if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
             this.shark.speed += 1;
             this.timePassed+=10;
-            console.log(this.shark.speed);
         }
         if(!this.gameOver){
             this.shark.update();
@@ -239,6 +219,24 @@ class Play extends Phaser.Scene{
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
+        }
+    }
+    collisions(){
+        if(!this.fishDead)
+            this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
+    }
+    jellyMovement(){
+        if(
+            this.input.activePointer.x >= 0 + this.jellyFishCont.body.width &&
+            this.input.activePointer.x <= game.config.width - this.jellyFishCont.body.width&&
+            !this.fishDead){
+            this.jellyFishCont.x = this.input.activePointer.x;
+        }
+        if(
+            this.input.activePointer.y >= 0 + this.jellyFishCont.body.height && 
+            this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height && 
+            !this.fishDead){
+            this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
         }
     }
 
