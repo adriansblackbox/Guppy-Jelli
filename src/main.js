@@ -2,8 +2,10 @@
 // Bailey: doubling size of the canvas from Rocket Patrol Assignment
 let config = {
     type: Phaser.AUTO,
-    width: 1280,
-    height: 960,
+    //width: 1280,
+    //height: 960,
+    width: 960,
+    height: 720,
     pixelArt: true,
     scene: [Menu, Play], // Bailey: reusing the work from Rocket Patrol menu to start the game
 
