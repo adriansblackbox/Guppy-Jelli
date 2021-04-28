@@ -53,8 +53,8 @@ class Play extends Phaser.Scene{
         //const cX = game.config.width-370;
         //const cY = borderUISize+350;
 
-        const cX = game.config.width-570;;
-        const cY = borderUISize+350;
+        const cX = game.config.width/2;
+        const cY = game.config.height/2;
 
         this.background = this.add.image(cX, cY, 'BG');
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 280, 45, 15, 35).setOrigin(0,0);
