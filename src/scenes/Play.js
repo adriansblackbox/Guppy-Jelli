@@ -15,6 +15,10 @@ class Play extends Phaser.Scene{
 
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('BG', './assets/first_background.png');
+        this.load.image('base0', './assets/base_0.png');
+        this.load.image('base1', './assets/base_1.png');
+        this.load.image('base2', './assets/base_2.png');
+        this.load.image('base3', './assets/base_3.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
@@ -35,6 +39,14 @@ class Play extends Phaser.Scene{
         const cY = game.config.height/2;
 
         this.background = this.add.tileSprite(cX, cY, 1920, 720, 'BG');
+
+        this.base0 = this.add.tileSprite(cX, cY, 1920, 720, 'base0');
+        //platformhere
+        this.base1 = this.add.tileSprite(cX, cY, 1920, 720, 'base1');
+        //platformhere
+        this.base2 = this.add.tileSprite(cX, cY, 1920, 720, 'base2');
+        this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
+
         this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 400, 70, 15, 50).setOrigin(0,0);
 
         //====================== Place hidden things ^ =============================
@@ -152,7 +164,11 @@ class Play extends Phaser.Scene{
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
 
-        this.background.tilePositionX += 0.8;
+        this.background.tilePositionX += 0.7;
+        this.base0.tilePositionX += 0.8;
+        this.base1.tilePositionX += 0.9;
+        this.base2.tilePositionX += 1;
+        this.base3.tilePositionX += 1.1;
 
         // Adrian: Collision detection between shark and fish calls onSharkCollision
         // log(4,23,21)
