@@ -10,8 +10,6 @@ class Play extends Phaser.Scene{
     preload(){
         this.load.image('platform','./assets/Ground.png');
         this.load.image('player','./assets/Player.png');
-        this.load.image('fish','./assets/fish.png');
-        this.load.image('shark', './assets/temp-shark.png'); // Bailey: temp asset for the shark
 
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('BG', './assets/first_background.png');
@@ -19,6 +17,8 @@ class Play extends Phaser.Scene{
         this.load.image('base1', './assets/base_1.png');
         this.load.image('base2', './assets/base_2.png');
         this.load.image('base3', './assets/base_3.png');
+
+        this.load.image('wall1', './assets/wall1.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
@@ -31,6 +31,8 @@ class Play extends Phaser.Scene{
         //Adrian: Boolean var for checking if the player has died
         this.fishDead = false;
         this.gameOver = false;
+        this.jellyDown = false;
+        this.wall2Delayed = false;
 
         this.initializeKeys();
         this.creatAnims();
@@ -39,15 +41,20 @@ class Play extends Phaser.Scene{
         const cY = game.config.height/2;
 
         this.background = this.add.tileSprite(cX, cY, 1920, 720, 'BG');
-
         this.base0 = this.add.tileSprite(cX, cY, 1920, 720, 'base0');
-        //platformhere
         this.base1 = this.add.tileSprite(cX, cY, 1920, 720, 'base1');
-        //platformhere
         this.base2 = this.add.tileSprite(cX, cY, 1920, 720, 'base2');
         this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
 
-        this.shark = new Obstacle(this, game.config.width, borderUISize*6 + borderPadding*4,null, 0, 400, 70, 15, 50).setOrigin(0,0);
+        this.wall1 = new tenticle(
+            this, game.config.width, game.config.height - 300, 
+            'wall1', 'wall1', 50, 300, 0, 0, true).setOrigin(0,0);
+        this.wall2 = new tenticle(
+            this, game.config.width, 0, 
+            'wall1', 'wall1', 50, 300, 0, 0, false).setOrigin(0,0);
+    
+        this.shark = new shark(this, game.config.width/2,game.config.height, null, 0, 400, 70, 15, 50).setOrigin(0,0);
+        
 
         //====================== Place hidden things ^ =============================
         //==========================================================================
@@ -192,11 +199,12 @@ class Play extends Phaser.Scene{
         }
         this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
         //this.shark.speed += (this.timeVar*.000001);   //one way of speeding up sharks
-        if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
-            this.shark.speed += 1;
-            this.timePassed+=10;
-        }
+        //if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
+            //this.shark.speed += 1;
+            //this.timePassed+=10;
+        //}
         if(!this.gameOver){
+            this.updateTenticles();
             this.shark.update();
             this.player.update();
             this.player.anims.play('swim', true);
@@ -211,9 +219,9 @@ class Play extends Phaser.Scene{
 
             // light x/y values handled here
             this.renderTexture.clear();
-            this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
-            this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
-            this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
+            if(!this.jellyDown)
+                this.drawJellyLight();
+            
 
             this.renderTexture.draw(this.fishlight, this.player.x, this.player.y);
             this.renderTexture.draw(this.fishlightMid, this.player.x, this.player.y);
@@ -227,19 +235,30 @@ class Play extends Phaser.Scene{
             this.player.alpha = 0;
             this.shark.anims.play('shark', false);
             this.jellyFishCont.play('jelly', false);
+            this.jellyFishCont.alpha = 0;
 
             this.renderTexture.clear();
-            this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
-            this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
-            this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
         }
     }
+    updateTenticles(){
+        this.wall1.update();
+        if(this.wall2Delayed)
+            this.wall2.update();
+        else if(this.wall1.x <= game.config.width/2){
+            this.wall2Delayed = true;
+        }
+    }
+
     collisions(){
-        if(!this.fishDead)
+        if(!this.fishDead){
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
+            this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
+            this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
+            this.physics.world.collide(this.jellyFishCont, this.shark, this.onJellyWallCollision, null, this);
+        }
     }
     jellyMovement(){
         if(
@@ -252,8 +271,13 @@ class Play extends Phaser.Scene{
             this.input.activePointer.y >= 0 + this.jellyFishCont.body.height && 
             this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height && 
             !this.fishDead){
-            this.jellyFishCont.y = this.input.activePointer.y; // Baiely: temporarily commenting this out to see if shark movement across the basic screen works
+            this.jellyFishCont.y = this.input.activePointer.y;
         }
+    }
+    drawJellyLight(){
+        this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
+        this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
+        this.renderTexture.draw(this.lightFar, this.jellyFishCont.x, this.jellyFishCont.y);
     }
 
     
@@ -261,5 +285,18 @@ class Play extends Phaser.Scene{
     onSharkCollision(){
         this.gameOver = true;
         this.fishDead = true;
+    }
+    onJellyWallCollision(){
+        this.jellyDown = true;
+        var timer = this.time.addEvent({
+            delay: 5000,                // ms
+            callback: this.resetJelly,
+            
+            callbackScope: this,
+            loop: false
+        });
+    }
+    resetJelly(){
+        this.jellyDown = false;
     }
 }
