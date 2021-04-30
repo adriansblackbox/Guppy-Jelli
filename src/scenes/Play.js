@@ -46,11 +46,11 @@ class Play extends Phaser.Scene{
         this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
 
         this.wall1 = new tentacle(
-            this, game.config.width, game.config.height - 450, 
-            null, null, 50, 300, 0, 0, true).setOrigin(0,0);
+            this, game.config.width, game.config.height - 450,  //gorund
+            null, null, 50, 400, 27.5, 0, true).setOrigin(0,0);
         this.wall2 = new tentacle(
             this, game.config.width, 0, 
-            null, null, 50, 300, 0, 0, false).setOrigin(0,0);
+            null, null, 50, 400, 27.5, 0, false).setOrigin(0,0);  // cieling
 
         this.wall1.anims.play('tentacle', true);
         this.wall2.anims.play('tentacle', true);
