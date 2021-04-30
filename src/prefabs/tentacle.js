@@ -1,4 +1,4 @@
-class tenticle extends Phaser.Physics.Arcade.Sprite {
+class tentacle extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, ground, cieling, bodyW, bodyH, offX, offY, description) {
         if(description == true)
             super(scene, x, y, ground, 0, bodyW, bodyH);
@@ -8,7 +8,7 @@ class tenticle extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this)
         this.body.setImmovable()
-        this.speed = 3;
+        this.speed = 2;
         //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
@@ -24,10 +24,14 @@ class tenticle extends Phaser.Physics.Arcade.Sprite {
 
     update() {
         this.x -= this.speed;
+        if(this.preference){
+            this.upanddown();
+        }else{
+            this.downandup();
+        }
 
         if(this.x <= -280){
             this.x = game.config.width;
-            this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
             this.alpha = 0;
             this.reset();
         }
@@ -35,21 +39,25 @@ class tenticle extends Phaser.Physics.Arcade.Sprite {
 
     reset() {
 
-        this.isFloor = Math.floor(Math.random() * 10); 
 
-        if (this.preference)
-            this.randomSelect = 2;
-        else
-        this.randomSelect = 8;
-
-        if( this.isFloor > this.randomSelect){
-            this.setTexture(this.ground);
-            this.y = game.config.height - 300;
+        if(this.preference){
+            //this.setTexture(this.ground);
+            this.y = game.config.height - 450;
         }else{
-            this.setTexture(this.cieling);
+            //this.setTexture(this.cieling);
             this.y = 0;
         }
         this.x = game.config.width;
         this.alpha = 1;
+    }
+    upanddown(){
+        if(this.y > game.config.height - 300){
+            this.y -= 2
+        }else if(this.y < game.config.height - 100){
+            this.y += 2
+        }
+    }
+    downandup(){
+
     }
 }

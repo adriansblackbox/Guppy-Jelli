@@ -8,10 +8,8 @@ class Play extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('platform','./assets/Ground.png');
-        this.load.image('player','./assets/Player.png');
-
         this.load.image('cover', './assets/BlackCover.png');
+        this.load.image('covercover', './assets/cover_cover.png');
         this.load.image('BG', './assets/first_background.png');
         this.load.image('base0', './assets/base_0.png');
         this.load.image('base1', './assets/base_1.png');
@@ -23,6 +21,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
         this.load.spritesheet('jelly', 'assets/jelly.png', {frameWidth: 32, frameHeight: 40, startFrame: 0, endFrame: 21});
+        this.load.spritesheet('tentacle', 'assets/tentacle_bigger.png', {frameWidth: 120, frameHeight: 450, startFrame: 0, endFrame: 31});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
@@ -46,12 +45,16 @@ class Play extends Phaser.Scene{
         this.base2 = this.add.tileSprite(cX, cY, 1920, 720, 'base2');
         this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
 
-        this.wall1 = new tenticle(
-            this, game.config.width, game.config.height - 300, 
-            'wall1', 'wall1', 50, 300, 0, 0, true).setOrigin(0,0);
-        this.wall2 = new tenticle(
+        this.wall1 = new tentacle(
+            this, game.config.width, game.config.height - 450, 
+            null, null, 50, 300, 0, 0, true).setOrigin(0,0);
+        this.wall2 = new tentacle(
             this, game.config.width, 0, 
-            'wall1', 'wall1', 50, 300, 0, 0, false).setOrigin(0,0);
+            null, null, 50, 300, 0, 0, false).setOrigin(0,0);
+
+        this.wall1.anims.play('tentacle', true);
+        this.wall2.anims.play('tentacle', true);
+        this.wall1.flipY = true;
     
         this.shark = new shark(this, game.config.width/2,game.config.height, null, 0, 400, 70, 15, 50).setOrigin(0,0);
         
@@ -60,9 +63,12 @@ class Play extends Phaser.Scene{
         //==========================================================================
 
         this.lightEffect(cX, cY);
+        this.particles = this.add.tileSprite(cX, cY, 960, 720, 'covercover');
         
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
+
+        this.jellyFishCont.alpha = 0.75; 
 
         let scoreConfig = {
             fontFamily: 'Courier',
@@ -109,6 +115,12 @@ class Play extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('jelly', { start: 0, end: 21, first: 0}),
             frameRate: 13
         });
+        this.anims.create({
+            key: 'tentacle',
+            frames: this.anims.generateFrameNumbers('tentacle', { start: 0, end: 31, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
         
     }
     lightEffect(cX, cY){
@@ -137,19 +149,12 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,155,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,185,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,165,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid = this.add.circle(0,0,195,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.lightMid.visible = false;
-        this.lightFar = this.add.circle(0,0,170,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.lightFar = this.add.circle(0,0,200,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
-
-        this.fishlight = this.add.circle(0,0,45,0x000000,1);    //circle with radius of 30 and alpha of 1
-        this.fishlight.visible = false;
-        this.fishlightMid = this.add.circle(0,0,50,0x000000,0.5);    //circle with radius of 30 and alpha of 1
-        this.fishlightMid.visible = false;
-        this.fishlightFar = this.add.circle(0,0,55,0x000000,0.25);    //circle with radius of 30 and alpha of 1
-        this.fishlightFar.visible = false;
 
         this.renderTexture = rt;
 
@@ -176,6 +181,7 @@ class Play extends Phaser.Scene{
         this.base1.tilePositionX += 0.9;
         this.base2.tilePositionX += 1;
         this.base3.tilePositionX += 1.1;
+        this.particles.tilePositionX += 0.7;
 
         // Adrian: Collision detection between shark and fish calls onSharkCollision
         // log(4,23,21)
@@ -221,11 +227,6 @@ class Play extends Phaser.Scene{
             this.renderTexture.clear();
             if(!this.jellyDown)
                 this.drawJellyLight();
-            
-
-            this.renderTexture.draw(this.fishlight, this.player.x, this.player.y);
-            this.renderTexture.draw(this.fishlightMid, this.player.x, this.player.y);
-            this.renderTexture.draw(this.fishlightFar, this.player.x, this.player.y);
 
         }else{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', gameOverConfig).setOrigin(0.5);
