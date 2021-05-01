@@ -15,6 +15,7 @@ class Play extends Phaser.Scene{
         this.load.image('base1', './assets/base_1.png');
         this.load.image('base2', './assets/base_2.png');
         this.load.image('base3', './assets/base_3.png');
+        this.load.image('monster', './assets/monster.png');
 
         this.load.image('wall1', './assets/wall1.png');
 
@@ -32,6 +33,8 @@ class Play extends Phaser.Scene{
         this.gameOver = false;
         this.jellyDown = false;
         this.wall2Delayed = false;
+        this.wall3Delayed = false;
+        this.wall4Delayed = false;
 
         this.initializeKeys();
         this.creatAnims();
@@ -48,15 +51,28 @@ class Play extends Phaser.Scene{
         this.wall1 = new tentacle(
             this, game.config.width, game.config.height - 450,  //gorund
             null, null, 50, 400, 27.5, 0, true).setOrigin(0,0);
+
+        this.wall3 = new tentacle(
+            this, game.config.width, game.config.height - 450,  //gorund
+            null, null, 50, 400, 27.5, 0, true).setOrigin(0,0);
+
         this.wall2 = new tentacle(
+            this, game.config.width, 0, 
+            null, null, 50, 400, 27.5, 0, false).setOrigin(0,0);  // cieling
+
+        this.wall4 = new tentacle(
             this, game.config.width, 0, 
             null, null, 50, 400, 27.5, 0, false).setOrigin(0,0);  // cieling
 
         this.wall1.anims.play('tentacle', true);
         this.wall2.anims.play('tentacle', true);
         this.wall1.flipY = true;
+        this.wall3.anims.play('tentacle', true);
+        this.wall4.anims.play('tentacle', true);
+        this.wall3.flipY = true;
     
         this.shark = new shark(this, game.config.width/2,game.config.height, null, 0, 400, 70, 15, 50).setOrigin(0,0);
+        this.monster = new monster(this, 0, game.config.height/2, 'monster',0)
         
 
         //====================== Place hidden things ^ =============================
@@ -213,6 +229,7 @@ class Play extends Phaser.Scene{
             this.updateTenticles();
             this.shark.update();
             this.player.update();
+            this.monster.update(this.player.y);
             this.player.anims.play('swim', true);
             this.shark.anims.play('shark', true);
             this.jellyFishCont.play('jelly', true);
@@ -246,10 +263,20 @@ class Play extends Phaser.Scene{
     }
     updateTenticles(){
         this.wall1.update();
-        if(this.wall2Delayed)
+        if(this.wall2Delayed){
             this.wall2.update();
-        else if(this.wall1.x <= game.config.width/2){
+        }else if(this.wall1.x <= game.config.width - 252){
             this.wall2Delayed = true;
+        }
+        if(this.wall3Delayed){
+            this.wall3.update();
+        }else if(this.wall2.x <= game.config.width - 252){
+            this.wall3Delayed = true;
+        }
+        if(this.wall4Delayed){
+            this.wall4.update();
+        }else if(this.wall3.x <= game.config.width - 252){
+            this.wall4Delayed = true;
         }
     }
 

@@ -6,13 +6,13 @@ let config = {
     //height: 960,
     width: 960,
     height: 720,
-    pixelArt: false,
+    pixelArt: true,
     scene: [Menu, Play], // Bailey: reusing the work from Rocket Patrol menu to start the game
 
     physics: {               // Adrian: set built in physics to arcade physics. gravity is 0 currently
         default: 'arcade',   // log: (4/23/21)
         arcade: {
-            debug: true,    // Set to true for testing purposes only
+            debug: false,    // Set to true for testing purposes only
             gravity: {
                 x: 0,
                 y: 0

@@ -8,7 +8,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this)
         this.body.setImmovable()
-        this.speed = 2;
+        this.speed = 1;
         //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
@@ -23,6 +23,8 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
         this.goingDown = true;
         this.goingUp = true;
+
+        this.yorigin = y;
 
 
     }
@@ -41,8 +43,8 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
                 this.downC(this.cieling);
         }
 
-        if(this.x <= -280){
-            this.x = game.config.width;
+        if(this.x <= 0){
+            this.x = game.config.width + 50;
             this.alpha = 0;
             this.reset();
         }
@@ -52,7 +54,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
 
         if(this.preference){
-            this.y = game.config.height - 450;
+            this.y = this.yorigin;
         }else{
             //this.setTexture(this.cieling);
             this.y = 0;
@@ -64,7 +66,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
     upG(anchor){
         
-        if(this.y > anchor - 400){  // Going up
+        if(this.y > this.yorigin){  // Going up
             this.y -= 2;
         }else{
             this.goingDown = true;
@@ -90,7 +92,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
     }
     downC(anchor){
-        if(this.y < anchor){  // Going down
+        if(this.y < this.yorigin){  // Going down
             this.y += 2;
         }else{
             this.goingUp = true;
