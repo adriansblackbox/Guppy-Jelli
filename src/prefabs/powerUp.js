@@ -11,14 +11,15 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         this.body.offset.x = offX;
         this.body.offset.y = offY;     // WARNING: Keep the offsets even if they're 0.
                                      // Just the way phaser works I guess
-        this.currX = .5;
+        this.currX = 0;
+        this.upOrDown = true;
     }
 
     update() {
-        this.x -= .5;
-        this.y -= 10*this.currX;
+        this.x -= 1;
         this.currX = this.calculateSine(this.currX);
-        console.log(10*this.currX);
+        this.y -= 10*this.currX;
+
         if(this.x <= -420){
             //this.x = game.config.width;
             //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
@@ -26,19 +27,22 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
             this.reset();
         }
     }
+
+    //definitly not the cleaniest, but it works (maybe something with tweening will be better)
     calculateSine(currX){
-        if (currX === 0)
-        {
-            return .9;
+        if(currX >= .3){
+            this.upOrDown = false;
         }
-        else if (currX === 1)
-        {
-            return 0.1;
+        if(currX <= -.3){
+            this.upOrDown = true;
         }
-        else
-        {
-            return Math.sin(currX * Math.PI / 2);
+        if(currX <= .3 && this.upOrDown==true){
+            return (currX+.01);
         }
+        if (currX >= -.3 && this.upOrDown == false){
+            return(currX-.01);
+        }
+        
     }
     reset() {
         this.x = game.config.width + 420;
