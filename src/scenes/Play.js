@@ -105,7 +105,7 @@ class Play extends Phaser.Scene{
 
 
         scoreConfig.fixedWidth = 0;
-        this.timeVariable = game.settings.gameTimer;
+        //dawdddwathis.timeVariable = game.settings.gameTimer;
 
         //this.clock = this.time.delayedCall(this.timeVariable, () => {
             //this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
