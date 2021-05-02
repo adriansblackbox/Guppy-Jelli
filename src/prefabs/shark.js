@@ -7,7 +7,7 @@ class shark extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame, bodyW, bodyH);
         scene.add.existing(this);
         scene.physics.add.existing(this)
-        this.body.setImmovable()
+        this.body.setImmovable();
         this.speed = 2;
         //this.body.collideWorldBounds = true;
 

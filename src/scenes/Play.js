@@ -36,6 +36,8 @@ class Play extends Phaser.Scene{
         this.wall3Delayed = false;
         this.wall4Delayed = false;
 
+        this.advanceMonster = false;
+
         this.initializeKeys();
         this.creatAnims();
 
@@ -72,7 +74,7 @@ class Play extends Phaser.Scene{
         this.wall3.flipY = true;
     
         this.shark = new shark(this, game.config.width/2,game.config.height, null, 0, 400, 70, 15, 50).setOrigin(0,0);
-        this.monster = new monster(this, 0, game.config.height/2, 'monster',0)
+        this.monster = new monster(this, -960, 60, 'monster',0);
         
 
         //====================== Place hidden things ^ =============================
@@ -229,7 +231,7 @@ class Play extends Phaser.Scene{
             this.updateTenticles();
             this.shark.update();
             this.player.update();
-            this.monster.update(this.player.y);
+            this.monster.update();
             this.player.anims.play('swim', true);
             this.shark.anims.play('shark', true);
             this.jellyFishCont.play('jelly', true);
@@ -244,6 +246,12 @@ class Play extends Phaser.Scene{
             this.renderTexture.clear();
             if(!this.jellyDown)
                 this.drawJellyLight();
+
+            if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200){
+                this.monster.advance();
+            }else if(this.monster.x >= this.monster.currentX + 200){
+                this.advanceMonster = false;
+            }
 
         }else{
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', gameOverConfig).setOrigin(0.5);
@@ -285,7 +293,18 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
+            this.physics.world.collide(this.jellyFishCont, this.wall3, this.onJellyWallCollision, null, this);
+            this.physics.world.collide(this.jellyFishCont, this.wall4, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.shark, this.onJellyWallCollision, null, this);
+
+            if(!this.advanceMonster){
+                this.physics.world.collide(this.player, this.wall1, this.advance, null, this);
+                this.physics.world.collide(this.player, this.wall2, this.advance, null, this);
+                this.physics.world.collide(this.player, this.wall3, this.advance, null, this);
+                this.physics.world.collide(this.player, this.wall4, this.advance, null, this);
+            }
+
+            this.physics.world.collide(this.player, this.monster, this.monsterChomp, null, this);
         }
     }
     jellyMovement(){
@@ -326,5 +345,14 @@ class Play extends Phaser.Scene{
     }
     resetJelly(){
         this.jellyDown = false;
+    }
+
+    advance(){
+        this.advanceMonster = true;
+        this.monster.currentX = this.monster.x;
+        this.player.isHurt = true;
+    }
+    monsterChomp(){
+        this.gameOver = true;
     }
 }

@@ -43,11 +43,12 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
                 this.downC(this.cieling);
         }
 
-        if(this.x <= 0){
+        if(this.x <= -100){
             this.x = game.config.width + 50;
             this.alpha = 0;
             this.reset();
         }
+
     }
 
     reset() {

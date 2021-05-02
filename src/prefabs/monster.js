@@ -4,17 +4,22 @@ class monster extends Phaser.Physics.Arcade.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this)
 
-
-        this.body.setSize(100, 120, true);  //Adrian: collision box adjustments for fish
+        this.body.setImmovable();
+        this.body.setSize(960, 720, true);  //Adrian: collision box adjustments for fish
         this.body.offset.x = 0;
         this.body.offset.y = 0;     // WARNING: Keep the offsets even if they're 0.
                                     // Just the way phaser works I guess
+
+        this.currentX = 0   // Used in play
+        this.cooldown = 1
+
+        this.advanceSpeed = 1;
+
     }
     create(){
     }
-    update(playerY){
+    update(){
         
-        this.movement(playerY);
     }
 
     /* Adrian:
@@ -28,8 +33,11 @@ class monster extends Phaser.Physics.Arcade.Sprite{
        //                           83                                              880
         //&& this.y >= borderUISize + borderPadding && this.y <= game.config.height - borderUISize - this.height
         // Horizontal/Vertical movement
-    movement(playerY){
-       this.y = playerY;
+    advance(){
+
+        this.x +=this.advanceSpeed;
+    }
+    smoothadvance(){
     }
 
     /* Adrian:
