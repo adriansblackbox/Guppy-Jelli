@@ -39,12 +39,4 @@ class monster extends Phaser.Physics.Arcade.Sprite{
     }
     smoothadvance(){
     }
-
-    /* Adrian:
-    *   Important note HERE:
-    *   I purposly implemented this function incase we want to halt the player manually.
-    *   
-    *   log:(4/23/2021)
-    */
-
 }

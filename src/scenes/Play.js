@@ -86,6 +86,8 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
+        this.powerUp = new powerUp(this, game.config.width/2,game.config.height, 'monster', 0, -200, 70, 15, 50)
+
         this.jellyFishCont.alpha = 0.75; 
 
         let scoreConfig = {
@@ -235,6 +237,7 @@ class Play extends Phaser.Scene{
             this.player.anims.play('swim', true);
             this.shark.anims.play('shark', true);
             this.jellyFishCont.play('jelly', true);
+            this.powerUp.update();
             this.timeVar = this.timeVar + delta;
             if(this.player.isMoving){
                 this.player.anims.msPerFrame = 35;
