@@ -11,6 +11,7 @@ class Menu extends Phaser.Scene {
     preload(){
         this.load.spritesheet('MainMenu', 'assets/title.png', {frameWidth: 960, frameHeight: 720, startFrame: 0, endFrame: 19});
         this.load.image('button', './assets/dreamButton.png');
+        this.load.image('buttonover', './assets/dreamButton_selected.png');
     }
     
     create() {
@@ -51,10 +52,10 @@ class Menu extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
-        this.startBtn = this.add.sprite(100, 100, 'button').setInteractive();
+        this.startBtn = this.add.sprite(150, 250, 'button').setInteractive();
 
-        this.startBtn.on('pointerover', function (event) { /* Do something when the mouse enters */ });
-        this.startBtn.on('pointerout', function (event) { /* Do something when the mouse exits. */ });
+        this.startBtn.on('pointerover', function (event) { this.startBtn.setTexture('buttonover', 0) }, this);
+        this.startBtn.on('pointerout', function (event) { this.startBtn.setTexture('button', 0) }, this);
         this.startBtn.on('pointerdown', function (event) {this.scene.start('playScene'); },this); // Start game on click.
     }
 
