@@ -144,6 +144,7 @@ class Play extends Phaser.Scene{
         
     }
     lightEffect(cX, cY){
+        this.lightRad = 200
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0
 
@@ -169,11 +170,11 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,185,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,this.lightRad - 15,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,195,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid = this.add.circle(0,0,this.lightRad - 5,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.lightMid.visible = false;
-        this.lightFar = this.add.circle(0,0,200,0x000000,0.25);    //circle with radius of 30 and alpha of 1
+        this.lightFar = this.add.circle(0,0,this.lightRad,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
         this.renderTexture = rt;
@@ -249,8 +250,24 @@ class Play extends Phaser.Scene{
 
             // light x/y values handled here
             this.renderTexture.clear();
-            if(!this.jellyDown)
-                this.drawJellyLight();
+
+            if(this.jellyDown){
+                if(this.lightRad > 100){
+                    this.lightRad -= 2;
+                }
+                this.light.radius = this.lightRad - 15;
+                this.lightMid.radius = this.lightRad - 5;
+                this.lightFar.radius = this.lightRad;
+            }else{
+                if(this.lightRad < 200){
+                    this.lightRad += 2;
+                }
+                this.light.radius = this.lightRad - 15;
+                this.lightMid.radius = this.lightRad - 5;
+                this.lightFar.radius = this.lightRad;
+            }
+                
+            this.drawJellyLight();
 
             if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200){
                 this.monster.advance();
@@ -351,7 +368,7 @@ class Play extends Phaser.Scene{
     onJellyWallCollision(){
         this.jellyDown = true;
         var timer = this.time.addEvent({
-            delay: 5000,                // ms
+            delay: 6000,                // ms
             callback: this.resetJelly,
             
             callbackScope: this,
