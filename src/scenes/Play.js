@@ -195,13 +195,15 @@ class Play extends Phaser.Scene{
     update(time,delta){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
+        if(!this.advanceMonster){
+            this.background.tilePositionX += 0.7;
+            this.base0.tilePositionX += 0.8;
+            this.base1.tilePositionX += 0.9;
+            this.base2.tilePositionX += 1;
+            this.base3.tilePositionX += 1.1;
+            this.particles.tilePositionX += 0.7;
+        }
 
-        this.background.tilePositionX += 0.7;
-        this.base0.tilePositionX += 0.8;
-        this.base1.tilePositionX += 0.9;
-        this.base2.tilePositionX += 1;
-        this.base3.tilePositionX += 1.1;
-        this.particles.tilePositionX += 0.7;
 
         // Adrian: Collision detection between shark and fish calls onSharkCollision
         // log(4,23,21)
@@ -252,6 +254,12 @@ class Play extends Phaser.Scene{
 
             if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200){
                 this.monster.advance();
+                this.background.tilePositionX -= 0.7;
+                this.base0.tilePositionX -= 0.8;
+                this.base1.tilePositionX -= 0.9;
+                this.base2.tilePositionX -= 1;
+                this.base3.tilePositionX -= 1.1;
+                this.particles.tilePositionX -= 0.7;
             }else if(this.monster.x >= this.monster.currentX + 200){
                 this.advanceMonster = false;
             }

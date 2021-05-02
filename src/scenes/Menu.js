@@ -49,8 +49,6 @@ class Menu extends Phaser.Scene {
         this.menuScreen.anims.play('Title', true);
 
        
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         this.startBtn = this.add.sprite(150, 250, 'button').setInteractive();
 
