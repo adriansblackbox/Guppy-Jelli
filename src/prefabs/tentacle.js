@@ -26,6 +26,8 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
         this.yorigin = y;
 
+        this.ySpeed = Phaser.Math.Between(1.5, 3);
+
 
     }
 
@@ -62,13 +64,15 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         }
         this.x = game.config.width;
         this.alpha = 1;
+
+        this.ySpeed = Phaser.Math.Between(1.5, 3);
     }
 
 
     upG(anchor){
         
         if(this.y > this.yorigin){  // Going up
-            this.y -= 2;
+            this.y -= this.ySpeed;
         }else{
             this.goingDown = true;
         }
@@ -76,7 +80,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
     }
     downG(anchor){
         if(this.y < anchor - 100){  // Going down
-            this.y += 2;
+            this.y += this.ySpeed;
         }else{
             this.goingDown = false;
         }
@@ -86,7 +90,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
     upC(anchor){
         
         if(this.y > anchor -300){  // Going up
-            this.y -= 2;
+            this.y -= this.ySpeed;
         }else{
             this.goingUp = false;
         }
@@ -94,7 +98,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
     }
     downC(anchor){
         if(this.y < this.yorigin){  // Going down
-            this.y += 2;
+            this.y += this.ySpeed;
         }else{
             this.goingUp = true;
         }
