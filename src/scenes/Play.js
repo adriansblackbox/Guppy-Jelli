@@ -86,7 +86,7 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
-        this.powerUp = new powerUp(this, game.config.width/2,game.config.height, 'monster', 0, -200, 70, 15, 50)
+        this.powerUp = new powerUp(this, game.config.width,game.config.height/2, 'monster', 0, 400, 70, 15, 50);
 
         this.jellyFishCont.alpha = 0.75; 
 
@@ -294,6 +294,10 @@ class Play extends Phaser.Scene{
     collisions(){
         if(!this.fishDead){
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
+
+            //powerup
+            this.physics.world.collide(this.player, this.powerUp, this.onPowerUpCollision, null, this);
+
             this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.wall3, this.onJellyWallCollision, null, this);
@@ -346,6 +350,12 @@ class Play extends Phaser.Scene{
             loop: false
         });
     }
+    onPowerUpCollision(){
+        console.log("powerUpCollided");
+        this.powerUp.reset();
+        //whatever we want the powerup to do
+    }
+
     resetJelly(){
         this.jellyDown = false;
     }

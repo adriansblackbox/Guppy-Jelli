@@ -16,7 +16,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        this.x -= 1;
+        this.x -= this.speed;
         this.currX = this.calculateSine(this.currX);
         this.y -= 10*this.currX;
 
