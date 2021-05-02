@@ -4,7 +4,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this)
         this.body.setImmovable()
-        this.speed = 2;
+        this.speed = 4;
         //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
@@ -24,7 +24,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
             //this.x = game.config.width;
             //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
             this.alpha = 0;
-            this.reset();
+            this.reset();    
         }
     }
 
