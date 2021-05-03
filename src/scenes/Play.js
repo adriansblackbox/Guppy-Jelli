@@ -27,6 +27,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('monster', 'assets/deathWall.png', {frameWidth: 1200, frameHeight: 820, startFrame: 0, endFrame: 24});
         this.load.spritesheet('fishHurt', 'assets/guppyOuch.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 1});
         this.load.spritesheet('collectable', 'assets/jellyBubble.png', {frameWidth: 21, frameHeight: 20, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('mamajelly', 'assets/mamaJelly.png', {frameWidth: 960, frameHeight: 720, startFrame: 0, endFrame: 22});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
@@ -82,7 +83,7 @@ class Play extends Phaser.Scene{
         this.wall4.anims.play('tentacle', true);
         this.wall3.flipY = true;
     
-        this.shark = new shark(this, game.config.width/2,game.config.height, null, 0, 400, 70, 15, 50).setOrigin(0,0);
+        this.shark = new shark(this, game.config.width + 210,game.config.height/2, null, 0, 150, 70, 15, 50).setOrigin(0,0);
         this.monster = new monster(this, -600, game.config.height/2, 'monster',0);
         
 
@@ -171,6 +172,12 @@ class Play extends Phaser.Scene{
         this.anims.create({
             key: 'collectable',
             frames: this.anims.generateFrameNumbers('collectable', { start: 0, end: 9, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'mamajelly',
+            frames: this.anims.generateFrameNumbers('mamajelly', { start: 0, end: 22, first: 0}),
             frameRate: 10,
             repeat: -1
         });
