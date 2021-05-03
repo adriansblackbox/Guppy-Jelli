@@ -283,7 +283,7 @@ class Play extends Phaser.Scene{
                     //this.shark.update(this.timeVar*.001);
 
                 if( Math.round(this.timeVar*.001) > 15)
-                    this.powerUp.update(this.timeVar*.001);
+                    this.powerUp.update(this.timeVar*.001, delta);
             }
             //////////////////////////////////////////////////////////////////////////
             this.player.update();
@@ -457,7 +457,6 @@ class Play extends Phaser.Scene{
         });
     }
     onPowerUpCollision(){
-        console.log("powerUpCollided");
         
         var timer2 = this.time.addEvent({
             delay: 1000,                // ms

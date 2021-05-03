@@ -4,7 +4,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this)
         this.body.setImmovable()
-        this.speed = 4;
+        this.speed = 3;
         //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
@@ -14,6 +14,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         this.currX = 0;
         this.upOrDown = true;
         this.currTime = 0;
+        this.timeVar = 0;
     }
 
     update(time, delta) {
@@ -26,11 +27,12 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
             //this.x = game.config.width;
             //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
             this.alpha = 0;
-            //if(this.timeVar>3){
+            if(this.timeVar > delta + 15000){
                 this.reset();
                 this.timeVar = 0;    
-            //}
+            }
         }
+        console.log(this.timeVar);
     }
 
     //definitly not the cleaniest, but it works (maybe something with tweening will be better)
