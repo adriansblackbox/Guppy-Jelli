@@ -45,6 +45,8 @@ class Play extends Phaser.Scene{
         this.retreatMonster = false;
         this.isChomped = false;
 
+        this.startGame = false;
+
         this.initializeKeys();
         this.creatAnims();
 
@@ -93,7 +95,7 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
-        this.powerUp = new powerUp(this, game.config.width,game.config.height/2, null, 0, 20, 21, 0, 0);
+        this.powerUp = new powerUp(this, game.config.width + 12 ,game.config.height/2, null, 0, 20, 21, 0, 0);
 
         this.jellyFishCont.alpha = 0.75; 
 
@@ -224,10 +226,15 @@ class Play extends Phaser.Scene{
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
 
     update(time,delta){
+
+        if(keySPACE.isDown){
+            this.startGame = true;
+        }
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
         if(!this.advanceMonster || this.mamaLightOn){
@@ -260,15 +267,20 @@ class Play extends Phaser.Scene{
             },
             fixedWidth: 100
         }
-        this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
+        //this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
         //this.shark.speed += (this.timeVar*.000001);   //one way of speeding up sharks
         //if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
             //this.shark.speed += 1;
             //this.timePassed+=10;
         //}
         if(!this.gameOver){
-            this.updateTenticles();
-            this.shark.update();
+            if(this.startGame){
+                this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
+                this.timeVar = this.timeVar + delta;
+                this.updateTenticles();
+                this.shark.update();
+                this.powerUp.update();
+            }
             this.player.update();
             if(!this.advanceMonster)
                 this.playerSwim();
@@ -284,9 +296,7 @@ class Play extends Phaser.Scene{
 
             this.monster.anims.play('monster', true);
             
-            this.powerUp.update();
             this.powerUp.anims.play('collectable', true);
-            this.timeVar = this.timeVar + delta;
 
             // light x/y values handled here
             this.renderTexture.clear();
