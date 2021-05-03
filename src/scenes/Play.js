@@ -458,7 +458,7 @@ class Play extends Phaser.Scene{
             delay: 6000,                // ms
             callback: this.powerUp.reset(),
             
-            callbackScope: this,
+            callbackScope: this.powerUp,
             loop: false
         });
         
