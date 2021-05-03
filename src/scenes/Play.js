@@ -405,7 +405,8 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
             //powerup
-            this.physics.world.collide(this.player, this.powerUp, this.onPowerUpCollision, null, this);
+            if(!this.mamaLightOn)
+                this.physics.world.collide(this.player, this.powerUp, this.onPowerUpCollision, null, this);
 
             this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
@@ -458,13 +459,7 @@ class Play extends Phaser.Scene{
     }
     onPowerUpCollision(){
         
-        var timer2 = this.time.addEvent({
-            delay: 1000,                // ms
-            callback: this.powerUp.reset,
-            
-            callbackScope: this.powerUp,
-            loop: false
-        });
+        this.powerUp.alpha = 0;
         
         this.mamaLightOn = true;
 
