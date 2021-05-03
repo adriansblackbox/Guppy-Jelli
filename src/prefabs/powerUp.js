@@ -4,7 +4,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.add.existing(this)
         this.body.setImmovable()
-        this.speed = 1;
+        this.speed = 2;
         //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
@@ -30,16 +30,16 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
 
     //definitly not the cleaniest, but it works (maybe something with tweening will be better)
     calculateSine(currX){
-        if(currX >= .3){
+        if(currX >= .5){
             this.upOrDown = false;
         }
-        if(currX <= -.3){
+        if(currX <= -.5){
             this.upOrDown = true;
         }
-        if(currX <= .3 && this.upOrDown==true){
+        if(currX <= .5 && this.upOrDown==true){
             return (currX+.01);
         }
-        if (currX >= -.3 && this.upOrDown == false){
+        if (currX >= -.5 && this.upOrDown == false){
             return(currX-.01);
         }
         
