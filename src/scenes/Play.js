@@ -111,11 +111,16 @@ class Play extends Phaser.Scene{
 
         //setting up time text
         let timeConfig = {fontFamily: 'Nanum Pen Script', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
+        let warning = {fontFamily: 'Nanum Pen Script', fontSize: '30px', backgroundColor: null/*'#30D5C8'*/, color: '#000000', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
         this.timeLeft = this.add.text(0, 0, '', timeConfig);
         // Instructions
-        this.fishInstructions = this.add.text(0, 0, '', timeConfig);
-        this.jellyInstructions = this.add.text(0, 0, '', timeConfig);
-        this.startInstruction = this.add.text(game.config.height/2 - 20, game.config.width/2, 'Press SPACE to Sart', timeConfig);
+        
+        this.startInstruction = this.add.text(game.config.height/2 - 20, game.config.width/2, 'Press SPACE to Start', timeConfig);
+        this.startInstruction = this.add.text(game.config.height/2 - 80, game.config.width/2 + 100, 'beware the mosters lurking in the dark', warning);
+        timeConfig.fontSize = '25px';
+        this.fishInstructions = this.add.text(0, 0, 'W-A-S-D to Move the Fish', timeConfig);
+        this.jellyInstructions = this.add.text(game.config.width - 320, 0, 'Move The Mouse to Guide the Light', timeConfig);
+        timeConfig.fontSize = '40px';
 
         this.timeVar = 0;
         this.timePassed = 0;
