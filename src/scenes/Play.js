@@ -110,7 +110,7 @@ class Play extends Phaser.Scene{
         //}, null, this);
 
         //setting up time text
-        let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 500}
+        let timeConfig = {fontFamily: 'Nanum Pen Script', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
         this.timeLeft = this.add.text(0, 0, 'Dream Seconds: 0', timeConfig);
         this.timeVar = 0;
         this.timePassed = 0;
