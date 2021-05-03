@@ -217,15 +217,19 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,this.lightRad - 15,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,this.lightRad - 25,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,this.lightRad - 5,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid = this.add.circle(0,0,this.lightRad - 10,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.lightMid.visible = false;
         this.lightFar = this.add.circle(0,0,this.lightRad,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
-        this.mamalight = this.add.circle(0,0,this.mamaLightRad,0x000000,1); 
+        this.mamalight = this.add.circle(0,0,this.mamaLightRad - 25,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.mamalight.visible = false;
+        this.mamalightMid = this.add.circle(0,0,this.mamaLightRad - 10,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.mamalightMid.visible = false;
+        this.mamalightFar = this.add.circle(0,0,this.mamaLightRad,0x000000,0.25); 
+        this.mamalightFar.visible = false;
 
         this.renderTexture = rt;
 
@@ -331,9 +335,9 @@ class Play extends Phaser.Scene{
             }
                 
             this.drawJellyLight();
-
+            this.drawMamaLight();
             
-            this.renderTexture.draw(this.mamalight, this.Mama.x, this.Mama.y);
+           
             
 
             if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200 && !this.mamaLightOn){
@@ -447,6 +451,11 @@ class Play extends Phaser.Scene{
             this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height){
             this.jellyFishCont.y = this.input.activePointer.y;
         }
+    }
+    drawMamaLight(){
+        this.renderTexture.draw(this.mamalight, this.Mama.x, this.Mama.y);
+        this.renderTexture.draw(this.mamalightMed, this.Mama.x, this.Mama.y);
+        this.renderTexture.draw(this.mamalightFar, this.Mama.x, this.Mama.y);
     }
     drawJellyLight(){
         this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);

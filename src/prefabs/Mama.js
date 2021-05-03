@@ -15,12 +15,12 @@ class Mama extends Phaser.Physics.Arcade.Sprite{
 
     ascend(){
         if(this.y > game.config.height/2){
-            this.y -= 10;
+            this.y -= 8;
         }
     }
     descend(){
         if(this.y < this.hiddenY){
-            this.y += 10
+            this.y += 8;
         }
     }
 }
