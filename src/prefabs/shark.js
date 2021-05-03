@@ -15,16 +15,21 @@ class shark extends Phaser.Physics.Arcade.Sprite {
         this.body.offset.x = offX;
         this.body.offset.y = offY;     // WARNING: Keep the offsets even if they're 0.
                                      // Just the way phaser works I guess
+        this.timeVar = 0;
     }
 
-    update(time) {
+    update(delta) {
         this.x -= this.speed;
+        this.timeVar = this.timeVar + delta;
 
         if(this.x <= -420){
             this.alpha = 0;
-            //if(time%10 == 0)
-                this.reset(time);
+            if(this.timeVar > delta + 20000){
+                this.reset();
+                this.timeVar = 0;    
+            }
         }
+        console.log(this.timeVar);
     }
 
     reset(time) {

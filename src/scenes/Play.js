@@ -280,10 +280,10 @@ class Play extends Phaser.Scene{
                 this.updateTenticles();
 
                 if( Math.round(this.timeVar*.001) > 10)
-                    //this.shark.update(this.timeVar*.001);
+                    this.shark.update(delta);
 
                 if( Math.round(this.timeVar*.001) > 15)
-                    this.powerUp.update(this.timeVar*.001, delta);
+                    this.powerUp.update(delta);
             }
             //////////////////////////////////////////////////////////////////////////
             this.player.update();
