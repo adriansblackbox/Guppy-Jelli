@@ -453,7 +453,15 @@ class Play extends Phaser.Scene{
     }
     onPowerUpCollision(){
         console.log("powerUpCollided");
-        this.powerUp.reset();
+        
+        var timer2 = this.time.addEvent({
+            delay: 6000,                // ms
+            callback: this.powerUp.reset(),
+            
+            callbackScope: this,
+            loop: false
+        });
+        
         this.mamaLightOn = true;
 
         var timer = this.time.addEvent({
