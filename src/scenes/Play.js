@@ -15,7 +15,6 @@ class Play extends Phaser.Scene{
         this.load.image('base1', './assets/base_1.png');
         this.load.image('base2', './assets/base_2.png');
         this.load.image('base3', './assets/base_3.png');
-        this.load.image('monster', './assets/monster.png');
 
         this.load.image('wall1', './assets/wall1.png');
 
@@ -23,6 +22,8 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
         this.load.spritesheet('jelly', 'assets/jelly.png', {frameWidth: 32, frameHeight: 40, startFrame: 0, endFrame: 21});
         this.load.spritesheet('tentacle', 'assets/tentacle_bigger.png', {frameWidth: 120, frameHeight: 450, startFrame: 0, endFrame: 31});
+        this.load.spritesheet('monster', 'assets/deathWall.png', {frameWidth: 1200, frameHeight: 820, startFrame: 0, endFrame: 24});
+        this.load.spritesheet('fishHurt', 'assets/guppyOuch.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 1});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
@@ -52,19 +53,19 @@ class Play extends Phaser.Scene{
 
         this.wall1 = new tentacle(
             this, game.config.width, game.config.height - 450,  //gorund
-            null, null, 50, 400, 27.5, 0, true).setOrigin(0,0);
+            null, null, 40, 450, 30, 0, true).setOrigin(0,0);
 
         this.wall3 = new tentacle(
             this, game.config.width, game.config.height - 450,  //gorund
-            null, null, 50, 400, 27.5, 0, true).setOrigin(0,0);
+            null, null, 40, 450, 30, 0, true).setOrigin(0,0);
 
         this.wall2 = new tentacle(
             this, game.config.width, 0, 
-            null, null, 50, 400, 27.5, 0, false).setOrigin(0,0);  // cieling
+            null, null, 40, 450, 30, 0, false).setOrigin(0,0);  // cieling
 
         this.wall4 = new tentacle(
             this, game.config.width, 0, 
-            null, null, 50, 400, 27.5, 0, false).setOrigin(0,0);  // cieling
+            null, null, 40, 450, 30, 0, false).setOrigin(0,0);  // cieling
 
         this.wall1.anims.play('tentacle', true);
         this.wall2.anims.play('tentacle', true);
@@ -74,7 +75,7 @@ class Play extends Phaser.Scene{
         this.wall3.flipY = true;
     
         this.shark = new shark(this, game.config.width/2,game.config.height, null, 0, 400, 70, 15, 50).setOrigin(0,0);
-        this.monster = new monster(this, -960, 60, 'monster',0);
+        this.monster = new monster(this, -600, game.config.height/2, 'monster',0);
         
 
         //====================== Place hidden things ^ =============================
@@ -86,7 +87,7 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
-        this.powerUp = new powerUp(this, game.config.width,game.config.height/2, 'monster', 0, 400, 70, 15, 50);
+        this.powerUp = new powerUp(this, game.config.width,game.config.height/2, null, 0, 400, 70, 15, 50);
 
         this.jellyFishCont.alpha = 0.75; 
 
@@ -141,10 +142,21 @@ class Play extends Phaser.Scene{
             frameRate: 10,
             repeat: -1
         });
-        
+        this.anims.create({
+            key: 'monster',
+            frames: this.anims.generateFrameNumbers('monster', { start: 0, end: 24, first: 0}),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'fishHurt',
+            frames: this.anims.generateFrameNumbers('fishHurt', { start: 0, end: 1, first: 0}),
+            frameRate: 1,
+            repeat: -1
+        });
     }
     lightEffect(cX, cY){
-        this.lightRad = 200
+        this.lightRad = 250
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0
 
@@ -236,12 +248,18 @@ class Play extends Phaser.Scene{
             this.updateTenticles();
             this.shark.update();
             this.player.update();
-            this.monster.update();
-            this.player.anims.play('swim', true);
+            this.monster.update(this.player);
             this.shark.anims.play('shark', true);
             this.jellyFishCont.play('jelly', true);
+            this.monster.anims.play('monster', true);
+            if(!this.advanceMonster)
+                this.player.anims.play('swim', true);
+            else
+                this.player.anims.play('swim', false);
             this.powerUp.update();
             this.timeVar = this.timeVar + delta;
+
+
             if(this.player.isMoving){
                 this.player.anims.msPerFrame = 35;
             }else{
@@ -253,14 +271,14 @@ class Play extends Phaser.Scene{
 
             if(this.jellyDown){
                 if(this.lightRad > 100){
-                    this.lightRad -= 2;
+                    this.lightRad -= 4;
                 }
                 this.light.radius = this.lightRad - 15;
                 this.lightMid.radius = this.lightRad - 5;
                 this.lightFar.radius = this.lightRad;
             }else{
-                if(this.lightRad < 200){
-                    this.lightRad += 2;
+                if(this.lightRad < 250){
+                    this.lightRad += 4;
                 }
                 this.light.radius = this.lightRad - 15;
                 this.lightMid.radius = this.lightRad - 5;
@@ -270,15 +288,17 @@ class Play extends Phaser.Scene{
             this.drawJellyLight();
 
             if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200){
+                this.player.anims.play('fishHurt', true);
                 this.monster.advance();
-                this.background.tilePositionX -= 0.7;
-                this.base0.tilePositionX -= 0.8;
-                this.base1.tilePositionX -= 0.9;
-                this.base2.tilePositionX -= 1;
-                this.base3.tilePositionX -= 1.1;
-                this.particles.tilePositionX -= 0.7;
+                this.background.tilePositionX -= 0.7/2;
+                this.base0.tilePositionX -= 0.8/2;
+                this.base1.tilePositionX -= 0.9/2;
+                this.base2.tilePositionX -= 1/2;
+                this.base3.tilePositionX -= 1.1/2;
+                this.particles.tilePositionX -= 0.7/2;
             }else if(this.monster.x >= this.monster.currentX + 200){
                 this.advanceMonster = false;
+                this.player.anims.play('fishHurt', false);
             }
 
         }else{

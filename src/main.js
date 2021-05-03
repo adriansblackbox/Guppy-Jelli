@@ -12,7 +12,7 @@ let config = {
     physics: {               // Adrian: set built in physics to arcade physics. gravity is 0 currently
         default: 'arcade',   // log: (4/23/21)
         arcade: {
-            debug: false,    // Set to true for testing purposes only
+            debug: true,    // Set to true for testing purposes only
             gravity: {
                 x: 0,
                 y: 0

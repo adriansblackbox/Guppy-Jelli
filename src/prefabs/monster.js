@@ -5,8 +5,8 @@ class monster extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this)
 
         this.body.setImmovable();
-        this.body.setSize(960, 720, true);  //Adrian: collision box adjustments for fish
-        this.body.offset.x = 0;
+        this.body.setSize(1200, 820, true);  //Adrian: collision box adjustments for fish
+        this.body.offset.x = -50;
         this.body.offset.y = 0;     // WARNING: Keep the offsets even if they're 0.
                                     // Just the way phaser works I guess
 
@@ -18,8 +18,8 @@ class monster extends Phaser.Physics.Arcade.Sprite{
     }
     create(){
     }
-    update(){
-        
+    update(player){
+        this.y = player.y
     }
 
     /* Adrian:
