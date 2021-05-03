@@ -276,9 +276,12 @@ class Play extends Phaser.Scene{
                 this.timeLeft.setText("Dream Seconds: " + Math.round(this.timeVar*.001));
                 this.timeVar = this.timeVar + delta;
                 this.updateTenticles();
-                this.shark.update(this.timeVar*.001);
 
-                this.powerUp.update(this.timeVar*.001);
+                if( Math.round(this.timeVar*.001) > 10)
+                    this.shark.update(this.timeVar*.001);
+
+                if( Math.round(this.timeVar*.001) > 15)
+                    this.powerUp.update(this.timeVar*.001);
             }
             //////////////////////////////////////////////////////////////////////////
             this.player.update();
