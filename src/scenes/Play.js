@@ -15,9 +15,9 @@ class Play extends Phaser.Scene{
         this.load.image('base1', './assets/base_1.png');
         this.load.image('base2', './assets/base_2.png');
         this.load.image('base3', './assets/base_3.png');
-
         this.load.image('wall1', './assets/wall1.png');
         this.load.image('chomp', './assets/deathWallClosed.png');
+        this.load.image('dreamOver', './assets/dreamOver.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
@@ -54,9 +54,9 @@ class Play extends Phaser.Scene{
         const cX = game.config.width/2;
         const cY = game.config.height/2;
 
-        this.background = this.add.tileSprite(cX, cY, 1920, 720, 'BG');
-        this.base0 = this.add.tileSprite(cX, cY, 1920, 720, 'base0');
-        this.base1 = this.add.tileSprite(cX, cY, 1920, 720, 'base1');
+        this.background = this.add.tileSprite(cX, cY , 1920, 720, 'BG');
+        this.base0 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base0');
+        this.base1 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base1');
         this.base2 = this.add.tileSprite(cX, cY, 1920, 720, 'base2');
         this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
 
@@ -97,6 +97,8 @@ class Play extends Phaser.Scene{
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
         this.powerUp = new powerUp(this, game.config.width + 12 ,game.config.height/2, null, 0, 20, 21, 0, 0);
+        this.gameOverTitle = this.add.sprite(game.config.width/2 ,game.config.height/2, 'dreamOver');
+        this.gameOverTitle.alpha = 0;
 
         this.jellyFishCont.alpha = 0.75; 
 
@@ -257,7 +259,7 @@ class Play extends Phaser.Scene{
         
 
         //for the gameover text, if we want the top to not have as large as box we may need to change the fixedwidth in between the two texts
-        let gameOverConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#F3B141', color: '#843605', align: 'center', padding:{top: 5, bottom: 5,}, fixedWidth: 400}
+        
 
         //this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
         //this.shark.speed += (this.timeVar*.000001);   //one way of speeding up sharks
@@ -278,7 +280,7 @@ class Play extends Phaser.Scene{
                 this.updateTenticles();
 
                 if( Math.round(this.timeVar*.001) > 10)
-                    this.shark.update(this.timeVar*.001);
+                    //this.shark.update(this.timeVar*.001);
 
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(this.timeVar*.001);
@@ -345,8 +347,7 @@ class Play extends Phaser.Scene{
             }
 
         }else{
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', gameOverConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', gameOverConfig).setOrigin(0.5);
+
             this.player.stopMoving();
             this.player.anims.play('swim', false );
             this.player.alpha = 0;
@@ -360,6 +361,7 @@ class Play extends Phaser.Scene{
 
             //this.renderTexture.clear();
             this.drawJellyLight();
+            this.gameOverTitle.alpha = 1;
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
