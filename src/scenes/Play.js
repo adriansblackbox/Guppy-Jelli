@@ -25,6 +25,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('tentacle', 'assets/tentacle_bigger.png', {frameWidth: 120, frameHeight: 450, startFrame: 0, endFrame: 31});
         this.load.spritesheet('monster', 'assets/deathWall.png', {frameWidth: 1200, frameHeight: 820, startFrame: 0, endFrame: 24});
         this.load.spritesheet('fishHurt', 'assets/guppyOuch.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('collectable', 'assets/jellyBubble.png', {frameWidth: 21, frameHeight: 20, startFrame: 0, endFrame: 9});
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
@@ -91,7 +92,7 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
-        this.powerUp = new powerUp(this, game.config.width,game.config.height/2, null, 0, 400, 70, 15, 50);
+        this.powerUp = new powerUp(this, game.config.width,game.config.height/2, null, 0, 20, 21, 0, 0);
 
         this.jellyFishCont.alpha = 0.75; 
 
@@ -155,7 +156,13 @@ class Play extends Phaser.Scene{
         this.anims.create({
             key: 'fishHurt',
             frames: this.anims.generateFrameNumbers('fishHurt', { start: 0, end: 1, first: 0}),
-            frameRate: 1,
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'collectable',
+            frames: this.anims.generateFrameNumbers('collectable', { start: 0, end: 9, first: 0}),
+            frameRate: 10,
             repeat: -1
         });
     }
@@ -256,20 +263,19 @@ class Play extends Phaser.Scene{
             this.updateTenticles();
             this.shark.update();
             this.player.update();
+            if(!this.advanceMonster)
+                this.playerSwim();
+            else
+                this.playerHurt();
+            
             this.monster.update(this.player);
             this.shark.anims.play('shark', true);
             this.jellyFishCont.play('jelly', true);
             this.monster.anims.play('monster', true);
-            this.player.anims.play('swim', true);
+            
             this.powerUp.update();
+            this.powerUp.anims.play('collectable', true);
             this.timeVar = this.timeVar + delta;
-
-
-            if(this.player.isMoving){
-                this.player.anims.msPerFrame = 35;
-            }else{
-                this.player.anims.msPerFrame = 75;
-            }
 
             // light x/y values handled here
             this.renderTexture.clear();
@@ -297,7 +303,6 @@ class Play extends Phaser.Scene{
             }
 
             if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200 && !this.mamaLightOn){
-                this.player.anims.play('fishHurt', true);
                 this.monster.advance();
                 this.background.tilePositionX -= 0.7/2;
                 this.base0.tilePositionX -= 0.8/2;
@@ -336,6 +341,20 @@ class Play extends Phaser.Scene{
             this.scene.restart();
         }
     }
+
+    playerSwim(){
+        this.player.anims.play('swim', true);
+        if(this.player.isMoving){
+            this.player.anims.msPerFrame = 35;
+        }else{
+            this.player.anims.msPerFrame = 75;
+        }
+    }
+    playerHurt(){
+        this.player.anims.play('fishHurt', true);
+
+    }
+
     updateTenticles(){
         this.wall1.update();
         if(this.wall2Delayed){
