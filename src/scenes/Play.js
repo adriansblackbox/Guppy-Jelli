@@ -22,6 +22,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
         this.load.spritesheet('jelly', 'assets/jelly.png', {frameWidth: 32, frameHeight: 40, startFrame: 0, endFrame: 21});
+        this.load.spritesheet('jellyHurt', 'assets/jelliOuch.png', {frameWidth: 32, frameHeight: 40, startFrame: 0, endFrame: 1});
         this.load.spritesheet('tentacle', 'assets/tentacle_bigger.png', {frameWidth: 120, frameHeight: 450, startFrame: 0, endFrame: 31});
         this.load.spritesheet('monster', 'assets/deathWall.png', {frameWidth: 1200, frameHeight: 820, startFrame: 0, endFrame: 24});
         this.load.spritesheet('fishHurt', 'assets/guppyOuch.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 1});
@@ -160,6 +161,12 @@ class Play extends Phaser.Scene{
             repeat: -1
         });
         this.anims.create({
+            key: 'jellyHurt',
+            frames: this.anims.generateFrameNumbers('jellyHurt', { start: 0, end: 1, first: 0}),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
             key: 'collectable',
             frames: this.anims.generateFrameNumbers('collectable', { start: 0, end: 9, first: 0}),
             frameRate: 10,
@@ -270,7 +277,11 @@ class Play extends Phaser.Scene{
             
             this.monster.update(this.player);
             this.shark.anims.play('shark', true);
-            this.jellyFishCont.play('jelly', true);
+            if(!this.jellyDown)
+                this.jellyFishCont.play('jelly', true);
+            else
+                this.jellyFishCont.play('jellyHurt', true);
+
             this.monster.anims.play('monster', true);
             
             this.powerUp.update();
