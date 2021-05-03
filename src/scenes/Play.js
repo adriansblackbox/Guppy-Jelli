@@ -100,21 +100,7 @@ class Play extends Phaser.Scene{
 
         this.jellyFishCont.alpha = 0.75; 
 
-        let scoreConfig = {
-            fontFamily: 'Courier',
-            fontsize: '28px',
-            backgroundColor: '#006994',
-            color: '#FFFFFF',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
 
-
-        scoreConfig.fixedWidth = 0;
         //dawdddwathis.timeVariable = game.settings.gameTimer;
 
         //this.clock = this.time.delayedCall(this.timeVariable, () => {
@@ -124,8 +110,8 @@ class Play extends Phaser.Scene{
         //}, null, this);
 
         //setting up time text
-        let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 150}
-        this.timeLeft = this.add.text(0, 0, 'Time: ', timeConfig);
+        let timeConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{top: 5, bottom: 5,}, fixedWidth: 500}
+        this.timeLeft = this.add.text(0, 0, 'Dream Seconds: 0', timeConfig);
         this.timeVar = 0;
         this.timePassed = 0;
     }
@@ -262,18 +248,7 @@ class Play extends Phaser.Scene{
 
         //for the gameover text, if we want the top to not have as large as box we may need to change the fixedwidth in between the two texts
         let gameOverConfig = {fontFamily: 'Courier', fontSize: '28px', backgroundColor: '#F3B141', color: '#843605', align: 'center', padding:{top: 5, bottom: 5,}, fixedWidth: 400}
-        let scoreConfig = {
-            fontFamily: 'Courier',
-            fontsize: '28px',
-            backgroundColor: '#006994',
-            color: '#FFFFFF',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 100
-        }
+
         //this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
         //this.shark.speed += (this.timeVar*.000001);   //one way of speeding up sharks
         //if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
@@ -284,7 +259,7 @@ class Play extends Phaser.Scene{
             // Make timed spawn in's here
             //////////////////////////////////////////////////////////////////////////
             if(this.startGame){
-                this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
+                this.timeLeft.setText("Dream Seconds: " + Math.round(this.timeVar*.001));
                 this.timeVar = this.timeVar + delta;
                 this.updateTenticles();
                 this.shark.update(this.timeVar*.001);
