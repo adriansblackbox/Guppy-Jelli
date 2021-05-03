@@ -111,7 +111,12 @@ class Play extends Phaser.Scene{
 
         //setting up time text
         let timeConfig = {fontFamily: 'Nanum Pen Script', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
-        this.timeLeft = this.add.text(0, 0, 'Dream Seconds: 0', timeConfig);
+        this.timeLeft = this.add.text(0, 0, '', timeConfig);
+        // Instructions
+        this.fishInstructions = this.add.text(0, 0, '', timeConfig);
+        this.jellyInstructions = this.add.text(0, 0, '', timeConfig);
+        this.startInstruction = this.add.text(game.config.height/2 - 20, game.config.width/2, 'Press SPACE to Sart', timeConfig);
+
         this.timeVar = 0;
         this.timePassed = 0;
     }
@@ -259,6 +264,7 @@ class Play extends Phaser.Scene{
             // Make timed spawn in's here
             //////////////////////////////////////////////////////////////////////////
             if(this.startGame){
+                this.startInstruction.setText('');
                 this.timeLeft.setText("Dream Seconds: " + Math.round(this.timeVar*.001));
                 this.timeVar = this.timeVar + delta;
                 this.updateTenticles();
