@@ -455,7 +455,7 @@ class Play extends Phaser.Scene{
         console.log("powerUpCollided");
         
         var timer2 = this.time.addEvent({
-            delay: 6000,                // ms
+            delay: 1000,                // ms
             callback: this.powerUp.reset,
             
             callbackScope: this.powerUp,
