@@ -12,6 +12,7 @@ class Menu extends Phaser.Scene {
         this.load.spritesheet('MainMenu', 'assets/title.png', {frameWidth: 960, frameHeight: 720, startFrame: 0, endFrame: 19});
         this.load.image('button', './assets/dreamButton.png');
         this.load.image('buttonover', './assets/dreamButton_selected.png');
+        this.load.audio('title_bgm', './assets/Guppy_Title_BGM_Brahm.wav');
     }
     
     create() {
@@ -27,7 +28,18 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-        
+        let titleBGMConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0,
+            pan: 0
+        }
+
+        this.sound.play('title_bgm', titleBGMConfig);
         //this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Endless Runner prototype #1', menuConfig).setOrigin(0.5);
         //this.add.text(game.config.width/2, game.config.height/2, 'Use the keys: (W,A,S,D) to move the fish', menuConfig).setOrigin(0.5);
         //this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'The jelly fish will follow your cursor', menuConfig).setOrigin(0.5);

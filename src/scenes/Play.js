@@ -8,6 +8,11 @@ class Play extends Phaser.Scene{
     }
 
     preload(){
+        this.load.audio('play_scene_bgm','./assets/zapsplat_vehicles_submarine_small_personal_onboard_ambience_underwater_25576 (play scene bgm).wav');
+        this.load.audio('gameover', './assets/sound_design_big_underwater_reversed_reverb_bubbles_sound_design_element (gameover).wav');
+        this.load.audio('monster_hurt', './assets/lukas_tvrdon_impact_underwater_or_space_crash_distant_d_032(Monster hurt).wav');
+        this.load.audio('monster_warning', './assets/lukas_tvrdon_impact_underwater_or_space_massive_b_034(monster Warning sound).wav');
+
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('covercover', './assets/cover_cover.png');
         this.load.image('BG', './assets/first_background.png');
@@ -33,6 +38,8 @@ class Play extends Phaser.Scene{
         this.canvas.style.cursor = 'none';
     }
     create(){
+        //Bailey: really rough sound stopping
+        this.sound.stopByKey('title_bgm');
         //Adrian: Boolean var for checking if the player has died
         this.fishDead = false;
         this.gameOver = false;
@@ -53,7 +60,19 @@ class Play extends Phaser.Scene{
 
         const cX = game.config.width/2;
         const cY = game.config.height/2;
-
+        // Bailey: setting up the sound config
+        let playSceneBGMConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0,
+            pan: 0
+        }
+        this.sound.play('play_scene_bgm', playSceneBGMConfig);
+        // 
         this.background = this.add.tileSprite(cX, cY , 1920, 720, 'BG');
         this.base0 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base0');
         this.base1 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base1');
@@ -347,7 +366,7 @@ class Play extends Phaser.Scene{
             }
 
         }else{
-
+            this.sound.stopByKey('play_scene_bgm');
             this.player.stopMoving();
             this.player.anims.play('swim', false );
             this.player.alpha = 0;
