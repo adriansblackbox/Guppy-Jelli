@@ -19,7 +19,8 @@ class monster extends Phaser.Physics.Arcade.Sprite{
     create(){
     }
     update(player){
-        this.y = player.y + 100
+        if(player.y >= 360)
+            this.y = player.y;
     }
 
     /* Adrian:

@@ -29,7 +29,6 @@ class shark extends Phaser.Physics.Arcade.Sprite {
                 this.timeVar = 0;    
             }
         }
-        console.log(this.timeVar);
     }
 
     reset(time) {

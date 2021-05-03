@@ -48,6 +48,7 @@ class Play extends Phaser.Scene{
         this.wall3Delayed = false;
         this.wall4Delayed = false;
         this.mamaLightOn = false;
+        this.mamaAcsend = false;
 
         this.advanceMonster = false;
         this.retreatMonster = false;
@@ -74,7 +75,9 @@ class Play extends Phaser.Scene{
         this.sound.play('play_scene_bgm', playSceneBGMConfig);
         // 
         this.background = this.add.tileSprite(cX, cY , 1920, 720, 'BG');
+
         this.base0 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base0');
+        this.Mama = new Mama(this, game.config.width/2, 1700, null, 0);
         this.base1 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base1');
         this.base2 = this.add.tileSprite(cX, cY, 1920, 720, 'base2');
         this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
@@ -115,8 +118,9 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, borderUISize + borderPadding + 100,game.config.height/2);
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
+
         this.powerUp = new powerUp(this, game.config.width + 12 ,game.config.height/2, null, 0, 20, 21, 0, 0);
-        this.gameOverTitle = this.add.sprite(game.config.width/2 ,game.config.height/2, 'dreamOver');
+        this.gameOverTitle = this.add.sprite(game.config.width/2 + 40 ,game.config.height/2, 'dreamOver');
         this.gameOverTitle.alpha = 0;
 
         this.jellyFishCont.alpha = 0.75; 
@@ -141,6 +145,11 @@ class Play extends Phaser.Scene{
         timeConfig.fontSize = '25px';
         this.fishInstructions = this.add.text(0, 0, 'W-A-S-D to Move the Fish', timeConfig);
         this.jellyInstructions = this.add.text(game.config.width - 320, 0, 'Move The Mouse to Guide the Light', timeConfig);
+        timeConfig.fontSize = '30px';
+        this.restartInstruction = this.add.text(game.config.height/2 + 30, game.config.width/2 + 60, '', timeConfig);
+        timeConfig.fontSize = '50px';
+        this.highScore = this.add.text(game.config.height/2 - 80, 150, '', timeConfig);
+
         timeConfig.fontSize = '40px';
 
         this.timeVar = 0;
@@ -195,13 +204,13 @@ class Play extends Phaser.Scene{
         this.anims.create({
             key: 'mamajelly',
             frames: this.anims.generateFrameNumbers('mamajelly', { start: 0, end: 22, first: 0}),
-            frameRate: 10,
+            frameRate: 12,
             repeat: -1
         });
     }
     lightEffect(cX, cY){
         this.lightRad = 250;
-        this.mamaLightRad = 1000;
+        this.mamaLightRad = 960;
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0
 
@@ -227,15 +236,19 @@ class Play extends Phaser.Scene{
 
         reveal.mask = new Phaser.Display.Masks.BitmapMask(this, maskImage);
 
-        this.light = this.add.circle(0,0,this.lightRad - 15,0x000000,1);    //circle with radius of 30 and alpha of 1
+        this.light = this.add.circle(0,0,this.lightRad - 25,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.light.visible = false;
-        this.lightMid = this.add.circle(0,0,this.lightRad - 5,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.lightMid = this.add.circle(0,0,this.lightRad - 10,0x000000,0.5);    //circle with radius of 30 and alpha of 1
         this.lightMid.visible = false;
         this.lightFar = this.add.circle(0,0,this.lightRad,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
-        this.mamalight = this.add.circle(0,0,this.mamaLightRad,0x000000,1); 
+        this.mamalight = this.add.circle(0,0,this.mamaLightRad - 25,0x000000,1);    //circle with radius of 30 and alpha of 1
         this.mamalight.visible = false;
+        this.mamalightMid = this.add.circle(0,0,this.mamaLightRad - 10,0x000000,0.5);    //circle with radius of 30 and alpha of 1
+        this.mamalightMid.visible = false;
+        this.mamalightFar = this.add.circle(0,0,this.mamaLightRad,0x000000,0.25); 
+        this.mamalightFar.visible = false;
 
         this.renderTexture = rt;
 
@@ -287,8 +300,6 @@ class Play extends Phaser.Scene{
             //this.timePassed+=10;
         //}
         if(!this.gameOver){
-            // Make timed spawn in's here
-            //////////////////////////////////////////////////////////////////////////
             if(this.startGame){
                 this.startInstruction.setText('');
                 this.fishInstructions.setText('');
@@ -304,8 +315,8 @@ class Play extends Phaser.Scene{
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);
             }
-            //////////////////////////////////////////////////////////////////////////
             this.player.update();
+            this.Mama.update(this.mamaAcsend);
             if(!this.advanceMonster)
                 this.playerSwim();
             else
@@ -313,6 +324,7 @@ class Play extends Phaser.Scene{
             
             this.monster.update(this.player);
             this.shark.anims.play('shark', true);
+            this.Mama.anims.play('mamajelly', true);
             if(!this.jellyDown)
                 this.jellyFishCont.play('jelly', true);
             else
@@ -342,10 +354,10 @@ class Play extends Phaser.Scene{
             }
                 
             this.drawJellyLight();
-
-            if(this.mamaLightOn){
-                this.renderTexture.draw(this.mamalight, game.config.width/2, game.config.height/2);
-            }
+            this.drawMamaLight();
+            
+           
+            
 
             if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200 && !this.mamaLightOn){
                 this.monster.advance();
@@ -381,6 +393,10 @@ class Play extends Phaser.Scene{
             //this.renderTexture.clear();
             this.drawJellyLight();
             this.gameOverTitle.alpha = 1;
+            this.timeLeft.setText("");
+            this.restartInstruction.setText('Press R to Dream Again');
+            this.highScore.setText('Dream Seconds Lasted: ' + Math.round(this.timeVar*.001));
+
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
@@ -424,7 +440,8 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
             //powerup
-            this.physics.world.collide(this.player, this.powerUp, this.onPowerUpCollision, null, this);
+            if(!this.mamaLightOn)
+                this.physics.world.collide(this.player, this.powerUp, this.onPowerUpCollision, null, this);
 
             this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
@@ -454,6 +471,11 @@ class Play extends Phaser.Scene{
             this.jellyFishCont.y = this.input.activePointer.y;
         }
     }
+    drawMamaLight(){
+        this.renderTexture.draw(this.mamalight, this.Mama.x, this.Mama.y);
+        this.renderTexture.draw(this.mamalightMed, this.Mama.x, this.Mama.y);
+        this.renderTexture.draw(this.mamalightFar, this.Mama.x, this.Mama.y);
+    }
     drawJellyLight(){
         this.renderTexture.draw(this.light, this.jellyFishCont.x, this.jellyFishCont.y);
         this.renderTexture.draw(this.lightMid, this.jellyFishCont.x, this.jellyFishCont.y);
@@ -477,15 +499,10 @@ class Play extends Phaser.Scene{
     }
     onPowerUpCollision(){
         
-        var timer2 = this.time.addEvent({
-            delay: 1000,                // ms
-            callback: this.powerUp.reset,
-            
-            callbackScope: this.powerUp,
-            loop: false
-        });
+        this.powerUp.alpha = 0;
         
         this.mamaLightOn = true;
+        this.mamaAcsend = true;
 
         var timer = this.time.addEvent({
             delay: 6000,                // ms
@@ -508,6 +525,7 @@ class Play extends Phaser.Scene{
     }
     mamaLightOff(){
         this.mamaLightOn = false;
+        this.mamaAcsend = false;
     }
 
     advance(){
