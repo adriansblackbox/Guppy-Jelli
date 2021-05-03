@@ -274,13 +274,17 @@ class Play extends Phaser.Scene{
             //this.timePassed+=10;
         //}
         if(!this.gameOver){
+            // Make timed spawn in's here
+            //////////////////////////////////////////////////////////////////////////
             if(this.startGame){
                 this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
                 this.timeVar = this.timeVar + delta;
                 this.updateTenticles();
-                this.shark.update();
-                this.powerUp.update();
+                this.shark.update(this.timeVar*.001);
+
+                this.powerUp.update(this.timeVar*.001);
             }
+            //////////////////////////////////////////////////////////////////////////
             this.player.update();
             if(!this.advanceMonster)
                 this.playerSwim();

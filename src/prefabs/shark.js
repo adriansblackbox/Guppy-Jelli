@@ -17,18 +17,17 @@ class shark extends Phaser.Physics.Arcade.Sprite {
                                      // Just the way phaser works I guess
     }
 
-    update() {
+    update(time) {
         this.x -= this.speed;
 
         if(this.x <= -420){
-            //this.x = game.config.width;
-            //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
             this.alpha = 0;
-            this.reset();
+            //if(time%10 == 0)
+                this.reset(time);
         }
     }
 
-    reset() {
+    reset(time) {
         this.x = game.config.width + 420;
         this.y = Phaser.Math.Between(game.config.height/4, game.config.height*(3/4));
         this.alpha = 1;
