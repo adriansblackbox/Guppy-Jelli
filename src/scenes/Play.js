@@ -311,7 +311,7 @@ class Play extends Phaser.Scene{
 
             if(this.retreatMonster && this.monster.x >= this.monster.currentX - 200 && this.monster.x > -600){
                 this.monster.retreat();
-            }else if(this.monster.x <= this.monster.currentX - 200){
+            }else if(this.monster.x <= this.monster.currentX - 200 || this.monster.x <= -600){
                 this.retreatMonster = false
             }
 
