@@ -97,7 +97,7 @@ class Play extends Phaser.Scene{
         this.jellyFishCont = new JellyFish(this,game.config.width + borderUISize * 6, borderUISize*4, 'fish'); 
 
         this.powerUp = new powerUp(this, game.config.width + 12 ,game.config.height/2, null, 0, 20, 21, 0, 0);
-        this.gameOverTitle = this.add.sprite(game.config.width/2 ,game.config.height/2, 'dreamOver');
+        this.gameOverTitle = this.add.sprite(game.config.width/2 + 40 ,game.config.height/2, 'dreamOver');
         this.gameOverTitle.alpha = 0;
 
         this.jellyFishCont.alpha = 0.75; 
@@ -122,6 +122,11 @@ class Play extends Phaser.Scene{
         timeConfig.fontSize = '25px';
         this.fishInstructions = this.add.text(0, 0, 'W-A-S-D to Move the Fish', timeConfig);
         this.jellyInstructions = this.add.text(game.config.width - 320, 0, 'Move The Mouse to Guide the Light', timeConfig);
+        timeConfig.fontSize = '30px';
+        this.restartInstruction = this.add.text(game.config.height/2 + 30, game.config.width/2 + 60, '', timeConfig);
+        timeConfig.fontSize = '50px';
+        this.highScore = this.add.text(game.config.height/2 - 80, 150, '', timeConfig);
+
         timeConfig.fontSize = '40px';
 
         this.timeVar = 0;
@@ -268,8 +273,6 @@ class Play extends Phaser.Scene{
             //this.timePassed+=10;
         //}
         if(!this.gameOver){
-            // Make timed spawn in's here
-            //////////////////////////////////////////////////////////////////////////
             if(this.startGame){
                 this.startInstruction.setText('');
                 this.fishInstructions.setText('');
@@ -285,7 +288,6 @@ class Play extends Phaser.Scene{
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);
             }
-            //////////////////////////////////////////////////////////////////////////
             this.player.update();
             if(!this.advanceMonster)
                 this.playerSwim();
@@ -362,6 +364,10 @@ class Play extends Phaser.Scene{
             //this.renderTexture.clear();
             this.drawJellyLight();
             this.gameOverTitle.alpha = 1;
+            this.timeLeft.setText("");
+            this.restartInstruction.setText('Press R to Dream Again');
+            this.highScore.setText('Dream Seconds Lasted: ' + Math.round(this.timeVar*.001));
+
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
