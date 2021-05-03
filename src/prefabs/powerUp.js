@@ -20,7 +20,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         this.currX = this.calculateSine(this.currX);
         this.y -= 10*this.currX;
 
-        if(this.x <= -420){
+        if(this.x <= -400){
             //this.x = game.config.width;
             //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
             this.alpha = 0;
