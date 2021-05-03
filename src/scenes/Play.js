@@ -116,7 +116,7 @@ class Play extends Phaser.Scene{
         // Instructions
         
         this.startInstruction = this.add.text(game.config.height/2 - 20, game.config.width/2, 'Press SPACE to Start', timeConfig);
-        this.startInstruction = this.add.text(game.config.height/2 - 80, game.config.width/2 + 100, 'beware the mosters lurking in the dark', warning);
+        this.hiddenMessage = this.add.text(game.config.height/2 - 80, game.config.width/2 + 100, 'beware the mosters lurking in the dark', warning);
         timeConfig.fontSize = '25px';
         this.fishInstructions = this.add.text(0, 0, 'W-A-S-D to Move the Fish', timeConfig);
         this.jellyInstructions = this.add.text(game.config.width - 320, 0, 'Move The Mouse to Guide the Light', timeConfig);
@@ -270,6 +270,9 @@ class Play extends Phaser.Scene{
             //////////////////////////////////////////////////////////////////////////
             if(this.startGame){
                 this.startInstruction.setText('');
+                this.fishInstructions.setText('');
+                this.jellyInstructions.setText('');
+                this.hiddenMessage.setText('');
                 this.timeLeft.setText("Dream Seconds: " + Math.round(this.timeVar*.001));
                 this.timeVar = this.timeVar + delta;
                 this.updateTenticles();
