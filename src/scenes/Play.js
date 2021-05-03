@@ -456,7 +456,7 @@ class Play extends Phaser.Scene{
         
         var timer2 = this.time.addEvent({
             delay: 6000,                // ms
-            callback: this.powerUp.reset(),
+            callback: this.powerUp.reset,
             
             callbackScope: this.powerUp,
             loop: false
