@@ -37,6 +37,10 @@ class monster extends Phaser.Physics.Arcade.Sprite{
 
         this.x +=this.advanceSpeed;
     }
+    retreat(){
+            this.x -=this.advanceSpeed;
+        
+    }
     smoothadvance(){
     }
 }

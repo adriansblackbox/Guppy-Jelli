@@ -17,6 +17,7 @@ class Play extends Phaser.Scene{
         this.load.image('base3', './assets/base_3.png');
 
         this.load.image('wall1', './assets/wall1.png');
+        this.load.image('chomp', './assets/deathWallClosed.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
@@ -36,8 +37,11 @@ class Play extends Phaser.Scene{
         this.wall2Delayed = false;
         this.wall3Delayed = false;
         this.wall4Delayed = false;
+        this.mamaLightOn = false;
 
         this.advanceMonster = false;
+        this.retreatMonster = false;
+        this.isChomped = false;
 
         this.initializeKeys();
         this.creatAnims();
@@ -156,7 +160,8 @@ class Play extends Phaser.Scene{
         });
     }
     lightEffect(cX, cY){
-        this.lightRad = 250
+        this.lightRad = 250;
+        this.mamaLightRad = 1000;
         const reveal = this.add.image(cX, cY, 'cover');
         reveal.alpha = 0
 
@@ -189,6 +194,9 @@ class Play extends Phaser.Scene{
         this.lightFar = this.add.circle(0,0,this.lightRad,0x000000,0.25);    //circle with radius of 30 and alpha of 1
         this.lightFar.visible = false;
 
+        this.mamalight = this.add.circle(0,0,this.mamaLightRad,0x000000,1); 
+        this.mamalight.visible = false;
+
         this.renderTexture = rt;
 
 
@@ -208,7 +216,7 @@ class Play extends Phaser.Scene{
     update(time,delta){
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
-        if(!this.advanceMonster){
+        if(!this.advanceMonster || this.mamaLightOn){
             this.background.tilePositionX += 0.7;
             this.base0.tilePositionX += 0.8;
             this.base1.tilePositionX += 0.9;
@@ -252,10 +260,7 @@ class Play extends Phaser.Scene{
             this.shark.anims.play('shark', true);
             this.jellyFishCont.play('jelly', true);
             this.monster.anims.play('monster', true);
-            if(!this.advanceMonster)
-                this.player.anims.play('swim', true);
-            else
-                this.player.anims.play('swim', false);
+            this.player.anims.play('swim', true);
             this.powerUp.update();
             this.timeVar = this.timeVar + delta;
 
@@ -287,7 +292,11 @@ class Play extends Phaser.Scene{
                 
             this.drawJellyLight();
 
-            if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200){
+            if(this.mamaLightOn){
+                this.renderTexture.draw(this.mamalight, game.config.width/2, game.config.height/2);
+            }
+
+            if(this.advanceMonster && this.monster.x <= this.monster.currentX + 200 && !this.mamaLightOn){
                 this.player.anims.play('fishHurt', true);
                 this.monster.advance();
                 this.background.tilePositionX -= 0.7/2;
@@ -298,7 +307,12 @@ class Play extends Phaser.Scene{
                 this.particles.tilePositionX -= 0.7/2;
             }else if(this.monster.x >= this.monster.currentX + 200){
                 this.advanceMonster = false;
-                this.player.anims.play('fishHurt', false);
+            }
+
+            if(this.retreatMonster && this.monster.x >= this.monster.currentX - 200 && this.monster.x > -600){
+                this.monster.retreat();
+            }else if(this.monster.x <= this.monster.currentX - 200){
+                this.retreatMonster = false
             }
 
         }else{
@@ -309,9 +323,14 @@ class Play extends Phaser.Scene{
             this.player.alpha = 0;
             this.shark.anims.play('shark', false);
             this.jellyFishCont.play('jelly', false);
+            this.monster.anims.play('monster', false);
+            if(this.isChomped){
+                this.monster.setTexture('chomp',0);
+            }
             this.jellyFishCont.alpha = 0;
 
-            this.renderTexture.clear();
+            //this.renderTexture.clear();
+            this.drawJellyLight();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
@@ -349,7 +368,7 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.jellyFishCont, this.wall4, this.onJellyWallCollision, null, this);
             this.physics.world.collide(this.jellyFishCont, this.shark, this.onJellyWallCollision, null, this);
 
-            if(!this.advanceMonster){
+            if(!this.advanceMonster && !this.mamaLightOn){
                 this.physics.world.collide(this.player, this.wall1, this.advance, null, this);
                 this.physics.world.collide(this.player, this.wall2, this.advance, null, this);
                 this.physics.world.collide(this.player, this.wall3, this.advance, null, this);
@@ -362,14 +381,12 @@ class Play extends Phaser.Scene{
     jellyMovement(){
         if(
             this.input.activePointer.x >= 0 + this.jellyFishCont.body.width &&
-            this.input.activePointer.x <= game.config.width - this.jellyFishCont.body.width&&
-            !this.fishDead){
+            this.input.activePointer.x <= game.config.width - this.jellyFishCont.body.width){
             this.jellyFishCont.x = this.input.activePointer.x;
         }
         if(
             this.input.activePointer.y >= 0 + this.jellyFishCont.body.height && 
-            this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height && 
-            !this.fishDead){
+            this.input.activePointer.y <= game.config.height - this.jellyFishCont.body.height){
             this.jellyFishCont.y = this.input.activePointer.y;
         }
     }
@@ -383,7 +400,6 @@ class Play extends Phaser.Scene{
     //functions
     onSharkCollision(){
         this.gameOver = true;
-        this.fishDead = true;
     }
     onJellyWallCollision(){
         this.jellyDown = true;
@@ -398,11 +414,29 @@ class Play extends Phaser.Scene{
     onPowerUpCollision(){
         console.log("powerUpCollided");
         this.powerUp.reset();
-        //whatever we want the powerup to do
+        this.mamaLightOn = true;
+
+        var timer = this.time.addEvent({
+            delay: 6000,                // ms
+            callback: this.mamaLightOff,
+            
+            callbackScope: this,
+            loop: false
+        });
+
+        if(this.monster.x > -600)
+            this.retreatMonster = true;
+        
+        this.monster.currentX = this.monster.x;
+        this.advanceMonster = false;
+        
     }
 
     resetJelly(){
         this.jellyDown = false;
+    }
+    mamaLightOff(){
+        this.mamaLightOn = false;
     }
 
     advance(){
@@ -411,6 +445,7 @@ class Play extends Phaser.Scene{
         this.player.isHurt = true;
     }
     monsterChomp(){
+        this.isChomped = true;
         this.gameOver = true;
     }
 }
