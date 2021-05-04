@@ -574,9 +574,10 @@ class Play extends Phaser.Scene{
             loop: false
         });
 
-        if(this.monster.x > -600)
+        if(this.monster.x > -600){
             this.retreatMonster = true;
-        
+            this.sound.play('monster_hurt', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+        }
         this.monster.currentX = this.monster.x;
         this.advanceMonster = false;
         
