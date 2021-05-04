@@ -356,6 +356,7 @@ class Play extends Phaser.Scene{
                 this.wall4.tenteacleYVar += 1.25;
                 this.shark.speed += 1;
                 this.shark.respawnDelay -= 2000;
+                this.powerUp.powerUpRandom += 5000;
             }
             this.player.update();
             this.Mama.update(this.mamaAcsend);
