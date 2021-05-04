@@ -20,6 +20,8 @@ class Play extends Phaser.Scene{
         this.load.audio('shark_pass2', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_002_59241(shark movement2).wav');
         this.load.audio('shark_pass3', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_003_59242(shark movement1).wav');
         this.load.audio('swim', './assets/swim.wav');
+        this.load.audio('dream_start', './assets/476612__avaruusnuija__bubbles-14.wav');
+
 
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('covercover', './assets/cover_cover.png');
@@ -62,6 +64,7 @@ class Play extends Phaser.Scene{
         this.mamaAcsend = false;
         this.gameOvernoise = false;
         this.sharkNoise = false;
+        this.dream_started = false;
 
         this.advanceMonster = false;
         this.retreatMonster = false;
@@ -299,6 +302,10 @@ class Play extends Phaser.Scene{
 
         if(keySPACE.isDown){
             this.startGame = true;
+            if(!this.dream_started){
+                this.sound.play('dream_start', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+                this.dream_started = true;
+            }
         }
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
