@@ -15,6 +15,8 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         this.upOrDown = true;
         this.currTime = 0;
         this.timeVar = 0;
+
+        //this is the variable to change to change how often the powerup changes (changes in play)
         this.powerUpRandom = 28000;
 
         this.powerUpDelayTime = Phaser.Math.Between(this.powerUpRandom, this.powerUpRandom + 3000);

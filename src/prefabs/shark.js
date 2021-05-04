@@ -14,8 +14,9 @@ class shark extends Phaser.Physics.Arcade.Sprite {
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
         this.body.offset.x = offX;
         this.body.offset.y = offY;     // WARNING: Keep the offsets even if they're 0.
-                                     // Just the way phaser works I guess
         this.timeVar = 0;
+
+        //this is the variable to change in play to change the sharks delay
         this.respawnDelay = 20000;
     }
 

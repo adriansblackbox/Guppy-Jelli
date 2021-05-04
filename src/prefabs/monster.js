@@ -8,8 +8,6 @@ class monster extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(1200, 820, true);  //Adrian: collision box adjustments for fish
         this.body.offset.x = -50;
         this.body.offset.y = 0;     // WARNING: Keep the offsets even if they're 0.
-                                    // Just the way phaser works I guess
-
         this.currentX = 0   // Used in play
         this.cooldown = 1
 
