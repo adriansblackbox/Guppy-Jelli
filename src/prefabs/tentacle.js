@@ -11,10 +11,9 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         this.speed = 1.5;
         //this.body.collideWorldBounds = true;
 
-        this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
+        this.body.setSize(bodyW,bodyH);
         this.body.offset.x = offX;
         this.body.offset.y = offY;     // WARNING: Keep the offsets even if they're 0.
-                                       // Just the way phaser works I guess
         this.isFloor = Math.floor(Math.random() * 10); 
         this.preference = description   // true if ground image, false if cieling image
 
@@ -26,6 +25,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
         this.yorigin = y;
 
+        //this is the variable that controls how fast the tentacles go up and down (changes in play)
         this.tenteacleYVar = 1.5;
 
         this.ySpeed = Phaser.Math.Between(this.tenteacleYVar, this.tenteacleYVar + 1.5);
