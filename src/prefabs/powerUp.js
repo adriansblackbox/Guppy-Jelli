@@ -15,6 +15,9 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
         this.upOrDown = true;
         this.currTime = 0;
         this.timeVar = 0;
+        this.powerUpRandom = 28000;
+
+        this.powerUpDelayTime = Phaser.Math.Between(this.powerUpRandom, this.powerUpRandom + 3000);
     }
 
     update(delta) {
@@ -27,7 +30,7 @@ class powerUp extends Phaser.Physics.Arcade.Sprite {
             //this.x = game.config.width;
             //this.y = Phaser.Math.Between(borderUISize + borderPadding,game.config.height - borderUISize - this.height);
             this.alpha = 0;
-            if(this.timeVar > delta + 30000){
+            if(this.timeVar > delta + this.powerUpDelayTime){
                 this.reset();
                 this.timeVar = 0;    
             }
