@@ -172,7 +172,7 @@ class Play extends Phaser.Scene{
 
         let swimConfig = {
             mute: false,
-            volume: 0.5,
+            volume: 0.4,
             rate: 0.5,
             seek: 0,
             loop: true,
@@ -454,10 +454,13 @@ class Play extends Phaser.Scene{
         this.player.anims.play('swim', true);
         if(this.player.isMoving){
             this.player.anims.msPerFrame = 35;
-            this.swimNoise.rate = 0.75;
+            if(this.swimNoise.rate < 0.90)
+                this.swimNoise.rate += 0.01;
         }else{
             this.player.anims.msPerFrame = 75;
-            this.swimNoise.rate = 0.6;
+            if(this.swimNoise.rate > 0.1){
+                this.swimNoise.rate -= 0.01
+            }
         }
     }
     playerHurt(){
