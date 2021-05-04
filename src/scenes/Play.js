@@ -425,6 +425,7 @@ class Play extends Phaser.Scene{
                 this.sound.play('chomp', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
                 this.gameOvernoise = true;
             }
+            this.swimNoise.stop();
             this.player.stopMoving();
             this.player.anims.play('swim', false );
             this.player.alpha = 0;
@@ -453,8 +454,10 @@ class Play extends Phaser.Scene{
         this.player.anims.play('swim', true);
         if(this.player.isMoving){
             this.player.anims.msPerFrame = 35;
+            this.swimNoise.rate = 0.75;
         }else{
             this.player.anims.msPerFrame = 75;
+            this.swimNoise.rate = 0.6;
         }
     }
     playerHurt(){
