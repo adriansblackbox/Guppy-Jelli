@@ -80,7 +80,7 @@ class Play extends Phaser.Scene{
         // Bailey: setting up the bgm sound config
         let playSceneBGMConfig = {
             mute: false,
-            volume: 1,
+            volume: 0.3,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -181,6 +181,17 @@ class Play extends Phaser.Scene{
             loop: true,
             delay: 0
         };
+
+        let sharkSpawnConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            seek: 0,
+            loop: false,
+            delay: 0
+        };
+
+        this.sharkSpawn = this.sound.add('shark_pass1', sharkSpawnConfig);
 
         this.swimNoise = this.sound.add('swim', swimConfig);
 
@@ -303,7 +314,7 @@ class Play extends Phaser.Scene{
         if(keySPACE.isDown){
             this.startGame = true;
             if(!this.dream_started){
-                this.sound.play('dream_start', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+                this.sound.play('dream_start', {mute: false, volume: 1, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
                 this.dream_started = true;
             }
         }
@@ -346,7 +357,8 @@ class Play extends Phaser.Scene{
                 this.updateTenticles();
 
                 if( Math.round(this.timeVar*.001) > 10){
-                    this.shark.update(delta);
+                    //this.sharkSpawn.play();
+                    this.shark.update(delta, this.sharkSpawn);
                 }
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);

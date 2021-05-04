@@ -20,20 +20,21 @@ class shark extends Phaser.Physics.Arcade.Sprite {
         this.respawnDelay = 20000;
     }
 
-    update(delta) {
+    update(delta, spawnNoise) {
         this.x -= this.speed;
         this.timeVar = this.timeVar + delta;
 
         if(this.x <= -420){
             this.alpha = 0;
             if(this.timeVar > delta + this.respawnDelay){
-                this.reset();
+                this.reset(spawnNoise);
                 this.timeVar = 0;    
             }
         }
     }
 
-    reset(time) {
+    reset(spawnNoise) {
+        spawnNoise.play();
         this.x = game.config.width + 210;
         this.y = Phaser.Math.Between(game.config.height-200, 200);
         this.alpha = 1;
