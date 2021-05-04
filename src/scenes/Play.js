@@ -19,6 +19,7 @@ class Play extends Phaser.Scene{
         this.load.audio('shark_pass1', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_001_59240(shark movement3).wav');
         this.load.audio('shark_pass2', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_002_59241(shark movement2).wav');
         this.load.audio('shark_pass3', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_003_59242(shark movement1).wav');
+        this.load.audio('swim', './assets/swim.wav');
 
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('covercover', './assets/cover_cover.png');
@@ -168,6 +169,19 @@ class Play extends Phaser.Scene{
         this.timeVar = 0;
         this.timePassed = 0;
         this.difficultyTime = 0;
+
+        let swimConfig = {
+            mute: false,
+            volume: 0.5,
+            rate: 0.5,
+            seek: 0,
+            loop: true,
+            delay: 0
+        };
+
+        this.swimNoise = this.sound.add('swim', swimConfig);
+
+        this.swimNoise.play();
     }
     creatAnims(){
         this.anims.create({
