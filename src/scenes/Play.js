@@ -350,10 +350,10 @@ class Play extends Phaser.Scene{
                 this.wall2.speed += 1;
                 this.wall3.speed += 1;
                 this.wall4.speed += 1;
-                this.wall1.tenteacleYVar += 1;
-                this.wall2.tenteacleYVar += 1;
-                this.wall3.tenteacleYVar += 1;
-                this.wall4.tenteacleYVar += 1;
+                this.wall1.tenteacleYVar += 1.25;
+                this.wall2.tenteacleYVar += 1.25;
+                this.wall3.tenteacleYVar += 1.25;
+                this.wall4.tenteacleYVar += 1.25;
                 this.shark.speed += 1;
                 this.shark.respawnDelay -= 2000;
             }
