@@ -12,6 +12,12 @@ class Play extends Phaser.Scene{
         this.load.audio('gameover', './assets/sound_design_big_underwater_reversed_reverb_bubbles_sound_design_element (gameover).wav');
         this.load.audio('monster_hurt', './assets/lukas_tvrdon_impact_underwater_or_space_crash_distant_d_032(Monster hurt).wav');
         this.load.audio('monster_warning', './assets/lukas_tvrdon_impact_underwater_or_space_massive_b_034(monster Warning sound).wav');
+        this.load.audio('pop1', './assets/comedy_bubble_pop_001.wav');
+        this.load.audio('pop2', './assets/comedy_bubble_pop_002.wav');
+        this.load.audio('pop3', './assets/comedy_bubble_pop_003.wav');
+        this.load.audio('shark_pass1', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_001_59240(shark movement3).wav');
+        this.load.audio('shark_pass2', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_002_59241(shark movement2).wav');
+        this.load.audio('shark_pass3', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_003_59242(shark movement1).wav');
 
         this.load.image('cover', './assets/BlackCover.png');
         this.load.image('covercover', './assets/cover_cover.png');
@@ -42,6 +48,7 @@ class Play extends Phaser.Scene{
     create(){
         //Bailey: really rough sound stopping
         this.sound.stopByKey('title_bgm');
+        this.sound.stopByKey('gameover');
         //Adrian: Boolean var for checking if the player has died
         this.fishDead = false;
         this.gameOver = false;
@@ -51,6 +58,8 @@ class Play extends Phaser.Scene{
         this.wall4Delayed = false;
         this.mamaLightOn = false;
         this.mamaAcsend = false;
+        this.gameOvernoise = false;
+        this.sharkNoise = false;
 
         this.advanceMonster = false;
         this.retreatMonster = false;
@@ -63,7 +72,7 @@ class Play extends Phaser.Scene{
 
         const cX = game.config.width/2;
         const cY = game.config.height/2;
-        // Bailey: setting up the sound config
+        // Bailey: setting up the bgm sound config
         let playSceneBGMConfig = {
             mute: false,
             volume: 1,
@@ -311,9 +320,9 @@ class Play extends Phaser.Scene{
                 this.timeVar = this.timeVar + delta;
                 this.updateTenticles();
 
-                if( Math.round(this.timeVar*.001) > 10)
+                if( Math.round(this.timeVar*.001) > 10){
                     this.shark.update(delta);
-
+                }
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);
             }
@@ -381,6 +390,10 @@ class Play extends Phaser.Scene{
 
         }else{
             this.sound.stopByKey('play_scene_bgm');
+            if(!this.gameOvernoise){
+                this.sound.play('gameover', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+                this.gameOvernoise = true;
+            }
             this.player.stopMoving();
             this.player.anims.play('swim', false );
             this.player.alpha = 0;
@@ -500,6 +513,14 @@ class Play extends Phaser.Scene{
         });
     }
     onPowerUpCollision(){
+        switch(Math.floor(Math.random()* 3)){
+            case 0:
+                this.sound.play('pop1', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+            case 1:
+                this.sound.play('pop2', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+            case 2:
+                this.sound.play('pop3', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+        }
         
         this.powerUp.alpha = 0;
         
@@ -534,6 +555,7 @@ class Play extends Phaser.Scene{
         this.advanceMonster = true;
         this.monster.currentX = this.monster.x;
         this.player.isHurt = true;
+        this.sound.play('monster_warning', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
     }
     monsterChomp(){
         this.isChomped = true;
