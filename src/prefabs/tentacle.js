@@ -26,8 +26,9 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
 
         this.yorigin = y;
 
-        this.ySpeed = Phaser.Math.Between(1.5, 3);
+        this.tenteacleYVar = 1.5;
 
+        this.ySpeed = Phaser.Math.Between(this.tenteacleYVar, this.tenteacleYVar + 1.5);
 
     }
 
@@ -65,7 +66,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         this.x = game.config.width;
         this.alpha = 1;
 
-        this.ySpeed = Phaser.Math.Between(1.5, 3);
+        this.ySpeed = Phaser.Math.Between(this.tenteacleYVar, this.tenteacleYVar+1.5);
     }
 
 

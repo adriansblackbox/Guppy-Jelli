@@ -165,6 +165,7 @@ class Play extends Phaser.Scene{
 
         this.timeVar = 0;
         this.timePassed = 0;
+        this.difficultyTime = 0;
     }
     creatAnims(){
         this.anims.create({
@@ -318,6 +319,7 @@ class Play extends Phaser.Scene{
                 this.hiddenMessage.setText('');
                 this.timeLeft.setText("Dream Seconds: " + Math.round(this.timeVar*.001));
                 this.timeVar = this.timeVar + delta;
+                this.difficultyTime = this.difficultyTime + delta;
                 this.updateTenticles();
 
                 if( Math.round(this.timeVar*.001) > 10){
@@ -325,6 +327,19 @@ class Play extends Phaser.Scene{
                 }
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);
+            }
+            if(this.difficultyTime >= 30000 && this.wall1.speed <= 5){
+                this.difficultyTime = 0;
+                this.wall1.speed += 1;
+                this.wall2.speed += 1;
+                this.wall3.speed += 1;
+                this.wall4.speed += 1;
+                this.wall1.tenteacleYVar += 1;
+                this.wall2.tenteacleYVar += 1;
+                this.wall3.tenteacleYVar += 1;
+                this.wall4.tenteacleYVar += 1;
+                this.shark.speed += 1;
+                this.shark.respawnDelay -= 2000;
             }
             this.player.update();
             this.Mama.update(this.mamaAcsend);

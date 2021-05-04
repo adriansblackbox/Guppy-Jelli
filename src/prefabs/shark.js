@@ -16,6 +16,7 @@ class shark extends Phaser.Physics.Arcade.Sprite {
         this.body.offset.y = offY;     // WARNING: Keep the offsets even if they're 0.
                                      // Just the way phaser works I guess
         this.timeVar = 0;
+        this.respawnDelay = 20000;
     }
 
     update(delta) {
@@ -24,7 +25,7 @@ class shark extends Phaser.Physics.Arcade.Sprite {
 
         if(this.x <= -420){
             this.alpha = 0;
-            if(this.timeVar > delta + 20000){
+            if(this.timeVar > delta + this.respawnDelay){
                 this.reset();
                 this.timeVar = 0;    
             }
