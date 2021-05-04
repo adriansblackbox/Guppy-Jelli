@@ -36,6 +36,8 @@ class Play extends Phaser.Scene{
         //need a sprite for the jelly
         this.canvas = this.sys.canvas;
         this.canvas.style.cursor = 'none';
+        
+        
     }
     create(){
         //Bailey: really rough sound stopping
@@ -135,8 +137,8 @@ class Play extends Phaser.Scene{
         //}, null, this);
 
         //setting up time text
-        let timeConfig = {fontFamily: 'Nanum Pen Script', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
-        let warning = {fontFamily: 'Nanum Pen Script', fontSize: '30px', backgroundColor: null/*'#30D5C8'*/, color: '#000000', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
+        let timeConfig = {fontFamily: 'NanumPenScript', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
+        let warning = {fontFamily: 'NanumPenScript', fontSize: '30px', backgroundColor: null/*'#30D5C8'*/, color: '#000000', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
         this.timeLeft = this.add.text(0, 0, '', timeConfig);
         // Instructions
         
