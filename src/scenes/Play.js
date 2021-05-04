@@ -12,6 +12,7 @@ class Play extends Phaser.Scene{
         this.load.audio('gameover', './assets/sound_design_big_underwater_reversed_reverb_bubbles_sound_design_element (gameover).wav');
         this.load.audio('monster_hurt', './assets/lukas_tvrdon_impact_underwater_or_space_crash_distant_d_032(Monster hurt).wav');
         this.load.audio('monster_warning', './assets/lukas_tvrdon_impact_underwater_or_space_massive_b_034(monster Warning sound).wav');
+        this.load.audio('chomp', './assets/chomp.wav');
         this.load.audio('pop1', './assets/comedy_bubble_pop_001.wav');
         this.load.audio('pop2', './assets/comedy_bubble_pop_002.wav');
         this.load.audio('pop3', './assets/comedy_bubble_pop_003.wav');
@@ -89,6 +90,7 @@ class Play extends Phaser.Scene{
 
         this.base0 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base0');
         this.Mama = new Mama(this, game.config.width/2, 1700, null, 0);
+        this.Mama.alpha = 0.7;
         this.base1 = this.add.tileSprite(cX, cY - 30, 1920, 720, 'base1');
         this.base2 = this.add.tileSprite(cX, cY, 1920, 720, 'base2');
         this.base3 = this.add.tileSprite(cX, cY, 1920, 720, 'base3');
@@ -406,7 +408,7 @@ class Play extends Phaser.Scene{
         }else{
             this.sound.stopByKey('play_scene_bgm');
             if(!this.gameOvernoise){
-                this.sound.play('gameover', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+                this.sound.play('chomp', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
                 this.gameOvernoise = true;
             }
             this.player.stopMoving();
@@ -470,14 +472,15 @@ class Play extends Phaser.Scene{
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
             //powerup
-            if(!this.mamaLightOn)
+            if(!this.mamaLightOn) {
                 this.physics.world.collide(this.player, this.powerUp, this.onPowerUpCollision, null, this);
 
-            this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
-            this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
-            this.physics.world.collide(this.jellyFishCont, this.wall3, this.onJellyWallCollision, null, this);
-            this.physics.world.collide(this.jellyFishCont, this.wall4, this.onJellyWallCollision, null, this);
-            this.physics.world.collide(this.jellyFishCont, this.shark, this.onJellyWallCollision, null, this);
+                this.physics.world.collide(this.jellyFishCont, this.wall1, this.onJellyWallCollision, null, this);
+                this.physics.world.collide(this.jellyFishCont, this.wall2, this.onJellyWallCollision, null, this);
+                this.physics.world.collide(this.jellyFishCont, this.wall3, this.onJellyWallCollision, null, this);
+                this.physics.world.collide(this.jellyFishCont, this.wall4, this.onJellyWallCollision, null, this);
+                this.physics.world.collide(this.jellyFishCont, this.shark, this.onJellyWallCollision, null, this);
+            }
 
             if(!this.advanceMonster && !this.mamaLightOn){
                 this.physics.world.collide(this.player, this.wall1, this.advance, null, this);
