@@ -198,7 +198,7 @@ class Play extends Phaser.Scene{
 
         let hurtConfig = {
             mute: false,
-            volume: 1,
+            volume: 0.6,
             rate: 0.625,
             detune: 0,
             seek: 0,
