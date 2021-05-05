@@ -73,6 +73,7 @@ class Play extends Phaser.Scene{
         this.isChomped = false;
 
         this.startGame = false;
+        this.firstShark = true;
 
         this.initializeKeys();
         this.creatAnims();
@@ -356,7 +357,10 @@ class Play extends Phaser.Scene{
                 this.updateTenticles();
 
                 if( Math.round(this.timeVar*.001) > 10){
-                    //this.sharkSpawn.play();
+                    if(this.firstShark){
+                        this.sharkSpawn.play();
+                        this.firstShark = false;
+                    }
                     this.shark.update(delta, this.sharkSpawn);
                 }
                 if( Math.round(this.timeVar*.001) > 15)
@@ -457,7 +461,6 @@ class Play extends Phaser.Scene{
             }
             this.jellyFishCont.alpha = 0;
 
-            //this.renderTexture.clear();
             this.drawJellyLight();
             this.gameOverTitle.alpha = 1;
             this.timeLeft.setText("");
