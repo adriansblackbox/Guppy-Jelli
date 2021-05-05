@@ -13,6 +13,8 @@ class Menu extends Phaser.Scene {
         this.load.image('button', './assets/dreamButton.png');
         this.load.image('buttonover', './assets/dreamButton_selected.png');
         this.load.audio('title_bgm', './assets/Guppy_Title_BGM_Brahm.wav');
+        
+        this.load.audio('buttonOver', './assets/comedy_bubble_pop_003.wav');
     }
     
     create() {
@@ -36,6 +38,17 @@ class Menu extends Phaser.Scene {
             detune: 0,
             seek: 0,
             loop: true,
+            delay: 0,
+            pan: 0
+        }
+
+        let buttonConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
             delay: 0,
             pan: 0
         }
@@ -65,7 +78,7 @@ class Menu extends Phaser.Scene {
 
         this.startBtn = this.add.sprite(150, 250, 'button').setInteractive();
 
-        this.startBtn.on('pointerover', function (event) { this.startBtn.setTexture('buttonover', 0) }, this);
+        this.startBtn.on('pointerover', function (event) { this.startBtn.setTexture('buttonover', 0); this.sound.play('buttonOver', buttonConfig); }, this);
         this.startBtn.on('pointerout', function (event) { this.startBtn.setTexture('button', 0) }, this);
         this.startBtn.on('pointerdown', function (event) {this.scene.start('playScene'); },this); // Start game on click.
     }
