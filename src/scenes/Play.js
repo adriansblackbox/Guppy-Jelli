@@ -11,7 +11,7 @@ class Play extends Phaser.Scene{
         this.load.audio('play_scene_bgm','./assets/zapsplat_vehicles_submarine_small_personal_onboard_ambience_underwater_25576 (play scene bgm).wav');
         this.load.audio('second_play_scene_bgm', './assets/PlaySceneBGM.wav');
         this.load.audio('gameover', './assets/sound_design_big_underwater_reversed_reverb_bubbles_sound_design_element (gameover).wav');
-        this.load.audio('monster_hurt', './assets/lukas_tvrdon_impact_underwater_or_space_crash_distant_d_032(Monster hurt).wav');
+        this.load.audio('monster_hurt', './assets/monsterHurt.wav');
         this.load.audio('monster_warning', './assets/lukas_tvrdon_impact_underwater_or_space_massive_b_034(monster Warning sound).wav');
         this.load.audio('chomp', './assets/Chomp.wav');
         this.load.audio('pop1', './assets/comedy_bubble_pop_001.wav');
@@ -600,7 +600,7 @@ class Play extends Phaser.Scene{
 
         if(this.monster.x > -600){
             this.retreatMonster = true;
-            this.sound.play('monster_hurt', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+            this.sound.play('monster_hurt', {mute: false, volume: 0.7, rate: 0.5, detune: -2, seek: 0, loop: false, delay: 0});
         }
         this.monster.currentX = this.monster.x;
         this.advanceMonster = false;
