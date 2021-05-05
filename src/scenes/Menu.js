@@ -18,19 +18,6 @@ class Menu extends Phaser.Scene {
     }
     
     create() {
-        
-        let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: ' 28px',
-            backgroundColor: '#006994',
-            color: '#FFFFFF',
-            align: 'right',
-            padding:{
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
-        }
         let titleBGMConfig = {
             mute: false,
             volume: 1,
@@ -54,12 +41,6 @@ class Menu extends Phaser.Scene {
         }
 
         this.sound.play('title_bgm', titleBGMConfig);
-        //this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Endless Runner prototype #1', menuConfig).setOrigin(0.5);
-        //this.add.text(game.config.width/2, game.config.height/2, 'Use the keys: (W,A,S,D) to move the fish', menuConfig).setOrigin(0.5);
-        //this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'The jelly fish will follow your cursor', menuConfig).setOrigin(0.5);
-        //menuConfig.backgroundColor = '#000080';
-        //menuConfig.color = '#FFFFFF';
-        //this.add.text(game.config.width/2, game.config.height/2 + (2 *(borderUISize + borderPadding)), 'Press <- for quick session or -> for long session', menuConfig).setOrigin(0.5);
 
         this.anims.create({
             key: 'Title',
@@ -83,11 +64,6 @@ class Menu extends Phaser.Scene {
         this.startBtn.on('pointerdown', function (event) {buttonConfig.rate = 2; this.sound.play('buttonOver', buttonConfig); this.scene.start('playScene'); },this); // Start game on click.
     }
 
-    update(){
-
-            //this.scene.start('playScene'); 
-
-    }
     startGame(){
         this.scene.start('playScene'); 
     }

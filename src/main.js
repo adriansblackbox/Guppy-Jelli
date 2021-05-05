@@ -31,10 +31,3 @@ let borderPadding = borderUISize/3;
 
 
 let keyLEFT, keyRIGHT, keyF, keyR, keyUP, keyDOWN, keySPACE; //Bailey: we might need to add keyUP and keyDOWN for the player.
-
-/*
-this code goes in the html file below setting color to hide cursor everywhere
-    * {
-        cursor: none;
-    }
-*/

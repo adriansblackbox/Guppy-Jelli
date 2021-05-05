@@ -9,7 +9,6 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
         this.body.setImmovable()
         this.speed = 1.5;
-        //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);
         this.body.offset.x = offX;
@@ -60,7 +59,6 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         if(this.preference){
             this.y = this.yorigin;
         }else{
-            //this.setTexture(this.cieling);
             this.y = 0;
         }
         this.x = game.config.width;

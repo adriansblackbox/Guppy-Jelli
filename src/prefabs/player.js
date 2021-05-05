@@ -19,17 +19,9 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         this.body.offset.y = 0;     // WARNING: Keep the offsets even if they're 0.
                                     // Just the way phaser works I guess
     }
-    create(){
-    }
     update(){
-        
         this.movement();
         this.clampFun();
-
-        if(this.isHurt){
-            this.hurt();
-        }
-
     }
 
     /* Adrian:
@@ -118,8 +110,5 @@ class Player extends Phaser.Physics.Arcade.Sprite{
             this.body.setAccelerationY(0);
             this.body.setAccelerationX(this.accel);
         }
-    }
-
-    hurt(){
     }
 }
