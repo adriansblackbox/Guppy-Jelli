@@ -128,6 +128,8 @@ class Play extends Phaser.Scene{
         this.shark = new shark(this, game.config.width + 210,game.config.height/2, null, 0, 150, 70, 15, 50).setOrigin(0,0);
         this.monster = new monster(this, -600, game.config.height/2, 'monster',0);
         
+        let warning = {fontFamily: 'NanumPenScript', fontSize: '30px', backgroundColor: null/*'#30D5C8'*/, color: '#000000', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
+        this.hiddenMessage = this.add.text(game.config.height/2 - 80, game.config.width/2 + 100, 'beware the monsters lurking in the dark', warning);
 
         //====================== Place hidden things ^ =============================
         //==========================================================================
@@ -156,12 +158,12 @@ class Play extends Phaser.Scene{
 
         //setting up time text
         let timeConfig = {fontFamily: 'NanumPenScript', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
-        let warning = {fontFamily: 'NanumPenScript', fontSize: '30px', backgroundColor: null/*'#30D5C8'*/, color: '#000000', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
+       
         this.timeLeft = this.add.text(0, 0, '', timeConfig);
         // Instructions
         
         this.startInstruction = this.add.text(game.config.height/2 - 20, game.config.width/2, 'Press SPACE to Start', timeConfig);
-        this.hiddenMessage = this.add.text(game.config.height/2 - 80, game.config.width/2 + 100, 'beware the monsters lurking in the dark', warning);
+
         timeConfig.fontSize = '25px';
         this.fishInstructions = this.add.text(0, 0, 'W-A-S-D to Move the Fish', timeConfig);
         this.jellyInstructions = this.add.text(game.config.width - 320, 0, 'Move The Mouse to Guide the Light', timeConfig);
