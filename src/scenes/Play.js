@@ -13,7 +13,7 @@ class Play extends Phaser.Scene{
         this.load.audio('gameover', './assets/sound_design_big_underwater_reversed_reverb_bubbles_sound_design_element (gameover).wav');
         this.load.audio('monster_hurt', './assets/lukas_tvrdon_impact_underwater_or_space_crash_distant_d_032(Monster hurt).wav');
         this.load.audio('monster_warning', './assets/lukas_tvrdon_impact_underwater_or_space_massive_b_034(monster Warning sound).wav');
-        this.load.audio('chomp', './assets/chomp.wav');
+        this.load.audio('chomp', './assets/Chomp.wav');
         this.load.audio('pop1', './assets/comedy_bubble_pop_001.wav');
         this.load.audio('pop2', './assets/comedy_bubble_pop_002.wav');
         this.load.audio('pop3', './assets/comedy_bubble_pop_003.wav');
