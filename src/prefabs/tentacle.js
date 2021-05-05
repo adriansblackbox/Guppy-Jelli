@@ -79,7 +79,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
     }
     downG(anchor){
         if(this.y < anchor - 100){  // Going down
-            this.y += this.ySpeed;
+            this.y += this.ySpeed/2;
         }else{
             this.goingDown = false;
         }
@@ -89,7 +89,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
     upC(anchor){
         
         if(this.y > anchor -300){  // Going up
-            this.y -= this.ySpeed;
+            this.y -= this.ySpeed/1.5;
         }else{
             this.goingUp = false;
         }

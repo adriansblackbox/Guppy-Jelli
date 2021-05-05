@@ -56,7 +56,6 @@ class Play extends Phaser.Scene{
         this.sound.stopByKey('title_bgm');
         this.sound.stopByKey('gameover');
         //Adrian: Boolean var for checking if the player has died
-        this.fishDead = false;
         this.gameOver = false;
         this.jellyDown = false;
         this.wall2Delayed = false;
@@ -74,6 +73,8 @@ class Play extends Phaser.Scene{
 
         this.startGame = false;
         this.firstShark = true;
+
+        this.BGspeed = 1;
 
         this.initializeKeys();
         this.creatAnims();
@@ -331,12 +332,12 @@ class Play extends Phaser.Scene{
         //the jellyfish is clamped now (can edit how much it is clamped by easily now too)
 
         if(!this.advanceMonster || this.mamaLightOn){
-            this.background.tilePositionX += 0.7;
-            this.base0.tilePositionX += 0.8;
-            this.base1.tilePositionX += 0.9;
-            this.base2.tilePositionX += 1;
-            this.base3.tilePositionX += 1.1;
-            this.particles.tilePositionX += 0.7;
+            this.background.tilePositionX += this.BGspeed - 0.3;
+            this.base0.tilePositionX += this.BGspeed - 0.2;
+            this.base1.tilePositionX += this.BGspeed - 0.1;
+            this.base2.tilePositionX += this.BGspeed;
+            this.base3.tilePositionX += this.BGspeed + 0.1;
+            this.particles.tilePositionX += this.BGspeed - 0.3;
         }
 
 
@@ -366,19 +367,16 @@ class Play extends Phaser.Scene{
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);
             }
-            if(this.difficultyTime >= 30000 && this.wall1.speed <= 5){
+            if(this.difficultyTime >= 30000 && this.wall1.speed <= 4){
                 this.difficultyTime = 0;
                 this.wall1.speed += 1;
                 this.wall2.speed += 1;
                 this.wall3.speed += 1;
                 this.wall4.speed += 1;
-                this.wall1.tenteacleYVar += 1.25;
-                this.wall2.tenteacleYVar += 1.25;
-                this.wall3.tenteacleYVar += 1.25;
-                this.wall4.tenteacleYVar += 1.25;
                 this.shark.speed += 1;
                 this.shark.respawnDelay -= 2000;
                 this.powerUp.powerUpRandom += 5000;
+                this.BGspeed += 0.5;
             }
             this.player.update();
             this.Mama.update(this.mamaAcsend);
