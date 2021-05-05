@@ -9,7 +9,6 @@ class shark extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this)
         this.body.setImmovable();
         this.speed = 2;
-        //this.body.collideWorldBounds = true;
 
         this.body.setSize(bodyW,bodyH);  //Adrian: collision box adjustments for shark (140,35)
         this.body.offset.x = offX;

@@ -32,9 +32,6 @@ class Player extends Phaser.Physics.Arcade.Sprite{
         *  
         *   log:(4/23/2021)
         */
-       //                           83                                              880
-        //&& this.y >= borderUISize + borderPadding && this.y <= game.config.height - borderUISize - this.height
-        // Horizontal/Vertical movement
     movement(){
         if(keyUP.isDown && this.y >= borderUISize + borderPadding){
             this.body.setAccelerationY(-this.accel);
