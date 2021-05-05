@@ -13,7 +13,7 @@ class Menu extends Phaser.Scene {
         this.load.image('button', './assets/dreamButton.png');
         this.load.image('buttonover', './assets/dreamButton_selected.png');
         this.load.audio('title_bgm', './assets/Guppy_Title_BGM_Brahm.wav');
-        
+
         this.load.audio('buttonOver', './assets/comedy_bubble_pop_003.wav');
     }
     
@@ -44,7 +44,7 @@ class Menu extends Phaser.Scene {
 
         let buttonConfig = {
             mute: false,
-            volume: 1,
+            volume: 0.5,
             rate: 1,
             detune: 0,
             seek: 0,
