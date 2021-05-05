@@ -147,15 +147,6 @@ class Play extends Phaser.Scene{
 
         this.jellyFishCont.alpha = 0.75; 
 
-
-        //dawdddwathis.timeVariable = game.settings.gameTimer;
-
-        //this.clock = this.time.delayedCall(this.timeVariable, () => {
-            //this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            //this.add.text(game.config.width/2, game.config.height/2 +64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
-            //this.gameOver = true; 
-        //}, null, this);
-
         //setting up time text
         let timeConfig = {fontFamily: 'NanumPenScript', fontSize: '40px', backgroundColor: null/*'#30D5C8'*/, color: '#FFFFFF', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
        
