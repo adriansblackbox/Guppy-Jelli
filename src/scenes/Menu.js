@@ -80,7 +80,7 @@ class Menu extends Phaser.Scene {
 
         this.startBtn.on('pointerover', function (event) { this.startBtn.setTexture('buttonover', 0); this.sound.play('buttonOver', buttonConfig); }, this);
         this.startBtn.on('pointerout', function (event) { this.startBtn.setTexture('button', 0) }, this);
-        this.startBtn.on('pointerdown', function (event) {this.scene.start('playScene'); },this); // Start game on click.
+        this.startBtn.on('pointerdown', function (event) {buttonConfig.rate = 2; this.sound.play('buttonOver', buttonConfig); this.scene.start('playScene'); },this); // Start game on click.
     }
 
     update(){
