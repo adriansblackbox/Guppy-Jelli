@@ -27,7 +27,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
         //this is the variable that controls how fast the tentacles go up and down (changes in play)
         this.tenteacleYVar = 1.5;
 
-        this.ySpeed = Phaser.Math.Between(this.tenteacleYVar, this.tenteacleYVar + 1.5);
+        this.ySpeed = Phaser.Math.Between(this.tenteacleYVar, this.tenteacleYVar + 2);
 
     }
 
@@ -89,7 +89,7 @@ class tentacle extends Phaser.Physics.Arcade.Sprite {
     upC(anchor){
         
         if(this.y > anchor -300){  // Going up
-            this.y -= this.ySpeed/1.5;
+            this.y -= this.ySpeed/2;
         }else{
             this.goingUp = false;
         }
