@@ -22,6 +22,7 @@ class Play extends Phaser.Scene{
         this.load.audio('shark_pass3', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_003_59242(shark movement1).wav');
         this.load.audio('swim', './assets/swim.wav');
         this.load.audio('dream_start', './assets/476612__avaruusnuija__bubbles-14.wav');
+        this.load.audio('hurt', './assets/hurt.wav');
 
 
         this.load.image('cover', './assets/BlackCover.png');
@@ -193,9 +194,22 @@ class Play extends Phaser.Scene{
             delay: 0
         };
 
+        let hurtConfig = {
+            mute: false,
+            volume: 1,
+            rate: 0.625,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        };
+
         this.sharkSpawn = this.sound.add('shark_pass1', sharkSpawnConfig);
 
         this.swimNoise = this.sound.add('swim', swimConfig);
+
+        this.hurtNoise = this.sound.add('hurt', hurtConfig);
+
 
         this.swimNoise.play();
     }
@@ -337,16 +351,6 @@ class Play extends Phaser.Scene{
         this.collisions();
         this.jellyMovement();
         
-
-        //for the gameover text, if we want the top to not have as large as box we may need to change the fixedwidth in between the two texts
-        
-
-        //this.timeLeft.setText("Time: " + Math.round(this.timeVar*.001));
-        //this.shark.speed += (this.timeVar*.000001);   //one way of speeding up sharks
-        //if(Math.round(this.timeVar*.001) >= this.timePassed+10){    //10 is the amount of time passed before it speeds up
-            //this.shark.speed += 1;
-            //this.timePassed+=10;
-        //}
         if(!this.gameOver){
             if(this.startGame){
                 this.startInstruction.setText('');
@@ -477,12 +481,12 @@ class Play extends Phaser.Scene{
         this.player.anims.play('swim', true);
         if(this.player.isMoving){
             this.player.anims.msPerFrame = 35;
-            if(this.swimNoise.rate < 0.90)
-                this.swimNoise.rate += 0.01;
+            if(this.swimNoise.rate < 1)
+                this.swimNoise.rate += 0.015;
         }else{
             this.player.anims.msPerFrame = 75;
             if(this.swimNoise.rate > 0.1){
-                this.swimNoise.rate -= 0.01
+                this.swimNoise.rate -= 0.02
             }
         }
     }
@@ -511,7 +515,7 @@ class Play extends Phaser.Scene{
     }
 
     collisions(){
-        if(!this.fishDead){
+        if(!this.gameOver){
             this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
             //powerup
@@ -564,14 +568,19 @@ class Play extends Phaser.Scene{
         this.gameOver = true;
     }
     onJellyWallCollision(){
-        this.jellyDown = true;
-        var timer = this.time.addEvent({
-            delay: 6000,                // ms
-            callback: this.resetJelly,
-            
-            callbackScope: this,
-            loop: false
-        });
+        if(!this.jellyDown){
+            this.hurtNoise.rate = 1;
+            this.hurtNoise.play();
+
+            this.jellyDown = true;
+            var timer = this.time.addEvent({
+                delay: 6000,                // ms
+                callback: this.resetJelly,
+                
+                callbackScope: this,
+                loop: false
+            });
+        }
     }
     onPowerUpCollision(){
         switch(Math.floor(Math.random()* 3)){
@@ -614,10 +623,14 @@ class Play extends Phaser.Scene{
     }
 
     advance(){
-        this.advanceMonster = true;
-        this.monster.currentX = this.monster.x;
-        this.player.isHurt = true;
-        this.sound.play('monster_warning', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+        if(!this.advanceMonster){
+            this.hurtNoise.rate = 0.625;
+            this.hurtNoise.play();
+            this.advanceMonster = true;
+            this.monster.currentX = this.monster.x;
+            this.player.isHurt = true;
+            this.sound.play('monster_warning', {mute: false, volume: 0.5, rate: 1, detune: 0, seek: 0, loop: false, delay: 0});
+        }
     }
     monsterChomp(){
         this.isChomped = true;
