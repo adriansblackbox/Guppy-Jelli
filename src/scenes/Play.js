@@ -18,8 +18,6 @@ class Play extends Phaser.Scene{
         this.load.audio('pop2', './assets/comedy_bubble_pop_002.wav');
         this.load.audio('pop3', './assets/comedy_bubble_pop_003.wav');
         this.load.audio('shark_pass1', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_001_59240(shark movement3).wav');
-        this.load.audio('shark_pass2', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_002_59241(shark movement2).wav');
-        this.load.audio('shark_pass3', './assets/zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_003_59242(shark movement1).wav');
         this.load.audio('swim', './assets/swim.wav');
         this.load.audio('dream_start', './assets/476612__avaruusnuija__bubbles-14.wav');
         this.load.audio('hurt', './assets/hurt.wav');
@@ -32,7 +30,6 @@ class Play extends Phaser.Scene{
         this.load.image('base1', './assets/base_1.png');
         this.load.image('base2', './assets/base_2.png');
         this.load.image('base3', './assets/base_3.png');
-        this.load.image('wall1', './assets/wall1.png');
         this.load.image('chomp', './assets/deathWallClosed.png');
         this.load.image('dreamOver', './assets/dreamOver.png');
 
