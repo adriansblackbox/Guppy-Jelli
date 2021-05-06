@@ -32,6 +32,7 @@ class Play extends Phaser.Scene{
         this.load.image('base3', './assets/base_3.png');
         this.load.image('chomp', './assets/deathWallClosed.png');
         this.load.image('dreamOver', './assets/dreamOver.png');
+        this.load.image('skelletonShark', './assets/shark_skele.png');
 
         this.load.spritesheet('fishswim', 'assets/feesh_spreadsheet.png', {frameWidth: 80, frameHeight: 46, startFrame: 0, endFrame: 14});
         this.load.spritesheet('sharkswim', 'assets/shark.png', {frameWidth: 420, frameHeight: 168, startFrame: 0, endFrame: 30});
@@ -70,6 +71,7 @@ class Play extends Phaser.Scene{
 
         this.startGame = false;
         this.firstShark = true;
+        this.firstSkeletonShark = true;
 
         this.BGspeed = 1;
 
@@ -124,7 +126,8 @@ class Play extends Phaser.Scene{
         this.wall4.anims.play('tentacle', true);
         this.wall3.flipY = true;
     
-        this.shark = new shark(this, game.config.width + 210,game.config.height/2, null, 0, 150, 70, 15, 50).setOrigin(0,0);
+        this.shark = new shark(this, game.config.width + 210,game.config.height/2, null, 0, 400, 70, 15, 50).setOrigin(0,0);
+        this.skelletonShark = new skelletonShark(this, -420, game.config.height/2, 'skelletonShark', 0, 400, 70, 15, 50).setOrigin(0,0);
         this.monster = new monster(this, -600, game.config.height/2, 'monster',0);
         
         let warning = {fontFamily: 'NanumPenScript', fontSize: '30px', backgroundColor: null/*'#30D5C8'*/, color: '#000000', align: 'left', padding:{left: 5, top: 5, bottom: 5,}, fixedWidth: 500}
@@ -363,6 +366,14 @@ class Play extends Phaser.Scene{
                 }
                 if( Math.round(this.timeVar*.001) > 15)
                     this.powerUp.update(delta);
+
+                if( Math.round(this.timeVar*.001) > 60){
+                    if(this.firstSkeletonShark){
+                        //this.sharkSpawn.play(); harpoon sound here
+                        this.firstSkeletonShark = false;
+                    }
+                    this.skelletonShark.update(delta, this.sharkSpawn, this.player.y); // and replace is here
+                }
             }
             if(this.difficultyTime >= 30000 && this.wall1.speed <= 4){
                 this.difficultyTime = 0;
@@ -507,7 +518,6 @@ class Play extends Phaser.Scene{
 
     collisions(){
         if(!this.gameOver){
-            this.physics.world.collide(this.player, this.shark, this.onSharkCollision, null, this);
 
             //powerup
             if(!this.mamaLightOn) {
@@ -518,6 +528,7 @@ class Play extends Phaser.Scene{
                 this.physics.world.collide(this.jellyFishCont, this.wall3, this.onJellyWallCollision, null, this);
                 this.physics.world.collide(this.jellyFishCont, this.wall4, this.onJellyWallCollision, null, this);
                 this.physics.world.collide(this.jellyFishCont, this.shark, this.onJellyWallCollision, null, this);
+                this.physics.world.collide(this.jellyFishCont, this.skelletonShark, this.onJellyWallCollision, null, this);
             }
 
             if(!this.advanceMonster && !this.mamaLightOn){
@@ -525,6 +536,9 @@ class Play extends Phaser.Scene{
                 this.physics.world.collide(this.player, this.wall2, this.advance, null, this);
                 this.physics.world.collide(this.player, this.wall3, this.advance, null, this);
                 this.physics.world.collide(this.player, this.wall4, this.advance, null, this);
+
+                this.physics.world.collide(this.player, this.shark, this.advance, null, this);
+                this.physics.world.collide(this.player, this.skelletonShark, this.advance, null, this);
             }
 
             this.physics.world.collide(this.player, this.monster, this.monsterChomp, null, this);
@@ -554,10 +568,6 @@ class Play extends Phaser.Scene{
     }
 
     
-    //functions
-    onSharkCollision(){
-        this.gameOver = true;
-    }
     onJellyWallCollision(){
         if(!this.jellyDown){
             this.hurtNoise.rate = 1;
