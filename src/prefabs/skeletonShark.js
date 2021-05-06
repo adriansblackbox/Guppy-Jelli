@@ -1,4 +1,4 @@
-class skelletonShark extends Phaser.Physics.Arcade.Sprite {
+class skeletonShark extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, bodyW, bodyH, offX, offY) {
         super(scene, x, y, texture, frame, bodyW, bodyH);
         scene.add.existing(this);
@@ -15,23 +15,23 @@ class skelletonShark extends Phaser.Physics.Arcade.Sprite {
         this.respawnDelay = 30000;
     }
 
-    update(delta, spawnNoise, monstery) {
+    update(delta, spawnNoise, monstery, monsterx) {
         this.x += this.speed;
         this.timeVar = this.timeVar + delta;
 
         if(this.x >= game.config.width + 420){
             this.alpha = 0;
             if(this.timeVar > delta + this.respawnDelay){
-                this.reset(spawnNoise, monstery);
+                this.reset(spawnNoise, monstery, monsterx);
                 this.timeVar = 0;    
             }
         }
     }
 
-    reset(spawnNoise, monstery) {
+    reset(spawnNoise, monstery, monsterx) {
         spawnNoise.play();
-        this.x = -420;
-        this.y = monstery;
+        this.x = monsterx -100;
+        this.y = monstery - 50;
         this.alpha = 1;
     }
 }
