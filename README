@@ -11,7 +11,73 @@ Group members:
     Bailey Victorio
     Tristan Dunlop
 
-Sounds gotten from:
-    ZapSplat: https://www.zapsplat.com/
-    Freesound: https://freesound.org/people/newlocknew/sounds/554810/
+Assets created using beepbox.co 
+
+‘Title_bgm’ by Bailey Victorio
+    Rendition of “Brahm’s Lullaby”/”Cradle Song” 
+‘Second_play_scene_bgm’ by Bailey Victorio
+
+
+Freesound:
+https://freesound.org/people/ristooooo1/sounds/539819/
+    Renamed and used within game as ‘swim’
+https://freesound.org/people/Khrinx/sounds/565024/ 
+    Renamed and used within game as ‘monster_hurt’
+https://freesound.org/people/Mrthenoronha/sounds/506585/
+    Renamed and used within game as ‘hurt’
+https://freesound.org/people/Avaruusnuija/sounds/476612/ 
+    Renamed and used within game as ‘dream_start’
+https://freesound.org/people/newlocknew/sounds/554810/ 
+    Renamed and used within game as ‘chomp’
+
+Zapsplat:
+
+All sfxs used within the standard license: “Sound effects obtained from https://www.zapsplat.com” 
+
+https://www.zapsplat.com/music/sound-design-big-underwater-reversed-reverb-bubbles-sound-design-element/
+    Converted into .wav format 
+    Renamed as ‘sound_design_big_underwater_reversed_reverb_bubbles_sound_design_element (gameover).wav’ 
+    Not used within final game, asset called ‘gameover’
+https://www.zapsplat.com/music/cartoon-bubble-pop-1-4/
+    Converted into .wav format
+    Renamed as ‘comedy_bubble_pop_001.wav’
+    Used within final game as ‘pop1’
+https://www.zapsplat.com/music/cartoon-bubble-pop-2-4/
+    Converted into .wav format
+    Renamed as ‘comedy_bubble_pop_002.wav’
+    Used within final game as ‘pop2’
+https://www.zapsplat.com/music/cartoon-bubble-pop-3-4/
+    Converted into .wav format
+    Renamed as ‘comedy_bubble_pop_003.wav’
+    Used within final game as ‘pop3’
+https://www.zapsplat.com/music/small-personal-submarine-onboard-ambience-underwater-engine-noise-water-and-bubbles/
+    Converted into .wav format
+    Renamed as ‘zapsplat_vehicles_submarine_small_personal_onboard_ambience_underwater_25576 (play scene bgm).wav’
+    Used within final game as ‘play_scene_bgm’
+https://www.zapsplat.com/music/massive-underwater-impact-crash-or-could-be-in-space-2/
+    Converted into .wav format
+    Renamed as ‘lukas_tvrdon_impact_underwater_or_space_massive_b_034(monster Warning sound).wav’
+    Used within the final game as ‘monster_warning’
+https://www.zapsplat.com/music/medium-underwater-movement-whoosh-pass-by-1/ 
+    Converted into .wav format 
+    Renamed as ‘zapsplat_nature_water_underwater_whoosh_movement_pass_med_designed_001_59240(shark movement3).wav’
+    Used within the final game as ‘shark_pass1’
+https://www.zapsplat.com/music/designed-underwater-whoosh-water-rising-drip-swirling-clean-bass-tail/
+    Converted into .wav format 
+    Renamed as ‘SP_WATRMvmt_Cinematic_Underwater_Whoosh_02.wav’
+    Used within the final game as ‘skeleton_shark’
     
+Creative Tilt:
+
+For this endless runner, we wanted there to be 2 distinct ways of interacting with the game that needed to be maintained in order for the players to get far. We also wanted our game to incorporate themes around blindness, perspective, and uncertainty. 
+
+Guppy and Jelly’s Dream was the result of amalgamating these desires together.
+
+We focused on lighting for our game because it would serve to reinforce the aesthetic themes we had in mind and become an interesting mechanic to test out for our final game. We wanted to see how players could navigate a dark space with very little light that they could control showing them what obstacles are hidden. To that extent, we searched online for tutorials of how to layer sprites to be hidden while others could be visible on top of it all. Though the tutorials we found did not provide us with all the answers we needed, we figured out how to change up the concepts to fit within the phase type we had. 
+
+As for the visual style, one of our team members, Tristan, wanted to challenge themselves as an artist and chose to take the game in the direction of sprite art. All the art assets(sprites, backgrounds, and animations) were done by him. The sprite art also contributed to the somewhat cuteness of Jelly and Guppy in contrast to the uncertainty and hopefully, horror, players feel while playing for juxtaposition. As for the sound effects, we used assets we found online that fit our horror in the depths and underwater feel that we had crafted even though we should have created our own (although we did forget that requirement). The music, done by Bailey, was created using an online free editor in order to understand some sound design knowledge from GDA.  
+
+
+To sum up what our core idea of innovation for the endless runner is this statement: 
+
+‘How would an endless runner work if you couldn’t see where things were?’
