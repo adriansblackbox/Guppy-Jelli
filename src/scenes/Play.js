@@ -21,6 +21,7 @@ class Play extends Phaser.Scene{
         this.load.audio('swim', './assets/swim.wav');
         this.load.audio('dream_start', './assets/476612__avaruusnuija__bubbles-14.wav');
         this.load.audio('hurt', './assets/hurt.wav');
+        this.load.audio('skeleton_shark', 'SP_WATRMvmt_Cinematic_Underwater_Whoosh_02.wav');
 
 
         this.load.image('cover', './assets/BlackCover.png');
