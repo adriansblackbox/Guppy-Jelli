@@ -391,15 +391,15 @@ class Play extends Phaser.Scene{
                     this.skeletonShark.update(delta, this.skeleShoot, this.player.y, this.monster.x); // and replace is here
                 }
             }
-            if(this.difficultyTime >= 30000 && this.wall1.speed <= 4){
+            if(this.difficultyTime >= 30000 && this.wall1.speed <= 3){
                 this.difficultyTime = 0;
-                this.wall1.speed += 1;
-                this.wall2.speed += 1;
-                this.wall3.speed += 1;
-                this.wall4.speed += 1;
-                this.shark.speed += 1;
+                this.wall1.speed += 0.5;
+                this.wall2.speed += 0.5;
+                this.wall3.speed += 0.5;
+                this.wall4.speed += 0.5;
+                this.shark.speed += 0.5;
                 this.shark.respawnDelay -= 2000;
-                this.powerUp.powerUpRandom += 5000;
+                this.powerUp.powerUpRandom += 7000;
                 this.BGspeed += 0.5;
             }
             this.player.update();
