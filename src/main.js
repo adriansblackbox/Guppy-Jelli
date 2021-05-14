@@ -18,8 +18,12 @@ let config = {
             fps: 60
         }
     },
-    
-    
+    // scale game logic
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
+ 
 };
 
 
